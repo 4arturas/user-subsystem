@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express           = require('express');
 const path              = require('path');
 
@@ -12,6 +14,6 @@ app.get('/', (req, res) => {
     res.sendFile( htmlFile );
 })
 
-const USERS_APP_PORT = 4000;
-app.listen( USERS_APP_PORT );
-console.log(`Running on port ${USERS_APP_PORT}`);
+const USER_APP_PORT = process.env.USER_APP_PORT;
+app.listen( USER_APP_PORT );
+console.log(`Running on port ${USER_APP_PORT}`);
