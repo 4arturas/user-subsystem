@@ -44,7 +44,7 @@ function App()
                     </NavLink>
                 </div>
             </div>
-            <div style={{textAlign:'center'}}>
+            <div style={{padding:'30px 20px'}}>
                 <Switch>
                     <Route exact path="/organizations">
                         <Organizations/>
