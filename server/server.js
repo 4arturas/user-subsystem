@@ -7,6 +7,9 @@ const app               = express();
 
 const model             = require("./model");
 
+const API               = require( './api' );
+app.use( '/', API );
+
 const pathToStaticResources = '../app/dist'
 app.use('/assets', express.static(path.join( __dirname, pathToStaticResources + '/assets' )));
 app.use('/img', express.static(path.join( __dirname, pathToStaticResources + '/img' )));
