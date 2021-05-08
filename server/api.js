@@ -1,10 +1,12 @@
 const express   = require('express');
 const app       = express.Router();
 
+const model     = require("./model");
 
-app.get('/api/organizations', (req, res) =>
+app.get('/api/organizations', async (req, res) =>
 {
-    const jSonOrganizations = [{ org_id: '1' }];
+    const jSonOrganizations = await model.get_Organizations();
+    console.log( jSonOrganizations );
     res.json( jSonOrganizations );
 });
 
