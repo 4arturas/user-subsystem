@@ -23,7 +23,7 @@ async function hello_World()
 async function get_Organizations()
 {
     const jSonArr = [];
-    const client = await pool.connect()
+    const client = await pool.connect();
     const result = await client.query({
         rowMode: 'array',
         text: 'SELECT ROW_TO_JSON(o) FROM organizations as o;',
