@@ -11,7 +11,7 @@ const pathToStaticResources = '../app/dist'
 app.use('/assets', express.static(path.join( __dirname, pathToStaticResources + '/assets' )));
 app.use('/img', express.static(path.join( __dirname, pathToStaticResources + '/img' )));
 
-app.get('/', async (req, res)  => {
+app.get('/', (req, res)  => {
 
     model.hello_World();
 
