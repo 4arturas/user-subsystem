@@ -29,7 +29,7 @@ function AddOrganization()
     return (
         <span>
         <Button variant="contained" color="primary" onClick={() => { handleClickOpen(); }}>
-            Add new organizaton
+            Add new organization
         </Button>
         <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open} maxWidth="xl">
             <div style={{padding: '5px'}}>
