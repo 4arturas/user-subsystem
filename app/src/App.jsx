@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import './App.css'
+import './header.css'
 import {
     BrowserRouter, NavLink,
     Route,
@@ -16,18 +17,20 @@ function App() {
 
     return (
         <BrowserRouter>
-            <div className="App">
-                <button onClick={() => setCount((count) => count + 1)}>
-                    count is: {count}
-                </button>
-            </div>
-            <div style={{textAlign:'center', borderBottom:'1px solid black', paddingBottom:'100px;'}}>
-                <NavLink to="/">
-                    Home
-                </NavLink>&nbsp;&nbsp;&nbsp;
-                <NavLink to="/organizations">
-                    Organizations
-                </NavLink>
+            <div className="header">
+                <div className='header__left'>
+                    <NavLink to="/">
+                        <img style={{width:'30px'}} src={'img/logo.png'} alt="Logo"/>
+                    </NavLink>
+                </div>
+                <div className="header__center">
+                    <NavLink to="/home" className="header__option" activeClassName="header__option--active">
+                        Home
+                    </NavLink>
+                    <NavLink to="/organizations" className="header__option" activeClassName="header__option--active">
+                        Organizations
+                    </NavLink>
+                </div>
             </div>
             <div style={{textAlign:'center'}}>
                 <Switch>
