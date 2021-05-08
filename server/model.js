@@ -27,7 +27,7 @@ async function get_Organizations()
     const result = await client.query({
         rowMode: 'array',
         text: 'SELECT ROW_TO_JSON(o) FROM organizations as o;',
-    })
+    });
     for ( let i = 0; i < result.rows.length; i++ )
     {
         const r = result.rows[i][0];
@@ -38,7 +38,7 @@ async function get_Organizations()
         };
         jSonArr.push( jSon );
     } // end for i
-    await client.end()
+    await client.end();
     return jSonArr;
 }
 
