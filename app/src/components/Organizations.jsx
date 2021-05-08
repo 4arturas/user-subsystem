@@ -83,8 +83,8 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-    { id: 'org_name', numeric: false, disablePadding: false, label: 'org_name' },
-    { id: 'org_add_date', numeric: false, disablePadding: false, label: 'org_add_date' }
+    { id: 'org_name', numeric: false, disablePadding: false, label: 'Organization Name' },
+    { id: 'org_add_date', numeric: false, disablePadding: false, label: 'Organization add date' }
 ];
 
 function EnhancedTableHead(props) {
@@ -99,7 +99,6 @@ function EnhancedTableHead(props) {
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'default'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -245,8 +244,8 @@ function Organizations()
                                                 tabIndex={-1}
                                                 key={row.org_id}
                                             >
-                                                <TableCell align="right">{row.org_name}</TableCell>
-                                                <TableCell align="right">{row.org_add_date}</TableCell>
+                                                <TableCell align="left">{row.org_name}</TableCell>
+                                                <TableCell align="left">{row.org_add_date}</TableCell>
                                             </TableRow>
                                         );
                                     })}
