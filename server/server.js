@@ -5,8 +5,6 @@ const path              = require('path');
 
 const app               = express();
 
-const model             = require("./model");
-
 const API               = require( './api' );
 app.use( '/', API );
 
@@ -14,12 +12,15 @@ const pathToStaticResources = '../app/dist'
 app.use('/assets', express.static(path.join( __dirname, pathToStaticResources + '/assets' )));
 app.use('/img', express.static(path.join( __dirname, pathToStaticResources + '/img' )));
 
-app.get('/', (req, res)  => {
-
-    model.hello_World();
+app.get('/*', (req, res)  => {
 
     const htmlFile = path.join( __dirname, pathToStaticResources ) + '/index.html';
     res.sendFile( htmlFile );
+})
+app.get('/assets/*', (req, res) => {
+    const originalUrl = req.originalUrl;
+    const jsPath = path.join( __dirname, pathToStaticResources ) + originalUrl;
+    res.sendFile( jsPath );
 })
 
 const USER_APP_PORT = process.env.USER_APP_PORT;
