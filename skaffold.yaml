@@ -1,0 +1,12 @@
+apiVersion: skaffold/v2beta14
+kind: Config
+build:
+  artifacts:
+    - image: users-app
+      docker:
+        dockerfile: server/devops/docker/Dockerfile
+        noCache: false
+deploy:
+  kubectl:
+    manifests:
+      - server/devops/k8s/k8s-local.yaml

@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-app
+  template:
+    metadata:
+      labels:
+        app: users-app
+    spec:
+      containers:
+      - name: users-app
+        image: users-app
+        ports:
+        - containerPort: 4004
+        env:
+          - name: USER_APP_PORT
+            value: '4004'
+          - name: POSTGRESS_HOST
+            value: postgres-server
+          - name: POSTGRESS_USER
+            value: postgres
+          - name: POSTGRESS_PASSWORD
+            value: password
+          - name: POSTGRESS_PORT
+            value: '5432'
+          - name: POSTGRESS_DATABASE
+            value: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-app
+  labels:
+    app: users-app
+spec:
+  selector:
+    app: users-app
+  ports:
+  - port: 4004
+    protocol: TCP
+    name: users-app
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: users-app
+  annotations:
+    nginx.ingress.kubernetes.io/redirect-regex: ^/(.*)
+spec:
+  rules:
+    - host: users-app.local.clearpay-test.systems
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: users-app
+                port:
+                  name: users-app
