@@ -84,7 +84,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
     { id: 'org_name', numeric: false, disablePadding: false, label: 'Organization Name' },
-    { id: 'org_add_date', numeric: false, disablePadding: false, label: 'Organization add date' }
+    { id: 'org_add_date', numeric: false, disablePadding: false, label: 'Organization Add Date' }
 ];
 
 function EnhancedTableHead(props) {
