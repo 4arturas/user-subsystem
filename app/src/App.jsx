@@ -27,7 +27,7 @@ function App()
             <div className="header" style={{height:'20px'}}>
                 <div className='header__left'>
                     <NavLink to="/">
-                        <img style={{width:'90px', position: 'absolute', top:'-5px'}} src={'img/logo.png'} alt="Logo"/>
+                        <img style={{width:'90px', position: 'absolute', top:'-5px'}} src={'/img/logo.png'} alt="Logo"/>
                     </NavLink>
                 </div>
                 <div className="header__center">
