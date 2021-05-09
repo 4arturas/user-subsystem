@@ -9,6 +9,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import {makeStyles} from "@material-ui/core/styles";
 import EnhancedTableHead from "./EnhancedTableHead";
 import API from "../API";
+import {NavLink} from "react-router-dom";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -142,7 +143,11 @@ function Roles()
                                                 tabIndex={-1}
                                                 key={row.role_id}
                                             >
-                                                <TableCell align="left">{row.role_name}</TableCell>
+                                                <TableCell align="left">
+                                                    <NavLink to={"/roles/role?id=" + row.role_id}>
+                                                        {row.role_name}
+                                                    </NavLink>
+                                                </TableCell>
                                                 <TableCell align="left">{row.role_add_date}</TableCell>
                                             </TableRow>
                                         );
