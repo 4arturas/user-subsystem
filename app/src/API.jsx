@@ -39,7 +39,10 @@ class API
     {
         return get_Data( url + 'users/user?id='+id );
     }
-
+    get_UsersByOrganization( organizationId )
+    {
+        return get_Data( url + 'users/organization?organizationId='+organizationId );
+    }
     get_Roles()
     {
         return get_Data( url + 'roles' );
