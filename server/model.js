@@ -42,7 +42,30 @@ async function get_Organizations()
     return jSonArr;
 }
 
+async function get_Roles()
+{
+    const jSonArr = [];
+    const client = await pool.connect();
+    const result = await client.query({
+        rowMode: 'array',
+        text: 'SELECT ROW_TO_JSON(r) FROM roles as r;',
+    });
+    for ( let i = 0; i < result.rows.length; i++ )
+    {
+        const r = result.rows[i][0];
+        const jSon = {
+            role_id:         r.role_id,
+            role_name:       r.role_name,
+            role_add_date:   r.role_add_date
+        };
+        jSonArr.push( jSon );
+    } // end for i
+    await client.end();
+    return jSonArr;
+}
+
 module.exports = {
     hello_World,
-    get_Organizations
+    get_Organizations,
+    get_Roles
 };
