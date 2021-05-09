@@ -55,4 +55,12 @@ app.get('/api/roles', async (req, res) =>
     res.json( jSonRoles );
 });
 
+app.get('/api/roles/role', async (req, res) =>
+{
+    const id = req.query.id;
+    const jSonUser = await model.get_Role( id );
+    console.log( jSonUser );
+    res.json( jSonUser );
+});
+
 module.exports = app;
