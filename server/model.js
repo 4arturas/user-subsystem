@@ -64,8 +64,33 @@ async function get_Roles()
     return jSonArr;
 }
 
+async function get_Users()
+{
+    const jSonArr = [];
+    const client = await pool.connect();
+    const result = await client.query({
+        rowMode: 'array',
+        text: 'SELECT ROW_TO_JSON(u) FROM users as u;',
+    });
+    for ( let i = 0; i < result.rows.length; i++ )
+    {
+        const r = result.rows[i][0];
+        const jSon = {
+            user_id:         r.user_id,
+            user_name:       r.user_name,
+            first_name:      r.first_name,
+            last_name:       r.last_name,
+            user_add_date:   r.user_add_date
+        };
+        jSonArr.push( jSon );
+    } // end for i
+    await client.end();
+    return jSonArr;
+}
+
 module.exports = {
     hello_World,
     get_Organizations,
-    get_Roles
+    get_Roles,
+    get_Users
 };
