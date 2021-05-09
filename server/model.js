@@ -185,6 +185,28 @@ async function get_Role( id )
     return res.rows[0].row_to_json;
 }
 
+async function get_RolesByUserId( userId )
+{
+    const jSonArr = [];
+    const result = await pool.query({
+        rowMode: 'array',
+        text: 'select ROW_TO_JSON(v) from ( select r.*, ur.start_date, ur.end_date from users_roles ur, roles r where ur.role_id = r.role_id and ur.end_date is null and ur.user_id = '+userId+' ) v'
+    });
+    for ( let i = 0; i < result.rows.length; i++ )
+    {
+        const r = result.rows[i][0];
+        const jSon = {
+            role_id:         r.role_id,
+            role_name:       r.role_name,
+            role_add_date:   r.role_add_date,
+            start_date:      r.start_date,
+            end_date:        r.end_date
+        };
+        jSonArr.push( jSon );
+    } // end for i
+    return jSonArr;
+}
+
 module.exports = {
     hello_World,
     get_Clients,
@@ -196,5 +218,6 @@ module.exports = {
     get_User,
     get_UsersByOrganization,
     get_Roles,
-    get_Role
+    get_Role,
+    get_RolesByUserId
 };
