@@ -47,4 +47,12 @@ app.get('/api/users', async (req, res) =>
     res.json( jSonUsers );
 });
 
+app.get('/api/users/user', async (req, res) =>
+{
+    const id = req.query.id;
+    const jSonUser = await model.get_User( id );
+    console.log( jSonUser );
+    res.json( jSonUser );
+});
+
 module.exports = app;
