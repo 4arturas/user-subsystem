@@ -10,6 +10,13 @@ app.get('/api/clients', async (req, res) =>
     res.json( jSonClients );
 });
 
+app.get('/api/clients/client', async (req, res) =>
+{
+    const jSonClient = await model.get_Client(1);
+    console.log( jSonClient );
+    res.json( jSonClient );
+});
+
 app.get('/api/organizations', async (req, res) =>
 {
     const jSonOrganizations = await model.get_Organizations();
