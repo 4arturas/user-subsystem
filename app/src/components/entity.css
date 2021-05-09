@@ -1,4 +1,4 @@
-.entity { border-bottom: 1px solid whitesmoke; padding-bottom: 10px; margin-bottom: 20px; }
+.entity { border-bottom: 1px solid whitesmoke; padding: 10px; margin-bottom: 20px; }
 .entity h1 { font-size: 20px; font-weight: bold; font-style: italic; border-bottom: 1px solid whitesmoke; margin: 10px 10px }
 .entity table {  }
 .entity table tbody tr td:nth-child(1) { font-weight: bold; text-decoration: underline }
