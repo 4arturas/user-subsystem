@@ -12,7 +12,8 @@ app.get('/api/clients', async (req, res) =>
 
 app.get('/api/clients/client', async (req, res) =>
 {
-    const jSonClient = await model.get_Client(1);
+    const id = req.query.id;
+    const jSonClient = await model.get_Client( id );
     console.log( jSonClient );
     res.json( jSonClient );
 });
