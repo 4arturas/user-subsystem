@@ -15,6 +15,7 @@ import Users from "./components/Users";
 import Roles from "./components/Roles";
 import Clients from "./components/Clients";
 import Client from "./components/Client";
+import Organization from "./components/Organization";
 
 function App()
 {
@@ -65,6 +66,9 @@ function App()
 
                     <Route exact path="/clients/client">
                         <Client/>
+                    </Route>
+                    <Route exact path="/organizations/organization">
+                        <Organization/>
                     </Route>
                 </Switch>
             </div>
