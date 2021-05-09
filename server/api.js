@@ -17,4 +17,11 @@ app.get('/api/roles', async (req, res) =>
     res.json( jSonRoles );
 });
 
+app.get('/api/users', async (req, res) =>
+{
+    const jSonUsers = await model.get_Users();
+    console.log( jSonUsers );
+    res.json( jSonUsers );
+});
+
 module.exports = app;
