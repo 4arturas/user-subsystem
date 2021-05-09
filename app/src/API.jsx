@@ -14,6 +14,10 @@ class API
     {
         return get_Data( url + 'clients' );
     }
+    get_Client(id)
+    {
+        return get_Data( url + 'clients/client?='+id );
+    }
     get_Organizations()
     {
         return get_Data( url + 'organizations' );
