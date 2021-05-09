@@ -126,6 +126,15 @@ async function get_Roles()
     return jSonArr;
 }
 
+async function get_Role( id )
+{
+    const res = await pool.query('SELECT ROW_TO_JSON(r) FROM roles as r where r.role_id='+id);
+    console.log( res.rows );
+    if ( res.rows.length == null )
+        return {};
+    return res.rows[0].row_to_json;
+}
+
 module.exports = {
     hello_World,
     get_Clients,
@@ -134,5 +143,6 @@ module.exports = {
     get_Organization,
     get_Users,
     get_User,
-    get_Roles
+    get_Roles,
+    get_Role
 };
