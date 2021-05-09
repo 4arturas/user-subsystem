@@ -66,6 +66,15 @@ async function get_Organizations()
     return jSonArr;
 }
 
+async function get_Organization( id )
+{
+    const res = await pool.query('SELECT ROW_TO_JSON(o) FROM organizations as o where o.org_id='+id);
+    console.log( res.rows );
+    if ( res.rows.length == null )
+        return {};
+    return res.rows[0].row_to_json;
+}
+
 async function get_Roles()
 {
     const jSonArr = [];
@@ -113,6 +122,7 @@ module.exports = {
     get_Clients,
     get_Client,
     get_Organizations,
+    get_Organization,
     get_Roles,
     get_Users
 };
