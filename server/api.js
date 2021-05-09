@@ -3,6 +3,13 @@ const app       = express.Router();
 
 const model     = require("./model");
 
+app.get('/api/clients', async (req, res) =>
+{
+    const jSonClients = await model.get_Clients();
+    console.log( jSonClients );
+    res.json( jSonClients );
+});
+
 app.get('/api/organizations', async (req, res) =>
 {
     const jSonOrganizations = await model.get_Organizations();
