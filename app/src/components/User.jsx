@@ -2,15 +2,16 @@ import React from "react";
 import {Paper} from "@material-ui/core";
 import API from "../API";
 import './entity.css'
+import Users from "./Users";
+import Roles from "./Roles";
 
 function User()
 {
     const [user, setUser] = React.useState(null);
     const query = new URLSearchParams(window.location.search);
+    const id = query.get('id');
     React.useEffect(async ()=>
     {
-        const id = query.get('id');
-
         const data = await API.get_User( id );
         setUser( data );
         console.log( data );
@@ -19,6 +20,7 @@ function User()
     return (
         <div>
             {user===null ? <div>Loading...</div> :
+                <div>
             <Paper>
                 <div className="entity">
                 <h1>User</h1>
@@ -44,6 +46,11 @@ function User()
                 </table>
                 </div>
             </Paper>
+                    Following roles are assigned to this user:
+                    <div>
+                        <Roles userId={id}/>
+                    </div>
+                </div>
             }
         </div>
     );
