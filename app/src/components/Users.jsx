@@ -8,6 +8,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TablePagination from "@material-ui/core/TablePagination";
 import {makeStyles} from "@material-ui/core/styles";
 import EnhancedTableHead from "./EnhancedTableHead";
+import API from "../API";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -75,11 +76,8 @@ function Users()
 
     React.useEffect(async ()=>
     {
-        const request = await fetch( 'api/users' );
-        const data = await request.json();
-        setRows( data );
-        console.log( data );
-        // return data;
+        const organizations = await API.get_Users();
+        setRows( organizations );
     }, [] );
 
     const classes = useStyles();

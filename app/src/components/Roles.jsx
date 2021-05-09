@@ -8,6 +8,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TablePagination from "@material-ui/core/TablePagination";
 import {makeStyles} from "@material-ui/core/styles";
 import EnhancedTableHead from "./EnhancedTableHead";
+import API from "../API";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -73,10 +74,8 @@ function Roles()
 
     React.useEffect(async ()=>
     {
-        const request = await fetch( 'api/roles' );
-        const data = await request.json();
-        setRows( data );
-        console.log( data );
+        const roles = await API.get_Roles();
+        setRows( roles );
         // return data;
     }, [] );
 

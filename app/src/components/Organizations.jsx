@@ -12,6 +12,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import {makeStyles} from "@material-ui/core/styles";
 import EnhancedTableHead from "./EnhancedTableHead";
+import API from "../API";
 
 
 function AddOrganization()
@@ -123,11 +124,8 @@ function Organizations()
 
     React.useEffect(async ()=>
     {
-        const request = await fetch( 'api/organizations' );
-        const data = await request.json();
-        setRows( data );
-        console.log( data );
-        // return data;
+        const organizations = await API.get_Organizations();
+        setRows( organizations );
     }, [] );
 
     const classes = useStyles();
