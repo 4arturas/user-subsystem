@@ -37,6 +37,14 @@ async function get_Clients()
     } // end for i
     return jSonArr;
 }
+async function get_Client( id )
+{
+    const res = await pool.query('SELECT ROW_TO_JSON(c) FROM clients as c where c.client_id='+id);
+    console.log( res.rows );
+    if ( res.rows.length == null )
+        return {};
+    return res.rows[0].row_to_json;
+}
 
 async function get_Organizations()
 {
@@ -103,6 +111,7 @@ async function get_Users()
 module.exports = {
     hello_World,
     get_Clients,
+    get_Client,
     get_Organizations,
     get_Roles,
     get_Users
