@@ -10,4 +10,11 @@ app.get('/api/organizations', async (req, res) =>
     res.json( jSonOrganizations );
 });
 
+app.get('/api/roles', async (req, res) =>
+{
+    const jSonRoles = await model.get_Roles();
+    console.log( jSonRoles );
+    res.json( jSonRoles );
+});
+
 module.exports = app;
