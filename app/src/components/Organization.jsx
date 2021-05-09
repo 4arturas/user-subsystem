@@ -2,15 +2,15 @@ import React from "react";
 import {Paper} from "@material-ui/core";
 import API from "../API";
 import './entity.css'
+import Users from "./Users";
 
 function Organization()
 {
     const [organization, setOrganization] = React.useState(null);
     const query = new URLSearchParams(window.location.search);
+    const id = query.get('id');
     React.useEffect(async ()=>
     {
-        const id = query.get('id');
-
         const data = await API.get_Organization( id );
         setOrganization( data );
         console.log( data );
@@ -19,6 +19,7 @@ function Organization()
     return (
         <div>
             {organization===null ? <div>Loading...</div> :
+            <div>
             <Paper>
                 <div className="entity">
                 <h1>Organization</h1>
@@ -36,6 +37,11 @@ function Organization()
                 </table>
                 </div>
             </Paper>
+                Following users are assigned to this organization:
+                <div>
+                    <Users organizationId={id}/>
+                </div>
+            </div>
             }
         </div>
     );
