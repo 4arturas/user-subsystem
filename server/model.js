@@ -126,6 +126,36 @@ async function get_User( id )
     return res.rows[0].row_to_json;
 }
 
+async function get_UsersByOrganization( organizationId )
+{
+    const jSonArr = [];
+    const result = await pool.query({
+        rowMode: 'array',
+        text: 'select ROW_TO_JSON(v) from (\n' +
+            '                  select u.*, ou.start_date, ou.end_date\n' +
+            '                  from organizations_users ou,\n' +
+            '                       users u\n' +
+            '                  where ou.user_id = u.user_id and ou.end_date is null ' +
+            '                    and ou.org_id = '+organizationId+'\n' +
+            ') v',
+    });
+    for ( let i = 0; i < result.rows.length; i++ )
+    {
+        const r = result.rows[i][0];
+        const jSon = {
+            user_id:         r.user_id,
+            user_name:       r.user_name,
+            first_name:      r.first_name,
+            last_name:       r.last_name,
+            user_add_date:   r.user_add_date,
+            start_date:      r.start_date,
+            end_date:        r.end_date
+        };
+        jSonArr.push( jSon );
+    } // end for i
+    return jSonArr;
+}
+
 async function get_Roles()
 {
     const jSonArr = [];
@@ -164,6 +194,7 @@ module.exports = {
     get_OrganizationsByClient,
     get_Users,
     get_User,
+    get_UsersByOrganization,
     get_Roles,
     get_Role
 };
