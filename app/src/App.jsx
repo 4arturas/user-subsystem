@@ -54,7 +54,7 @@ function App()
                         <Clients/>
                     </Route>
                     <Route exact path="/organizations">
-                        <Organizations/>
+                        <Organizations clientId={null}/>
                     </Route>
                     <Route exact path="/users">
                         <Users/>

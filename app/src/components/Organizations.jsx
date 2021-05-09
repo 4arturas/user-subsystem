@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Organizations()
+function Organizations( {clientId} )
 {
 
     const [rows, setRows] = React.useState([]);
@@ -125,7 +125,12 @@ function Organizations()
 
     React.useEffect(async ()=>
     {
-        const organizations = await API.get_Organizations();
+        let organizations;
+        if ( clientId !== null )
+            organizations = await API.get_OrganizationsByClient( clientId );
+        else
+            organizations = await API.get_Organizations();
+
         setRows( organizations );
     }, [] );
 

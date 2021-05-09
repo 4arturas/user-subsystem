@@ -2,15 +2,15 @@ import React from "react";
 import {Paper} from "@material-ui/core";
 import API from "../API";
 import './entity.css'
+import Organizations from "./Organizations";
 
 function Client()
 {
     const [client, setClient] = React.useState(null);
     const query = new URLSearchParams(window.location.search);
+    const id = query.get('id');
     React.useEffect(async ()=>
     {
-        const id = query.get('id');
-
         const data = await API.get_Client( id );
         setClient( data );
         console.log( data );
@@ -34,6 +34,9 @@ function Client()
                         </tr>
                     </tbody>
                 </table>
+                </div>
+                <div>
+                    <Organizations clientId={id}/>
                 </div>
             </Paper>
             }
