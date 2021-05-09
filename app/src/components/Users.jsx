@@ -9,6 +9,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import {makeStyles} from "@material-ui/core/styles";
 import EnhancedTableHead from "./EnhancedTableHead";
 import API from "../API";
+import {NavLink} from "react-router-dom";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -143,7 +144,11 @@ function Users()
                                                 tabIndex={-1}
                                                 key={row.user_id}
                                             >
-                                                <TableCell align="left">{row.user_name}</TableCell>
+                                                <TableCell align="left">
+                                                    <NavLink to={"/users/user?id=" + row.user_id}>
+                                                        {row.user_name}
+                                                    </NavLink>
+                                                </TableCell>
                                                 <TableCell align="left">{row.first_name}</TableCell>
                                                 <TableCell align="left">{row.last_name}</TableCell>
                                                 <TableCell align="left">{row.user_add_date}</TableCell>
