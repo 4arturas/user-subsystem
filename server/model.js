@@ -42,6 +42,28 @@ async function get_Organizations()
     return jSonArr;
 }
 
+async function get_Clients()
+{
+    const jSonArr = [];
+    const client = await pool.connect();
+    const result = await client.query({
+        rowMode: 'array',
+        text: 'SELECT ROW_TO_JSON(c) FROM clients as c;',
+    });
+    for ( let i = 0; i < result.rows.length; i++ )
+    {
+        const r = result.rows[i][0];
+        const jSon = {
+            client_id:         r.client_id,
+            client_name:       r.client_name,
+            client_add_date:   r.client_add_date
+        };
+        jSonArr.push( jSon );
+    } // end for i
+    await client.end();
+    return jSonArr;
+}
+
 async function get_Roles()
 {
     const jSonArr = [];
@@ -90,6 +112,7 @@ async function get_Users()
 
 module.exports = {
     hello_World,
+    get_Clients,
     get_Organizations,
     get_Roles,
     get_Users
