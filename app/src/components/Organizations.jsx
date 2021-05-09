@@ -13,6 +13,7 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import {makeStyles} from "@material-ui/core/styles";
 import EnhancedTableHead from "./EnhancedTableHead";
 import API from "../API";
+import {NavLink} from "react-router-dom";
 
 
 function AddOrganization()
@@ -184,14 +185,17 @@ function Organizations()
                                 {stableSort(rows, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((row, index) => {
-
                                         return (
                                             <TableRow
                                                 hover
                                                 tabIndex={-1}
                                                 key={row.org_id}
                                             >
-                                                <TableCell align="left">{row.org_name}</TableCell>
+                                                <TableCell align="left">
+                                                    <NavLink to={"/organizations/organization?id=" + row.org_id}>
+                                                        {row.org_name}
+                                                    </NavLink>
+                                                </TableCell>
                                                 <TableCell align="left">{row.org_add_date}</TableCell>
                                             </TableRow>
                                         );
