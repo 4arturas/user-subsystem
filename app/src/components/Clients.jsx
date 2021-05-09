@@ -9,6 +9,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import {makeStyles} from "@material-ui/core/styles";
 import EnhancedTableHead from "./EnhancedTableHead";
 import API from "../API";
+import {NavLink} from "react-router-dom";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -135,14 +136,18 @@ function Clients()
                                 {stableSort(rows, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((row, index) => {
-
+                                        const url = "/clients/client?id=" + row.client_id;
                                         return (
                                             <TableRow
                                                 hover
                                                 tabIndex={-1}
                                                 key={row.client_id}
                                             >
-                                                <TableCell align="left">{row.client_name}</TableCell>
+                                                <TableCell align="left">
+                                                    <NavLink to={url}>
+                                                        {row.client_name}
+                                                    </NavLink>
+                                                </TableCell>
                                                 <TableCell align="left">{row.client_add_date}</TableCell>
                                             </TableRow>
                                         );
