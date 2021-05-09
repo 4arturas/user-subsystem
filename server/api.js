@@ -33,13 +33,6 @@ app.get('/api/organizations/organization', async (req, res) =>
     res.json( jSonOrganization );
 });
 
-app.get('/api/roles', async (req, res) =>
-{
-    const jSonRoles = await model.get_Roles();
-    console.log( jSonRoles );
-    res.json( jSonRoles );
-});
-
 app.get('/api/users', async (req, res) =>
 {
     const jSonUsers = await model.get_Users();
@@ -53,6 +46,13 @@ app.get('/api/users/user', async (req, res) =>
     const jSonUser = await model.get_User( id );
     console.log( jSonUser );
     res.json( jSonUser );
+});
+
+app.get('/api/roles', async (req, res) =>
+{
+    const jSonRoles = await model.get_Roles();
+    console.log( jSonRoles );
+    res.json( jSonRoles );
 });
 
 module.exports = app;
