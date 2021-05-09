@@ -56,6 +56,14 @@ app.get('/api/users/user', async (req, res) =>
     res.json( jSonUser );
 });
 
+app.get('/api/users/organization', async (req, res) =>
+{
+    const organizationId = req.query.organizationId;
+    const jSonUsers = await model.get_UsersByOrganization( organizationId );
+    console.log( jSonUsers );
+    res.json( jSonUsers );
+});
+
 app.get('/api/roles', async (req, res) =>
 {
     const jSonRoles = await model.get_Roles();
