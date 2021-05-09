@@ -30,6 +30,11 @@ class API
     {
         return get_Data( url + 'users' );
     }
+
+    get_User( id )
+    {
+        return get_Data( url + 'users/user?id='+id );
+    }
     get_Roles()
     {
         return get_Data( url + 'roles' );
