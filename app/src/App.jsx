@@ -30,6 +30,9 @@ function App()
                     <NavLink to="/home" className="header__option" activeClassName="header__option--active">
                         Home
                     </NavLink>
+                    <NavLink to="/clients" className="header__option" activeClassName="header__option--active">
+                        Clients
+                    </NavLink>
                     <NavLink to="/organizations" className="header__option" activeClassName="header__option--active">
                         Organizations
                     </NavLink>
@@ -39,13 +42,13 @@ function App()
                     <NavLink to="/roles" className="header__option" activeClassName="header__option--active">
                         Roles
                     </NavLink>
-                    <NavLink to="/clients" className="header__option" activeClassName="header__option--active">
-                        Clients
-                    </NavLink>
                 </div>
             </div>
             <div style={{padding:'30px 20px'}}>
                 <Switch>
+                    <Route exact path="/clients">
+                        <Clients/>
+                    </Route>
                     <Route exact path="/organizations">
                         <Organizations/>
                     </Route>
@@ -54,9 +57,6 @@ function App()
                     </Route>
                     <Route exact path="/roles">
                         <Roles/>
-                    </Route>
-                    <Route exact path="/clients">
-                        <Clients/>
                     </Route>
                     <Route exact path={["/","/home"]}>
                         <Home/>
