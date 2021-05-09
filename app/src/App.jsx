@@ -26,6 +26,7 @@ function App()
         <BrowserRouter>
             <div className="header" style={{height:'20px'}}>
                 <div className='header__left'>
+                    <div style={{position:"absolute", left:"100px", top:"12px", color:"#0165B2"}}>users subsystem</div>
                     <NavLink to="/">
                         <img style={{width:'90px', position: 'absolute', top:'-5px'}} src={'/img/logo.png'} alt="Logo"/>
                     </NavLink>
