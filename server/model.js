@@ -11,20 +11,17 @@ const pool = new Pool({
     port:       POSTGRESS_PORT,
     database:   POSTGRESS_DATABASE
 });
-// await pool.connect();
 
 async function hello_World()
 {
     const res = await pool.query('SELECT $1::text as message', ['Hello world!'])
     console.log(res.rows[0].message) // Hello world!
-    await pool.end()
 }
 
 async function get_Organizations()
 {
     const jSonArr = [];
-    const client = await pool.connect();
-    const result = await client.query({
+    const result = await pool.query({
         rowMode: 'array',
         text: 'SELECT ROW_TO_JSON(o) FROM organizations as o;',
     });
@@ -38,15 +35,13 @@ async function get_Organizations()
         };
         jSonArr.push( jSon );
     } // end for i
-    await client.end();
     return jSonArr;
 }
 
 async function get_Clients()
 {
     const jSonArr = [];
-    const client = await pool.connect();
-    const result = await client.query({
+    const result = await pool.query({
         rowMode: 'array',
         text: 'SELECT ROW_TO_JSON(c) FROM clients as c;',
     });
@@ -60,15 +55,13 @@ async function get_Clients()
         };
         jSonArr.push( jSon );
     } // end for i
-    await client.end();
     return jSonArr;
 }
 
 async function get_Roles()
 {
     const jSonArr = [];
-    const client = await pool.connect();
-    const result = await client.query({
+    const result = await pool.query({
         rowMode: 'array',
         text: 'SELECT ROW_TO_JSON(r) FROM roles as r;',
     });
@@ -82,15 +75,13 @@ async function get_Roles()
         };
         jSonArr.push( jSon );
     } // end for i
-    await client.end();
     return jSonArr;
 }
 
 async function get_Users()
 {
     const jSonArr = [];
-    const client = await pool.connect();
-    const result = await client.query({
+    const result = await pool.query({
         rowMode: 'array',
         text: 'SELECT ROW_TO_JSON(u) FROM users as u;',
     });
@@ -106,7 +97,6 @@ async function get_Users()
         };
         jSonArr.push( jSon );
     } // end for i
-    await client.end();
     return jSonArr;
 }
 
