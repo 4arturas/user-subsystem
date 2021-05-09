@@ -18,26 +18,6 @@ async function hello_World()
     console.log(res.rows[0].message) // Hello world!
 }
 
-async function get_Organizations()
-{
-    const jSonArr = [];
-    const result = await pool.query({
-        rowMode: 'array',
-        text: 'SELECT ROW_TO_JSON(o) FROM organizations as o;',
-    });
-    for ( let i = 0; i < result.rows.length; i++ )
-    {
-        const r = result.rows[i][0];
-        const jSon = {
-            org_id:         r.org_id,
-            org_name:       r.org_name,
-            org_add_date:   r.org_add_date
-        };
-        jSonArr.push( jSon );
-    } // end for i
-    return jSonArr;
-}
-
 async function get_Clients()
 {
     const jSonArr = [];
@@ -52,6 +32,26 @@ async function get_Clients()
             client_id:         r.client_id,
             client_name:       r.client_name,
             client_add_date:   r.client_add_date
+        };
+        jSonArr.push( jSon );
+    } // end for i
+    return jSonArr;
+}
+
+async function get_Organizations()
+{
+    const jSonArr = [];
+    const result = await pool.query({
+        rowMode: 'array',
+        text: 'SELECT ROW_TO_JSON(o) FROM organizations as o;',
+    });
+    for ( let i = 0; i < result.rows.length; i++ )
+    {
+        const r = result.rows[i][0];
+        const jSon = {
+            org_id:         r.org_id,
+            org_name:       r.org_name,
+            org_add_date:   r.org_add_date
         };
         jSonArr.push( jSon );
     } // end for i
