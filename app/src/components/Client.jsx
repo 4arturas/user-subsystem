@@ -19,26 +19,29 @@ function Client()
     return (
         <div>
             {client===null ? <div>Loading...</div> :
-            <Paper>
-                <div className="entity">
-                <h1>Client</h1>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>Client Name</td>
-                            <td>{client.client_name}</td>
-                        </tr>
-                        <tr>
-                            <td>Client Add Date</td>
-                            <td>{client.client_add_date}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                </div>
+            <div>
+                <Paper>
+                    <div className="entity">
+                    <h1>Client</h1>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Client Name</td>
+                                <td>{client.client_name}</td>
+                            </tr>
+                            <tr>
+                                <td>Client Add Date</td>
+                                <td>{client.client_add_date}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </Paper>
+                Following organizations are assigned to this client:
                 <div>
                     <Organizations clientId={id}/>
                 </div>
-            </Paper>
+            </div>
             }
         </div>
     );
