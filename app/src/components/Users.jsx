@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Users()
+function Users( { organizationId}  )
 {
 
     const [rows, setRows] = React.useState([]);
@@ -77,8 +77,12 @@ function Users()
 
     React.useEffect(async ()=>
     {
-        const organizations = await API.get_Users();
-        setRows( organizations );
+        let users;
+        if ( organizationId !== null )
+            users = await API.get_UsersByOrganization( organizationId );
+        else
+            users = await API.get_Users();
+        setRows( users );
     }, [] );
 
     const classes = useStyles();
