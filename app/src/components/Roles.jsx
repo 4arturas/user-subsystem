@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Roles()
+function Roles( { userId } )
 {
 
     const [rows, setRows] = React.useState([]);
@@ -75,7 +75,11 @@ function Roles()
 
     React.useEffect(async ()=>
     {
-        const roles = await API.get_Roles();
+        let roles;
+        if ( userId !== null )
+            roles = await API.get_RolesByUserId( userId );
+        else
+            roles = await API.get_Roles();
         setRows( roles );
         // return data;
     }, [] );
