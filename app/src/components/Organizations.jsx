@@ -11,6 +11,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableHead from "@material-ui/core/TableHead";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import {makeStyles} from "@material-ui/core/styles";
+import EnhancedTableHead from "./EnhancedTableHead";
 
 
 function AddOrganization()
@@ -87,40 +88,7 @@ const headCells = [
     { id: 'org_add_date', numeric: false, disablePadding: false, label: 'Organization Add Date' }
 ];
 
-function EnhancedTableHead(props) {
-    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
-    const createSortHandler = (property) => (event) => {
-        onRequestSort(event, property);
-    };
 
-    return (
-        <TableHead>
-            <TableRow>
-                {headCells.map((headCell) => (
-                    <TableCell
-                        style={{fontWeight:'bold'}}
-                        key={headCell.id}
-                        padding={headCell.disablePadding ? 'none' : 'default'}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                    >
-                        <TableSortLabel
-                            active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : 'asc'}
-                            onClick={createSortHandler(headCell.id)}
-                        >
-                            {headCell.label}
-                            {orderBy === headCell.id ? (
-                                <span className={classes.visuallyHidden}>
-                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                </span>
-                            ) : null}
-                        </TableSortLabel>
-                    </TableCell>
-                ))}
-            </TableRow>
-        </TableHead>
-    );
-}
 
 
 const useStyles = makeStyles((theme) => ({
@@ -212,6 +180,7 @@ function Organizations()
                                 onSelectAllClick={handleSelectAllClick}
                                 onRequestSort={handleRequestSort}
                                 rowCount={rows.length}
+                                headCells={headCells}
                             />
                             <TableBody>
                                 {stableSort(rows, getComparator(order, orderBy))
