@@ -35,9 +35,15 @@ class API
     {
         return get_Data( url + 'users/user?id='+id );
     }
+
     get_Roles()
     {
         return get_Data( url + 'roles' );
+    }
+
+    get_Role( id )
+    {
+        return get_Data( url + 'roles/role?id='+id );
     }
 }
 export default new API();
