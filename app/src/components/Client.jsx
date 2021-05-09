@@ -18,7 +18,7 @@ function Client()
 
     return (
         <div>
-            {client===null ? '<div>Loading...</div>' :
+            {client===null ? <div>Loading...</div> :
             <Paper>
                 <div className="entity">
                 <h1>Client</h1>
