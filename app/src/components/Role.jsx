@@ -21,7 +21,7 @@ function Role()
             {role===null ? <div>Loading...</div> :
             <Paper>
                 <div className="entity">
-                <h1>Organization</h1>
+                <h1>Role</h1>
                 <table>
                     <tbody>
                         <tr>
