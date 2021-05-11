@@ -10,6 +10,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import EnhancedTableHead from "./EnhancedTableHead";
 import API from "../API";
 import {NavLink} from "react-router-dom";
+import {Input} from "@material-ui/core";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -73,7 +74,8 @@ function Users( { organizationId}  )
 {
 
     const [rows, setRows] = React.useState([]);
-
+    const [rowsBackup, setRowsBackup] = React.useState([]);
+    const refSearchBox      = React.useRef();
 
     React.useEffect(async ()=>
     {
@@ -83,6 +85,7 @@ function Users( { organizationId}  )
         else
             users = await API.get_Users();
         setRows( users );
+        setRowsBackup( users );
     }, [] );
 
     const classes = useStyles();
@@ -116,10 +119,41 @@ function Users( { organizationId}  )
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+
+    const handleSearch = (event) =>
+    {
+        const searchBoxValue = event.target.value;
+        let keys;
+        if ( rows.length > 0 )
+            keys = Object.keys( rows[0] );
+        const newRows = [];
+        const regex = new RegExp(searchBoxValue, 'i');
+        for ( let i = 0; i < rowsBackup.length; i++ )
+        {
+            const row = rowsBackup[i];
+            let containsSearchFragment = false;
+            for ( let j = 0; j < keys.length; j++ )
+            {
+                const key = keys[j];
+                const value = row[key] + '';
+                if ( regex.test( value ) )
+                {
+                    containsSearchFragment = true;
+                    break;
+                } // end if
+            } // end for j
+            if ( containsSearchFragment )
+            {
+                newRows.push( row );
+            }
+        } // end for i
+        setRows( newRows );
+    }
     return (
         <div>{rows.length === 0 ? 'Loading...' :
             <div className={classes.root}>
                 <Paper className={classes.paper}>
+                    <div style={{textAlign:'center'}}><strong>Search:</strong>&nbsp;&nbsp;&nbsp;&nbsp;<Input ref={refSearchBox} onChange={handleSearch} /></div>
                     <TableContainer>
                         <Table
                             className={classes.table}
