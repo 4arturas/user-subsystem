@@ -6,7 +6,7 @@ const get_Data = async ( url ) =>
 }
 
 
-const url = 'http://localhost:4004/api/';
+const url = '/api/';
 
 class API
 {
