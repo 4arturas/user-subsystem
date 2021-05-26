@@ -10,6 +10,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import EnhancedTableHead from "./EnhancedTableHead";
 import API from "../API";
 import {NavLink} from "react-router-dom";
+import * as GTS from "./globalTableStyles"
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -42,31 +43,6 @@ const headCells = [
     { id: 'role_add_date', numeric: false, disablePadding: false, label: 'Role Add Date' }
 ];
 
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-    },
-    paper: {
-        width: '100%',
-        marginBottom: theme.spacing(2),
-    },
-    table: {
-        minWidth: 750,
-    },
-    visuallyHidden: {
-        border: 0,
-        clip: 'rect(0 0 0 0)',
-        height: 1,
-        margin: -1,
-        overflow: 'hidden',
-        padding: 0,
-        position: 'absolute',
-        top: 20,
-        width: 1,
-    },
-}));
-
 function Roles( { userId } )
 {
 
@@ -84,7 +60,7 @@ function Roles( { userId } )
         // return data;
     }, [] );
 
-    const classes = useStyles();
+    const classes = GTS.useGlobalTableStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected, setSelected] = React.useState([]);

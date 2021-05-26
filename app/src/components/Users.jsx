@@ -11,6 +11,7 @@ import EnhancedTableHead from "./EnhancedTableHead";
 import API from "../API";
 import {NavLink} from "react-router-dom";
 import {Input} from "@material-ui/core";
+import * as GTS from "./globalTableStyles"
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -45,34 +46,8 @@ const headCells = [
     { id: 'user_add_date', numeric: false, disablePadding: false, label: 'User Add Date' }
 ];
 
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-    },
-    paper: {
-        width: '100%',
-        marginBottom: theme.spacing(2),
-    },
-    table: {
-        minWidth: 750,
-    },
-    visuallyHidden: {
-        border: 0,
-        clip: 'rect(0 0 0 0)',
-        height: 1,
-        margin: -1,
-        overflow: 'hidden',
-        padding: 0,
-        position: 'absolute',
-        top: 20,
-        width: 1,
-    },
-}));
-
 function Users( { organizationId}  )
 {
-
     const [rows, setRows] = React.useState([]);
     const [rowsBackup, setRowsBackup] = React.useState([]);
     const refSearchBox      = React.useRef();
@@ -88,7 +63,7 @@ function Users( { organizationId}  )
         setRowsBackup( users );
     }, [] );
 
-    const classes = useStyles();
+    const classes = GTS.useGlobalTableStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected, setSelected] = React.useState([]);
@@ -177,7 +152,7 @@ function Users( { organizationId}  )
                                     .map((row, index) => {
 
                                         return (
-                                            <TableRow
+                                            <TableRow hidden={true}
                                                 hover
                                                 tabIndex={-1}
                                                 key={row.user_id}
