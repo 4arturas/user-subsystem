@@ -1,26 +1,25 @@
+const g_Url = '/api/';
+
 const get_Data = async ( url ) =>
 {
-    const request = await fetch( url );
+    const request = await fetch( g_Url + url );
     const data = await request.json();
     return data;
 }
-
-
-const url = '/api/';
 
 class API
 {
     get_Clients()
     {
-        return get_Data( url + 'clients' );
+        return get_Data( 'clients' );
     }
     get_Client( id )
     {
-        return get_Data( url + 'clients/client?id='+id );
+        return get_Data( 'clients/client?id='+id );
     }
     get_Organizations()
     {
-        return get_Data( url + 'organizations' );
+        return get_Data( 'organizations' );
     }
     get_Organization( id )
     {
@@ -28,34 +27,34 @@ class API
     }
     get_OrganizationsByClient( clientId )
     {
-        return get_Data( url + 'organizations/client?clientId='+clientId );
+        return get_Data( 'organizations/client?clientId='+clientId );
     }
     get_Users()
     {
-        return get_Data( url + 'users' );
+        return get_Data( 'users' );
     }
 
     get_User( id )
     {
-        return get_Data( url + 'users/user?id='+id );
+        return get_Data( 'users/user?id='+id );
     }
     get_UsersByOrganization( organizationId )
     {
-        return get_Data( url + 'users/organization?organizationId='+organizationId );
+        return get_Data( 'users/organization?organizationId='+organizationId );
     }
     get_Roles()
     {
-        return get_Data( url + 'roles' );
+        return get_Data( 'roles' );
     }
 
     get_Role( id )
     {
-        return get_Data( url + 'roles/role?id='+id );
+        return get_Data( 'roles/role?id='+id );
     }
 
     get_RolesByUserId( userId )
     {
-        return get_Data( url + 'roles/user?userId='+userId );
+        return get_Data( 'roles/user?userId='+userId );
     }
 }
 export default new API();
