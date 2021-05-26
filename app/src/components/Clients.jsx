@@ -10,33 +10,8 @@ import {makeStyles} from "@material-ui/core/styles";
 import EnhancedTableHead from "./EnhancedTableHead";
 import API from "../API";
 import {NavLink} from "react-router-dom";
+import * as GS from "./globalTableStuff"
 import * as GTS from "./globalTableStyles"
-
-function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
-    }
-    return 0;
-}
-
-function getComparator(order, orderBy) {
-    return order === 'desc'
-        ? (a, b) => descendingComparator(a, b, orderBy)
-        : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-        const order = comparator(a[0], b[0]);
-        if (order !== 0) return order;
-        return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-}
 
 const headCells = [
     { id: 'client_name', numeric: false, disablePadding: false, label: 'Client Name' },
@@ -47,7 +22,6 @@ function Clients()
 {
 
     const [rows, setRows] = React.useState([]);
-
 
     React.useEffect(async ()=>
     {
@@ -78,7 +52,6 @@ function Clients()
         setSelected([]);
     };
 
-
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -87,6 +60,7 @@ function Clients()
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+
     return (
         <div>{rows.length === 0 ? 'Loading...' :
             <div className={classes.root}>
@@ -109,7 +83,7 @@ function Clients()
                                 headCells={headCells}
                             />
                             <TableBody>
-                                {stableSort(rows, getComparator(order, orderBy))
+                                {GS.stableSort(rows, GS.getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((row, index) => {
                                         const url = "/clients/client?id=" + row.client_id;
