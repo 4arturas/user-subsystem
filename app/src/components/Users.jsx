@@ -12,7 +12,6 @@ import API from "../API";
 import {NavLink} from "react-router-dom";
 import {Input} from "@material-ui/core";
 import * as GS from "./globalTableStuff"
-import * as GTS from "./globalTableStyles"
 
 const headCells = [
     { id: 'user_name', numeric: false, disablePadding: false, label: 'User Name' },
@@ -38,7 +37,7 @@ function Users( { organizationId}  )
         setRowsBackup( users );
     }, [] );
 
-    const classes = GTS.useGlobalTableStyles();
+    const classes = GS.useGlobalTableStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected, setSelected] = React.useState([]);

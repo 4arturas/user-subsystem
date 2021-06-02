@@ -11,7 +11,6 @@ import EnhancedTableHead from "./EnhancedTableHead";
 import API from "../API";
 import {NavLink} from "react-router-dom";
 import * as GS from "./globalTableStuff"
-import * as GTS from "./globalTableStyles"
 
 const headCells = [
     { id: 'client_name', numeric: false, disablePadding: false, label: 'Client Name' },
@@ -30,7 +29,7 @@ function Clients()
         // return data;
     }, [] );
 
-    const classes = GTS.useGlobalTableStyles();
+    const classes = GS.useGlobalTableStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected, setSelected] = React.useState([]);
