@@ -10,8 +10,9 @@ import {makeStyles} from "@material-ui/core/styles";
 import EnhancedTableHead from "./EnhancedTableHead";
 import API from "../API";
 import {NavLink} from "react-router-dom";
-import {Input} from "@material-ui/core";
+import {Input, Typography} from "@material-ui/core";
 import * as GS from "./globalTableStuff"
+import * as ReactDOM from "react-dom";
 
 const headCells = [
     { id: 'user_name', numeric: false, disablePadding: false, label: 'User Name' },
@@ -44,6 +45,8 @@ function Users( { organizationId}  )
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+    const [searchValue, setSearchValue] = React.useState('');
+
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -72,6 +75,7 @@ function Users( { organizationId}  )
     const handleSearch = (event) =>
     {
         const searchBoxValue = event.target.value;
+        setSearchValue( searchBoxValue );
         let keys;
         if ( rows.length > 0 )
             keys = Object.keys( rows[0] );
@@ -97,6 +101,30 @@ function Users( { organizationId}  )
             }
         } // end for i
         setRows( newRows );
+    }
+    function SearchReplace( {value, markValue} )
+    {
+        const begin = value.toLowerCase().indexOf( markValue.toLowerCase() );
+        if ( begin === -1 )
+        {
+            return value;
+        }
+        else
+        {
+            const end = begin + markValue.length;
+            let marked = ''
+            let i;
+            for ( i = 0; i < begin; i++ )
+                marked += value.charAt( i );
+            marked += '<span style="background-color: yellow; padding-top: 5px">';
+            for ( i = begin; i < end; i++ )
+                marked += value.charAt( i );
+            marked += '</span>';
+            for ( i = end; i < value.length; i++ )
+                marked += value.charAt(i);
+
+            return <Typography dangerouslySetInnerHTML={{ __html: marked }}/>;
+        }
     }
     return (
         <div>{rows.length === 0 ? 'Loading...' :
@@ -133,12 +161,12 @@ function Users( { organizationId}  )
                                             >
                                                 <TableCell align="left">
                                                     <NavLink to={"/users/user?id=" + row.user_id}>
-                                                        {row.user_name}
+                                                        <SearchReplace value={row.user_name} markValue={searchValue}/>
                                                     </NavLink>
                                                 </TableCell>
-                                                <TableCell align="left">{row.first_name}</TableCell>
-                                                <TableCell align="left">{row.last_name}</TableCell>
-                                                <TableCell align="left">{row.user_add_date}</TableCell>
+                                                <TableCell align="left"><SearchReplace value={row.first_name} markValue={searchValue}/></TableCell>
+                                                <TableCell align="left"><SearchReplace value={row.last_name} markValue={searchValue}/></TableCell>
+                                                <TableCell align="left"><SearchReplace value={row.user_add_date} markValue={searchValue}/></TableCell>
                                             </TableRow>
                                         );
                                     })}
