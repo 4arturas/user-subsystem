@@ -62,59 +62,56 @@ function Clients()
 
     return (
         <div>{rows.length === 0 ? 'Loading...' :
-            <div className={classes.root}>
-                <Paper className={classes.paper}>
-                    <TableContainer>
-                        <Table
-                            className={classes.table}
-                            aria-labelledby="tableTitle"
-                            size={'small'}
-                            aria-label="enhanced table"
-                        >
-                            <EnhancedTableHead
-                                classes={classes}
-                                numSelected={selected.length}
-                                order={order}
-                                orderBy={orderBy}
-                                onSelectAllClick={handleSelectAllClick}
-                                onRequestSort={handleRequestSort}
-                                rowCount={rows.length}
-                                headCells={headCells}
-                            />
-                            <TableBody>
-                                {GS.stableSort(rows, GS.getComparator(order, orderBy))
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((row, index) => {
-                                        const url = "/clients/client?id=" + row.client_id;
-                                        return (
-                                            <TableRow
-                                                hover
-                                                tabIndex={-1}
-                                                key={row.client_id}
-                                            >
-                                                <TableCell align="left">
-                                                    <NavLink to={url}>
-                                                        {row.client_name}
-                                                    </NavLink>
-                                                </TableCell>
-                                                <TableCell align="left">{row.client_add_date}</TableCell>
-                                            </TableRow>
-                                        );
-                                    })}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        component="div"
-                        count={rows.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onChangePage={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
-                    />
-                </Paper>
-            </div>
+            <Paper>
+                <TableContainer>
+                    <Table
+                        aria-labelledby="tableTitle"
+                        size={'small'}
+                        aria-label="enhanced table"
+                    >
+                        <EnhancedTableHead
+                            classes={classes}
+                            numSelected={selected.length}
+                            order={order}
+                            orderBy={orderBy}
+                            onSelectAllClick={handleSelectAllClick}
+                            onRequestSort={handleRequestSort}
+                            rowCount={rows.length}
+                            headCells={headCells}
+                        />
+                        <TableBody>
+                            {GS.stableSort(rows, GS.getComparator(order, orderBy))
+                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                .map((row, index) => {
+                                    const url = "/clients/client?id=" + row.client_id;
+                                    return (
+                                        <TableRow
+                                            hover
+                                            tabIndex={-1}
+                                            key={row.client_id}
+                                        >
+                                            <TableCell align="left">
+                                                <NavLink to={url}>
+                                                    {row.client_name}
+                                                </NavLink>
+                                            </TableCell>
+                                            <TableCell align="left">{row.client_add_date}</TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                />
+            </Paper>
         }</div>
     );
 }

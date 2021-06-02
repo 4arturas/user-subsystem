@@ -67,59 +67,56 @@ function Roles( { userId } )
     };
     return (
         <div>{rows.length === 0 ? 'Loading...' :
-            <div className={classes.root}>
-                <Paper className={classes.paper}>
-                    <TableContainer>
-                        <Table
-                            className={classes.table}
-                            aria-labelledby="tableTitle"
-                            size={'small'}
-                            aria-label="enhanced table"
-                        >
-                            <EnhancedTableHead
-                                classes={classes}
-                                numSelected={selected.length}
-                                order={order}
-                                orderBy={orderBy}
-                                onSelectAllClick={handleSelectAllClick}
-                                onRequestSort={handleRequestSort}
-                                rowCount={rows.length}
-                                headCells={headCells}
-                            />
-                            <TableBody>
-                                {GS.stableSort(rows, GS.getComparator(order, orderBy))
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((row, index) => {
+            <Paper>
+                <TableContainer>
+                    <Table
+                        aria-labelledby="tableTitle"
+                        size={'small'}
+                        aria-label="enhanced table"
+                    >
+                        <EnhancedTableHead
+                            classes={classes}
+                            numSelected={selected.length}
+                            order={order}
+                            orderBy={orderBy}
+                            onSelectAllClick={handleSelectAllClick}
+                            onRequestSort={handleRequestSort}
+                            rowCount={rows.length}
+                            headCells={headCells}
+                        />
+                        <TableBody>
+                            {GS.stableSort(rows, GS.getComparator(order, orderBy))
+                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                .map((row, index) => {
 
-                                        return (
-                                            <TableRow
-                                                hover
-                                                tabIndex={-1}
-                                                key={row.role_id}
-                                            >
-                                                <TableCell align="left">
-                                                    <NavLink to={"/roles/role?id=" + row.role_id}>
-                                                        {row.role_name}
-                                                    </NavLink>
-                                                </TableCell>
-                                                <TableCell align="left">{row.role_add_date}</TableCell>
-                                            </TableRow>
-                                        );
-                                    })}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        component="div"
-                        count={rows.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onChangePage={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
-                    />
-                </Paper>
-            </div>
+                                    return (
+                                        <TableRow
+                                            hover
+                                            tabIndex={-1}
+                                            key={row.role_id}
+                                        >
+                                            <TableCell align="left">
+                                                <NavLink to={"/roles/role?id=" + row.role_id}>
+                                                    {row.role_name}
+                                                </NavLink>
+                                            </TableCell>
+                                            <TableCell align="left">{row.role_add_date}</TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                />
+            </Paper>
         }</div>
     );
 }

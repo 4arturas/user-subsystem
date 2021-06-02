@@ -126,62 +126,59 @@ function Users( { organizationId}  )
     }
     return (
         <div>{rows.length === 0 ? 'Loading...' :
-            <div className={classes.root}>
-                <Paper className={classes.paper}>
-                    <div style={{textAlign:'center'}}><strong>Search:</strong>&nbsp;&nbsp;&nbsp;&nbsp;<Input ref={refSearchBox} onChange={handleSearch} /></div>
-                    <TableContainer>
-                        <Table
-                            className={classes.table}
-                            aria-labelledby="tableTitle"
-                            size={'small'}
-                            aria-label="enhanced table"
-                        >
-                            <EnhancedTableHead
-                                classes={classes}
-                                numSelected={selected.length}
-                                order={order}
-                                orderBy={orderBy}
-                                onSelectAllClick={handleSelectAllClick}
-                                onRequestSort={handleRequestSort}
-                                rowCount={rows.length}
-                                headCells={headCells}
-                            />
-                            <TableBody>
-                                {GS.stableSort(rows, GS.getComparator(order, orderBy))
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((row, index) => {
+            <Paper>
+                <div style={{textAlign:'center'}}><strong>Search:</strong>&nbsp;&nbsp;&nbsp;&nbsp;<Input ref={refSearchBox} onChange={handleSearch} /></div>
+                <TableContainer>
+                    <Table
+                        aria-labelledby="tableTitle"
+                        size={'small'}
+                        aria-label="enhanced table"
+                    >
+                        <EnhancedTableHead
+                            classes={classes}
+                            numSelected={selected.length}
+                            order={order}
+                            orderBy={orderBy}
+                            onSelectAllClick={handleSelectAllClick}
+                            onRequestSort={handleRequestSort}
+                            rowCount={rows.length}
+                            headCells={headCells}
+                        />
+                        <TableBody>
+                            {GS.stableSort(rows, GS.getComparator(order, orderBy))
+                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                .map((row, index) => {
 
-                                        return (
-                                            <TableRow hidden={true}
-                                                hover
-                                                tabIndex={-1}
-                                                key={row.user_id}
-                                            >
-                                                <TableCell align="left">
-                                                    <NavLink to={"/users/user?id=" + row.user_id}>
-                                                        <SearchReplace value={row.user_name} markValue={searchValue}/>
-                                                    </NavLink>
-                                                </TableCell>
-                                                <TableCell align="left"><SearchReplace value={row.first_name} markValue={searchValue}/></TableCell>
-                                                <TableCell align="left"><SearchReplace value={row.last_name} markValue={searchValue}/></TableCell>
-                                                <TableCell align="left"><SearchReplace value={row.user_add_date} markValue={searchValue}/></TableCell>
-                                            </TableRow>
-                                        );
-                                    })}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        component="div"
-                        count={rows.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onChangePage={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
-                    />
-                </Paper>
-            </div>
+                                    return (
+                                        <TableRow hidden={true}
+                                            hover
+                                            tabIndex={-1}
+                                            key={row.user_id}
+                                        >
+                                            <TableCell align="left">
+                                                <NavLink to={"/users/user?id=" + row.user_id}>
+                                                    <SearchReplace value={row.user_name} markValue={searchValue}/>
+                                                </NavLink>
+                                            </TableCell>
+                                            <TableCell align="left"><SearchReplace value={row.first_name} markValue={searchValue}/></TableCell>
+                                            <TableCell align="left"><SearchReplace value={row.last_name} markValue={searchValue}/></TableCell>
+                                            <TableCell align="left"><SearchReplace value={row.user_add_date} markValue={searchValue}/></TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                />
+            </Paper>
         }</div>
     );
 }
