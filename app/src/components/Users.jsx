@@ -6,13 +6,11 @@ import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TablePagination from "@material-ui/core/TablePagination";
-import {makeStyles} from "@material-ui/core/styles";
 import EnhancedTableHead from "./EnhancedTableHead";
 import API from "../API";
 import {NavLink} from "react-router-dom";
 import {Input, Typography} from "@material-ui/core";
 import * as GS from "./globalTableStuff"
-import * as ReactDOM from "react-dom";
 
 const headCells = [
     { id: 'user_name', numeric: false, disablePadding: false, label: 'User Name' },
