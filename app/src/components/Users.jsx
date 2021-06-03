@@ -9,7 +9,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import EnhancedTableHead from "./EnhancedTableHead";
 import API from "../API";
 import {NavLink} from "react-router-dom";
-import {Input, Typography} from "@material-ui/core";
+import {Input, LinearProgress, Typography} from "@material-ui/core";
 import * as GS from "./globalTableStuff"
 
 const headCells = [
@@ -21,9 +21,10 @@ const headCells = [
 
 function Users( { organizationId}  )
 {
-    const [rows, setRows] = React.useState([]);
+    const [rows, setRows] = React.useState(null);
     const [rowsBackup, setRowsBackup] = React.useState([]);
     const refSearchBox      = React.useRef();
+    const [noDataFound, setNoDataFound] = React.useState( false ); // this value is needed because if by search criteria we have 0 rows, weird error is received for which I have no explanation, so this value is needed as workaround
 
     React.useEffect(async ()=>
     {
@@ -98,7 +99,15 @@ function Users( { organizationId}  )
                 newRows.push( row );
             }
         } // end for i
-        setRows( newRows );
+        if ( newRows.length === 0 )
+        {
+            setNoDataFound( true );
+        }
+        else
+        {
+            setNoDataFound( false );
+            setRows( newRows );
+        }
     }
     function SearchReplace( {value, markValue} )
     {
@@ -125,9 +134,12 @@ function Users( { organizationId}  )
         }
     }
     return (
-        <div>{rows.length === 0 ? 'Loading...' :
+        <div>
             <Paper>
                 <div style={{textAlign:'center'}}><strong>Search:</strong>&nbsp;&nbsp;&nbsp;&nbsp;<Input ref={refSearchBox} onChange={handleSearch} /></div>
+                { rows === null ? <LinearProgress /> :
+                    noDataFound ? <div>No data found by search criteria</div> :
+                <div>
                 <TableContainer>
                     <Table
                         aria-labelledby="tableTitle"
@@ -178,8 +190,10 @@ function Users( { organizationId}  )
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
+                </div>
+                }
             </Paper>
-        }</div>
+        </div>
     );
 }
 
