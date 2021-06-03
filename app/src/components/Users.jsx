@@ -21,10 +21,10 @@ const headCells = [
 
 function Users( { organizationId}  )
 {
-    const [rows, setRows] = React.useState(null);
-    const [rowsBackup, setRowsBackup] = React.useState([]);
-    const refSearchBox      = React.useRef();
-    const [noDataFound, setNoDataFound] = React.useState( false ); // this value is needed because if by search criteria we have 0 rows, weird error is received for which I have no explanation, so this value is needed as workaround
+    const [rows, setRows]                   = React.useState(null);
+    const [rowsBackup, setRowsBackup]       = React.useState([]);
+    const refSearchBox                      = React.useRef();
+    const [noDataFound, setNoDataFound]     = React.useState( false ); // this value is needed because if by search criteria we have 0 rows, weird error is received for which I have no explanation, so this value is needed as workaround
 
     React.useEffect(async ()=>
     {
@@ -37,14 +37,14 @@ function Users( { organizationId}  )
         setRowsBackup( users );
     }, [] );
 
-    const classes = GS.useGlobalTableStyles();
-    const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('user_name');
-    const [selected, setSelected] = React.useState([]);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const classes                           = GS.useGlobalTableStyles();
+    const [order, setOrder]                 = React.useState('asc');
+    const [orderBy, setOrderBy]             = React.useState('user_name');
+    const [selected, setSelected]           = React.useState([]);
+    const [page, setPage]                   = React.useState(0);
+    const [rowsPerPage, setRowsPerPage]     = React.useState(10);
 
-    const [searchValue, setSearchValue] = React.useState('');
+    const [searchValue, setSearchValue]     = React.useState('');
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
