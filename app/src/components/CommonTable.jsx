@@ -1,5 +1,4 @@
 import React from "react";
-import * as GS from "./globalTableStuff";
 import Paper from "@material-ui/core/Paper";
 import {Input, LinearProgress} from "@material-ui/core";
 import TableContainer from "@material-ui/core/TableContainer";
