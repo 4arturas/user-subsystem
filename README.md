@@ -12,6 +12,8 @@ cd app
 npm run build
 ````
 
+navigate to [http://localhost:4004](http://localhost:4004)
+
 ## Minikube
 ```sh
 minikube config set driver docker
