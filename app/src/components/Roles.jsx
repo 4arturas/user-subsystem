@@ -5,9 +5,11 @@ import API from "../API";
 import {NavLink} from "react-router-dom";
 import SearchReplace from "./SearchReplace";
 import CommonTable from "./CommonTable";
+import * as GB from "../global";
 
 function RolesRow( {row, searchValue} )
 {
+    const role_add_date = GB.format_Date1(row.role_add_date);
     return (
         <TableRow
             hover
@@ -17,7 +19,7 @@ function RolesRow( {row, searchValue} )
             <TableCell align="left">
                 <NavLink to={"/roles/role?id=" + row.role_id}><SearchReplace value={row.role_name} markValue={searchValue}/></NavLink>
             </TableCell>
-            <TableCell align="left"><SearchReplace value={row.role_add_date} markValue={searchValue}/></TableCell>
+            <TableCell align="left"><SearchReplace value={role_add_date} markValue={searchValue}/></TableCell>
         </TableRow>
     );
 }

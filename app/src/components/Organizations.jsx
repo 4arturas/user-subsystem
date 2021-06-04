@@ -13,6 +13,7 @@ import {NavLink} from "react-router-dom";
 import * as GS from "./globalTableStuff"
 import SearchReplace from "./SearchReplace";
 import CommonTable from "./CommonTable";
+import * as GB from "../global";
 
 function AddOrganization()
 {
@@ -58,6 +59,7 @@ function AddOrganization()
 
 function OrganizationsRow( {row, searchValue} )
 {
+    const org_add_date = GB.format_Date1(row.org_add_date);
     return (
         <TableRow
             hover
@@ -67,7 +69,7 @@ function OrganizationsRow( {row, searchValue} )
             <TableCell align="left">
                 <NavLink to={"/organizations/organization?id=" + row.org_id}><SearchReplace value={row.org_name} markValue={searchValue}/></NavLink>
             </TableCell>
-            <TableCell align="left"><SearchReplace value={row.org_add_date} markValue={searchValue}/></TableCell>
+            <TableCell align="left"><SearchReplace value={org_add_date} markValue={searchValue}/></TableCell>
         </TableRow>
     );
 }

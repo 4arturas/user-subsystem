@@ -5,10 +5,13 @@ import API from "../API";
 import {NavLink} from "react-router-dom";
 import CommonTable from "./CommonTable";
 import SearchReplace from "./SearchReplace";
+import * as GB from "../global";
 
 function UserRow( {row, searchValue} )
 {
+    const user_add_date = GB.format_Date1(row.user_add_date);
     return (
+
         <TableRow hidden={true}
                   hover
                   tabIndex={-1}
@@ -21,7 +24,7 @@ function UserRow( {row, searchValue} )
             </TableCell>
             <TableCell align="left"><SearchReplace value={row.first_name} markValue={searchValue}/></TableCell>
             <TableCell align="left"><SearchReplace value={row.last_name} markValue={searchValue}/></TableCell>
-            <TableCell align="left"><SearchReplace value={row.user_add_date} markValue={searchValue}/></TableCell>
+            <TableCell align="left"><SearchReplace value={user_add_date} markValue={searchValue}/></TableCell>
         </TableRow>
     );
 }
