@@ -13,7 +13,6 @@ function Client()
     {
         const data = await API.get_Client( id );
         setClient( data );
-        console.log( data );
     }, [] );
 
     return (
