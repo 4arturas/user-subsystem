@@ -11,6 +11,8 @@ import EnhancedTableHead from "./EnhancedTableHead";
 import API from "../API";
 import {NavLink} from "react-router-dom";
 import * as GS from "./globalTableStuff"
+import SearchReplace from "./SearchReplace";
+import CommonTable from "./CommonTable";
 
 function AddOrganization()
 {
@@ -54,17 +56,30 @@ function AddOrganization()
     );
 }
 
-const headCells = [
-    { id: 'org_name', numeric: false, disablePadding: false, label: 'Organization Name' },
-    { id: 'org_add_date', numeric: false, disablePadding: false, label: 'Organization Add Date' }
-];
+function OrganizationsRow( {row, searchValue} )
+{
+    return (
+        <TableRow
+            hover
+            tabIndex={-1}
+            key={row.org_id}
+        >
+            <TableCell align="left">
+                <NavLink to={"/organizations/organization?id=" + row.org_id}><SearchReplace value={row.org_name} markValue={searchValue}/></NavLink>
+            </TableCell>
+            <TableCell align="left"><SearchReplace value={row.org_add_date} markValue={searchValue}/></TableCell>
+        </TableRow>
+    );
+}
 
 function Organizations( {clientId} )
 {
+    const headCells = [
+        { id: 'org_name', numeric: false, disablePadding: false, label: 'Organization Name' },
+        { id: 'org_add_date', numeric: false, disablePadding: false, label: 'Organization Add Date' }
+    ];
 
-    const [rows, setRows] = React.useState([]);
-
-
+    const [data, setData] = React.useState( null );
     React.useEffect(async ()=>
     {
         let organizations;
@@ -73,92 +88,11 @@ function Organizations( {clientId} )
         else
             organizations = await API.get_Organizations();
 
-        setRows( organizations );
+        setData( organizations );
     }, [] );
 
-    const classes = GS.useGlobalTableStyles();
-    const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('org_name');
-    const [selected, setSelected] = React.useState([]);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-    const handleRequestSort = (event, property) => {
-        const isAsc = orderBy === property && order === 'asc';
-        setOrder(isAsc ? 'desc' : 'asc');
-        setOrderBy(property);
-    };
-
-    const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelecteds = rows.map((n) => n.name);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
-    };
-
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
     return (
-        <div>{rows.length === 0 ? 'Loading...' :
-            <Paper>
-                <TableContainer>
-                    <Table
-                        aria-labelledby="tableTitle"
-                        size={'small'}
-                        aria-label="enhanced table"
-                    >
-                        <EnhancedTableHead
-                            classes={classes}
-                            numSelected={selected.length}
-                            order={order}
-                            orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
-                            onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
-                            headCells={headCells}
-                        />
-                        <TableBody>
-                            {GS.stableSort(rows, GS.getComparator(order, orderBy))
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
-                                    return (
-                                        <TableRow
-                                            hover
-                                            tabIndex={-1}
-                                            key={row.org_id}
-                                        >
-                                            <TableCell align="left">
-                                                <NavLink to={"/organizations/organization?id=" + row.org_id}>
-                                                    {row.org_name}
-                                                </NavLink>
-                                            </TableCell>
-                                            <TableCell align="left">{row.org_add_date}</TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                />
-            </Paper>
-        }</div>
+        <div>{ !data ? <></> : <CommonTable headCells={headCells} data={ data } RowComponent={ OrganizationsRow } />}</div>
     );
 }
 
