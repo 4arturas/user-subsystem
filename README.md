@@ -1,5 +1,17 @@
 # Users subsystem
 
+## Developing on localhost
+### Start backend
+```sh
+cd server
+node server.js
+````
+### Rebuild frontend
+```sh
+cd app
+npm run build
+````
+
 ## Minikube
 ````
 minikube config set driver docker
