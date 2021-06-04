@@ -23,7 +23,7 @@ class API
     }
     get_Organization( id )
     {
-        return get_Data( url + 'organizations/organization?id='+id );
+        return get_Data( 'organizations/organization?id='+id );
     }
     get_OrganizationsByClient( clientId )
     {
