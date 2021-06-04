@@ -3,6 +3,7 @@ import {Paper} from "@material-ui/core";
 import API from "../API";
 import './entity.css'
 import Organizations from "./Organizations";
+import * as GB from "../global";
 
 function Client()
 {
@@ -30,7 +31,7 @@ function Client()
                             </tr>
                             <tr>
                                 <td>Client Add Date</td>
-                                <td>{client.client_add_date}</td>
+                                <td>{GB.format_Date1(client.client_add_date)}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -4,6 +4,7 @@ import API from "../API";
 import './entity.css'
 import Users from "./Users";
 import Roles from "./Roles";
+import * as GB from "../global";
 
 function User()
 {
@@ -40,7 +41,7 @@ function User()
                         </tr>
                         <tr>
                             <td>User Add Date</td>
-                            <td>{user.user_add_date}</td>
+                            <td>{GB.format_Date1(user.user_add_date)}</td>
                         </tr>
                     </tbody>
                 </table>

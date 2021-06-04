@@ -3,6 +3,7 @@ import {Paper} from "@material-ui/core";
 import API from "../API";
 import './entity.css'
 import Users from "./Users";
+import * as GB from "../global";
 
 function Organization()
 {
@@ -31,7 +32,7 @@ function Organization()
                         </tr>
                         <tr>
                             <td>Organization Add Date</td>
-                            <td>{organization.org_add_date}</td>
+                            <td>{GB.format_Date1(organization.org_add_date)}</td>
                         </tr>
                     </tbody>
                 </table>

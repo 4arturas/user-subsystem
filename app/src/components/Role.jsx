@@ -2,6 +2,7 @@ import React from "react";
 import {Paper} from "@material-ui/core";
 import API from "../API";
 import './entity.css'
+import * as GB from "../global";
 
 function Role()
 {
@@ -30,7 +31,7 @@ function Role()
                         </tr>
                         <tr>
                             <td>Role Add Date</td>
-                            <td>{role.role_add_date}</td>
+                            <td>{GB.format_Date1(role.role_add_date)}</td>
                         </tr>
                     </tbody>
                 </table>
