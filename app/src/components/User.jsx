@@ -1,10 +1,35 @@
 import React from "react";
 import {Paper} from "@material-ui/core";
 import API from "../API";
-import './entity.css'
-import Users from "./Users";
 import Roles from "./Roles";
+import EntityBlock from "./EntityBlock";
 import * as GB from "../global";
+
+function UserChild( {user} )
+{
+    return (
+    <table>
+        <tbody>
+        <tr>
+            <td>User Name</td>
+            <td>{user.user_name}</td>
+        </tr>
+        <tr>
+            <td>First Name</td>
+            <td>{user.first_name}</td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td>{user.last_name}</td>
+        </tr>
+        <tr>
+            <td>User Add Date</td>
+            <td>{GB.format_Date1(user.user_add_date)}</td>
+        </tr>
+        </tbody>
+    </table>
+    );
+}
 
 function User()
 {
@@ -22,31 +47,7 @@ function User()
         <div>
             {user===null ? <div>Loading...</div> :
                 <div>
-            <Paper>
-                <div className="entity">
-                <h1>User</h1>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>User Name</td>
-                            <td>{user.user_name}</td>
-                        </tr>
-                        <tr>
-                            <td>First Name</td>
-                            <td>{user.first_name}</td>
-                        </tr>
-                        <tr>
-                            <td>Last Name</td>
-                            <td>{user.last_name}</td>
-                        </tr>
-                        <tr>
-                            <td>User Add Date</td>
-                            <td>{GB.format_Date1(user.user_add_date)}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                </div>
-            </Paper>
+                    <EntityBlock title='User' child={ <UserChild user={user}/> }/>
                     Following roles are assigned to this user:
                     <div>
                         <Roles userId={id}/>
