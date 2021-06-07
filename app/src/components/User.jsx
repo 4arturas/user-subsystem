@@ -39,7 +39,6 @@ function User()
     {
         const data = await API.get_User( id );
         setUser( data );
-        console.log( data );
     }, [] );
 
     return (
