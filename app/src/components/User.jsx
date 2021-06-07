@@ -1,5 +1,4 @@
 import React from "react";
-import {Paper} from "@material-ui/core";
 import API from "../API";
 import Roles from "./Roles";
 import EntityBlock from "./EntityBlock";
