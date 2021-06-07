@@ -1,5 +1,6 @@
 const express   = require('express');
 const app       = express.Router();
+app.use(express.json());
 
 const model     = require("./model");
 
@@ -62,6 +63,18 @@ app.get('/api/users/organization', async (req, res) =>
     const jSonUsers = await model.get_UsersByOrganization( organizationId );
     console.log( jSonUsers );
     res.json( jSonUsers );
+});
+
+app.post('/api/users/add', async (req, res) =>
+{
+    const jSon = req.body;
+    const user = await model.get_UserByUserName( jSon.userName );
+    if ( user !== null )
+    {
+        return res.json( { warn: 'User exists by given name' } );
+    }
+    const jSonAddResult = await model.add_NewUser( jSon.organizationId, jSon.userName, jSon.userPassword, jSon.firstName, jSon.lastName );
+    res.json( jSonAddResult );
 });
 
 app.get('/api/roles', async (req, res) =>
