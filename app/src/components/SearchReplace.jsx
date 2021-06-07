@@ -15,7 +15,7 @@ function SearchReplace( {value, markValue} )
         let i;
         for ( i = 0; i < begin; i++ )
             marked += value.charAt( i );
-        marked += '<span style="background-color: yellow; padding-top: 5px">';
+        marked += '<span style="background-color: #0165B2; color: white;">';
         for ( i = begin; i < end; i++ )
             marked += value.charAt( i );
         marked += '</span>';
