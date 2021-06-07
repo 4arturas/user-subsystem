@@ -6,6 +6,31 @@ const get_Data = async ( url ) =>
     const data = await request.json();
     return data;
 }
+const add_Data = async ( url, jSonRequest ) =>
+{
+    let jSonResponse;
+    const requestUrl = g_Url + url;
+    await fetch( requestUrl , {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin',
+        // todo: state is not really supposed to be sent here - fix on AS side needed
+        body: JSON.stringify( jSonRequest )
+    })
+        .then(res => res.json())
+        .then(json => {
+            jSonResponse = json;
+            // console.log(json)
+        } )
+        .catch(err => {
+            console.error('ERROR: ' + err);
+        });
+    await jSonResponse;
+    return jSonResponse;
+}
 
 class API
 {
@@ -41,6 +66,13 @@ class API
     get_UsersByOrganization( organizationId )
     {
         return get_Data( 'users/organization?organizationId='+organizationId );
+    }
+    add_NewUser( organizationId, userName, userPassword, firstName, lastName )
+    {
+        const jSon = { organizationId: organizationId, userName: userName, userPassword: userPassword, firstName: firstName, lastName: lastName };
+        const jSonResponse = add_Data( 'users/add', jSon );
+        console.log( jSonResponse );
+        return jSonResponse;
     }
     get_Roles()
     {
