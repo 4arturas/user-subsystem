@@ -156,6 +156,21 @@ async function get_UsersByOrganization( organizationId )
     return jSonArr;
 }
 
+async function get_UserByUserName( userName )
+{
+    const res = await pool.query(`SELECT ROW_TO_JSON(u) FROM users as u where u.user_name='${userName}'`);
+    console.log( 'rows: ' + res.rows.length );
+    if ( res.rows.length === 0 )
+        return null;
+    return res.rows[0].row_to_json;
+}
+
+async function add_NewUser( organizationId, userName, userPassword, firstName, lastName )
+{
+    // TODO: implement
+    throw new Error('Not implemented');
+}
+
 async function get_Roles()
 {
     const jSonArr = [];
@@ -217,6 +232,8 @@ module.exports = {
     get_Users,
     get_User,
     get_UsersByOrganization,
+    get_UserByUserName,
+    add_NewUser,
     get_Roles,
     get_Role,
     get_RolesByUserId
