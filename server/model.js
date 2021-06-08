@@ -167,8 +167,8 @@ async function get_UserByUserName( userName )
 
 async function add_NewUser( organizationId, userName, userPassword, firstName, lastName )
 {
-    // TODO: implement
-    throw new Error('Not implemented');
+    const res = await pool.query( `INSERT INTO users(user_name, first_name, last_name, user_add_date) VALUES('${userName}', '${firstName}', '${lastName}', now())` );
+    return { ok: 1 };
 }
 
 async function get_Roles()
