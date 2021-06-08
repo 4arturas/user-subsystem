@@ -13,10 +13,13 @@ function AddUser()
 {
     const [open, setOpen]   = React.useState(false);
     const refButton         = React.useRef();
+    const refCancelButton   = React.useRef();
     const refInfo           = React.useRef();
     const refSuccess        = React.useRef();
     const refError          = React.useRef();
     const refErrorMsg       = React.useRef();
+    const refWarning        = React.useRef();
+    const refWarningMsg     = React.useRef();
 
     const handleClickOpen = async () =>
     {
@@ -29,27 +32,60 @@ function AddUser()
     };
 
 
-    const addNewUser = () =>
+    const addNewUser = async () =>
     {
-        refButton.current.style.display     = 'none';
-        refSuccess.current.style.display    = 'none';
-        refError.current.style.display      = 'none';
-        refInfo.current.style.display       = 'none';
+        refButton.current.style.display             = 'none';
+        refCancelButton.current.style.display       = '';
+        refSuccess.current.style.display            = 'none';
+        refWarning.current.style.display            = 'none';
+        refError.current.style.display              = 'none';
+        refInfo.current.style.display               = 'none';
 
         let valid = errorUserName.length === 0 && errorUserPassword.length === 0 && errorFirstName.length === 0 && errorLastName.length === 0;
         valid = valid && userName.length > 0 && userPassword.length > 0 && firstName.length > 0 && lastName.length > 0;
-        console.log( valid );
+
         if ( valid === false )
         {
-            refButton.current.style.display     = '';
-            refError.current.style.display      = '';
-            refErrorMsg.current.innerHTML       = 'Fill all required values';
+            refButton.current.style.display         = '';
+            refCancelButton.current.style.display   = '';
+            refError.current.style.display          = '';
+            refErrorMsg.current.innerHTML           = 'Fill all required values';
             return;
         }
 
         refInfo.current.style.display       = '';
-        const jSonResponse = API.add_NewUser( 1, userName, userPassword, firstName, lastName );
-        console.log( jSonResponse );
+
+        const jSonResponse = await API.add_NewUser( 1, userName, userPassword, firstName, lastName );
+        if ( jSonResponse.hasOwnProperty('warning') )
+        {
+            refButton.current.style.display             = '';
+            refCancelButton.current.style.display       = '';
+            refSuccess.current.style.display            = 'none';
+            refWarning.current.style.display            = '';
+            refError.current.style.display              = 'none';
+            refInfo.current.style.display               = 'none';
+            refWarningMsg.current.innerHTML             = jSonResponse.warning;
+            return;
+        }
+        if ( jSonResponse.hasOwnProperty('error') )
+        {
+            refButton.current.style.display             = '';
+            refCancelButton.current.style.display       = '';
+            refSuccess.current.style.display            = 'none';
+            refWarning.current.style.display            = 'none';
+            refError.current.style.display              = '';
+            refInfo.current.style.display               = 'none';
+            refErrorMsg.current.innerHTML               = jSonResponse.error;
+            return;
+        }
+        // TODO: handle errors
+        refButton.current.style.display         = 'none';
+        refCancelButton.current.style.display   = '';
+        refSuccess.current.style.display        = '';
+        refWarning.current.style.display        = 'none';
+        refError.current.style.display          = 'none';
+        refInfo.current.style.display           = 'none';
+        refCancelButton.current.innerHTML       = 'Close';
     }
 
     const [ userName, setUserName ]             = React.useState('');
@@ -116,7 +152,9 @@ function AddUser()
         <Button variant="contained" color="primary" onClick={() => { handleClickOpen(); }}>
             Add New User
         </Button>
-        <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open} maxWidth="xl">
+        <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open} maxWidth="xl"
+                disableBackdropClick
+                disableEscapeKeyDown>
             <div style={{padding: '20px'}}>
                 <div style={{borderBottom: '1px solid gray', fontWeight: 'bold', fontStyle: 'italic', fontSize: 'large'}}>
                     Add New User
@@ -166,6 +204,8 @@ function AddUser()
                         <tr>
                             <td colSpan={2}>
                                 <Button variant="contained" color="primary" ref={refButton} onClick={()=>{ addNewUser(); }}>Add</Button>
+                                &nbsp;&nbsp;&nbsp;
+                                <Button variant="contained" color="primary" ref={refCancelButton} onClick={()=>{ handleClose('novalue'); }}>Cancel</Button>
                                 <Alert severity="info" ref={refInfo} style={{display:'none'}}>
                                     <AlertTitle>Info</AlertTitle>
                                     <CircularProgress size={15}/>&nbsp;&nbsp;&nbsp;Wait a second ...
@@ -177,6 +217,10 @@ function AddUser()
                                 <Alert severity="error" ref={refError} style={{display:'none'}}>
                                     <AlertTitle>Error</AlertTitle>
                                     <div ref={refErrorMsg}></div>
+                                </Alert>
+                                <Alert severity="warning" ref={refWarning} style={{display:'none'}}>
+                                    <AlertTitle>Warning</AlertTitle>
+                                    <div ref={refWarningMsg}></div>
                                 </Alert>
                             </td>
                         </tr>
