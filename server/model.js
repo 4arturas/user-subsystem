@@ -115,6 +115,12 @@ async function get_OrganizationsNotBelongingToClient( clientId )
     return jSonArr;
 }
 
+async function detach_ClientFromOrganization( clientId, organizationId )
+{
+    const res = await pool.query( `update clients_organizations set end_date = now() where org_id = ${organizationId} and client_id = ${clientId}` );
+    return { ok: 1 };
+}
+
 async function get_Users()
 {
     const jSonArr = [];
@@ -250,6 +256,7 @@ module.exports = {
     get_Organization,
     get_OrganizationsByClient,
     get_OrganizationsNotBelongingToClient,
+    detach_ClientFromOrganization,
     get_Users,
     get_User,
     get_UsersByOrganization,
