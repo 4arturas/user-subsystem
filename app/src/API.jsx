@@ -71,7 +71,6 @@ class API
     {
         const jSon = { organizationId: organizationId, userName: userName, userPassword: userPassword, firstName: firstName, lastName: lastName };
         const jSonResponse = add_Data( 'users/add', jSon );
-        console.log( jSonResponse );
         return jSonResponse;
     }
     get_Roles()
