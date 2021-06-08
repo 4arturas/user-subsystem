@@ -3,7 +3,7 @@ insert into clients ( client_name, client_add_date ) values ( 'ms-webapp', now()
 
 insert into organizations ( org_name, org_add_date ) values ( 'ClearPay Systems', now() );
 insert into organizations ( org_name, org_add_date ) values ( 'Alliance of Cambridge Advisors', now() );
-insert into organizations ( org_name, org_add_date ) values ( 'Alliance of Cambridge Advisors', now() );
+insert into organizations ( org_name, org_add_date ) values ( 'Alliance of Cambridge Brokers', now() );
 insert into organizations ( org_name, org_add_date ) values ( 'Australian Council of Life Insurers', now() );
 insert into organizations ( org_name, org_add_date ) values ( 'Australian Institute of Certified Public Accountants', now() );
 
