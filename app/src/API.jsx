@@ -54,6 +54,10 @@ class API
     {
         return get_Data( 'organizations/client?clientId='+clientId );
     }
+    get_OrganizationsNotBelongingToClient( clientId )
+    {
+        return get_Data( 'organizations/client/not?clientId='+clientId );
+    }
     get_Users()
     {
         return get_Data( 'users' );
