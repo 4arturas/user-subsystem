@@ -104,7 +104,8 @@ async function get_OrganizationsNotBelongingToClient( clientId )
                                                 union
                                                 select o.*, co.client_id, co.end_date
                                                 from clients_organizations co, organizations o
-                                                where co.org_id = o.org_id
+                                                where co.org_id = o.org_id 
+                                                and co.client_id = ${clientId}
                                             ) v`;
     const jSonArr = [];
     const result = await pool.query({

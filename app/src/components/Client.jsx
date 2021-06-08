@@ -84,8 +84,8 @@ function ShowOrganizations( { operation, clientId } )
             for ( let i = 0; i < organizations.length; i++ )
             {
                 const organization = organizations[i];
-                if ( organizations.end_date !== null )
-                    continue;
+                // if ( organizations.end_date !== null )
+                //     continue;
                 newOrganizations.push( organization );
             } // end for i
             setData( newOrganizations );
