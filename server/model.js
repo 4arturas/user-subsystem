@@ -100,7 +100,7 @@ async function get_OrganizationsNotBelongingToClient( clientId )
     const jSonArr = [];
     const result = await pool.query({
         rowMode: 'array',
-        text: 'select ROW_TO_JSON(o) from clients_organizations co, organizations o where co.org_id = o.org_id and co.client_id <> ' + clientId,
+        text: `select ROW_TO_JSON(o) from clients_organizations co, organizations o where co.org_id = o.org_id and co.client_id <> ${clientId} and co.end_date is null`,
     });
     for ( let i = 0; i < result.rows.length; i++ )
     {
