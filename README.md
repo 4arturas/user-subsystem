@@ -46,7 +46,7 @@ kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
 
 ## k8s
 ```sh
-kubectl apply -f postgresql.yaml
+kubectl apply -f devops/k8s/postgresql.yaml
 ````
 
 ## /etc/hosts
