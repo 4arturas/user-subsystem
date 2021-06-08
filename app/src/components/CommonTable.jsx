@@ -32,7 +32,7 @@ const useGlobalTableStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function CommonTable( { headCells, data, RowComponent }  )
+export default function CommonTable( { headCells, data, RowComponent, rowComponentExt1, rowComponentExt2 }  )
 {
     const [rows, setRows]                   = React.useState(null);
     const [rowsBackup, setRowsBackup]       = React.useState([]);
@@ -160,7 +160,7 @@ export default function CommonTable( { headCells, data, RowComponent }  )
                                             .map((row, index) => {
 
                                                 return (
-                                                    <RowComponent row={row} searchValue={searchValue} />
+                                                    <RowComponent row={row} searchValue={searchValue} rowComponentExt1={rowComponentExt1} rowComponentExt2={rowComponentExt2} />
                                                 );
                                             })}
                                     </TableBody>
