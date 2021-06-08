@@ -58,6 +58,12 @@ class API
     {
         return get_Data( 'organizations/client/not?clientId='+clientId );
     }
+    attach_ClientToOrganization( clientId, organizationId  )
+    {
+        const jSon = { clientId: clientId, organizationId: organizationId };
+        const jSonResponse = add_Data( 'organizations/client/attach', jSon );
+        return jSonResponse;
+    }
     detach_ClientFromOrganization( clientId, organizationId  )
     {
         const jSon = { clientId: clientId, organizationId: organizationId };
