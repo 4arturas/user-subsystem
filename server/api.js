@@ -50,6 +50,13 @@ app.get('/api/organizations/client/not', async (req, res) =>
     res.json( jSonOrganization );
 });
 
+app.post('/api/organizations/client/detach', async (req, res) =>
+{
+    const jSon = req.body;
+    const jSonAddResult = await model.detach_ClientFromOrganization( jSon.clientId, jSon.organizationId );
+    res.json( jSonAddResult );
+});
+
 app.get('/api/users', async (req, res) =>
 {
     const jSonUsers = await model.get_Users();
