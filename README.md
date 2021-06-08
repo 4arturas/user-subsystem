@@ -1,5 +1,19 @@
 # Users subsystem
 
+## Database
+
+### Deploy data model to postgres
+```
+server/datamodel.sql
+````
+
+### Add test data into postgres
+````
+server/data_test.sql
+````
+
+
+
 ## Developing on localhost
 ### Start backend
 ```sh
