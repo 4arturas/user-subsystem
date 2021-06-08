@@ -15,6 +15,8 @@ server/data_test.sql
 
 
 ## Developing on localhost
+
+### Change database connection values in server/.env file
 ### Start backend
 ```sh
 cd server
@@ -56,3 +58,5 @@ echo "$(minikube ip) users-app.local.clearpay-test.systems" | sudo tee -a /etc/h
 ```sh
 skaffold dev
 ````
+
+navigate to [http://users-app.local.clearpay-test.systems](users-app.local.clearpay-test.systems)
