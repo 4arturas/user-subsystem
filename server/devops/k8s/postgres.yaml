@@ -1,0 +1,114 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: postgres-server
+
+spec:
+  ports:
+    - name: "postgres"
+      port: 5432
+      nodePort: 30432
+      protocol: TCP
+  selector:
+    app: postgres-server
+  type: NodePort
+---
+apiVersion: v1
+data:
+  postgresql.conf: |-
+    #------------------------------------------------------------------------------
+    # CONNECTIONS AND AUTHENTICATION
+    #------------------------------------------------------------------------------
+
+    # - Connection Settings -
+
+    listen_addresses = '*'
+                                            # comma-separated list of addresses;
+                                            # defaults to 'localhost'; use '*' for all
+                                            # (change requires restart)
+    port = '5432'
+
+    #------------------------------------------------------------------------------
+    # WRITE AHEAD LOG
+    #------------------------------------------------------------------------------
+
+    # - Settings -
+
+    wal_level = 'logical'
+                                            # (change requires restart)
+    fsync = 'on'
+                                            # (turning this off can cause
+                                            # unrecoverable data corruption)
+    # - Checkpoints -
+
+    max_wal_size = '400MB'
+
+    #------------------------------------------------------------------------------
+    # REPLICATION
+    #------------------------------------------------------------------------------
+
+    # - Sending Server(s) -
+
+    # Set these on the master and on any standby that will send replication data.
+
+    max_wal_senders = '16'
+                                    # (change requires restart)
+    wal_keep_segments = '12'
+
+    # - Standby Servers -
+
+    # These settings are ignored on a master server.
+
+    hot_standby = 'on'
+                                            # (change requires restart)
+
+    #------------------------------------------------------------------------------
+    # CONFIG FILE INCLUDES
+    #------------------------------------------------------------------------------
+
+    # These options allow settings to be loaded from files other than the
+    # default postgresql.conf.  Note that these are directives, not variable
+    # assignments, so they can usefully be given more than once.
+
+    include_dir = 'conf.d'
+kind: ConfigMap
+metadata:
+  name: postgresql-config
+
+---
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: postgres-server
+
+spec:
+  selector:
+    matchLabels:
+      app: postgres-server
+  template:
+    metadata:
+      labels:
+        app: postgres-server
+    spec:
+      containers:
+        - image: bitnami/postgresql:11.7.0
+          name: postgres
+          volumeMounts:
+            - name: postgresql-conf
+              mountPath: /bitnami/postgresql/conf/
+          env:
+            - name: TZ
+              value: "Australia/Sydney"
+            - name: POSTGRESQL_PASSWORD
+              value: password
+          readinessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 1
+            periodSeconds: 1
+      volumes:
+        - name: postgresql-conf
+          configMap:
+            name: postgresql-config
