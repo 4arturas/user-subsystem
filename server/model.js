@@ -97,10 +97,19 @@ async function get_OrganizationsByClient( clientId )
 
 async function get_OrganizationsNotBelongingToClient( clientId )
 {
+    const sql = `select ROW_TO_JSON(v) from (
+                                                select o.*, null as client_id, null as end_date
+                                                from organizations o
+                                                where o.org_id not in (select org_id from clients_organizations)
+                                                union
+                                                select o.*, co.client_id, co.end_date
+                                                from clients_organizations co, organizations o
+                                                where co.org_id = o.org_id
+                                            ) v`;
     const jSonArr = [];
     const result = await pool.query({
         rowMode: 'array',
-        text: `select ROW_TO_JSON(o) from clients_organizations co, organizations o where co.org_id = o.org_id and ( co.client_id <> ${clientId} and co.end_date is null or co.client_id = ${clientId} and co.end_date is not null )`,
+        text: sql,
     });
     for ( let i = 0; i < result.rows.length; i++ )
     {
@@ -113,6 +122,12 @@ async function get_OrganizationsNotBelongingToClient( clientId )
         jSonArr.push( jSon );
     } // end for i
     return jSonArr;
+}
+
+async function attach_ClientToOrganization( clientId, organizationId )
+{
+    const res = await pool.query( `insert into clients_organizations(client_id, org_id, start_date) values (${clientId}, ${organizationId}, now())` );
+    return { ok: 1 };
 }
 
 async function detach_ClientFromOrganization( clientId, organizationId )
@@ -256,6 +271,7 @@ module.exports = {
     get_Organization,
     get_OrganizationsByClient,
     get_OrganizationsNotBelongingToClient,
+    attach_ClientToOrganization,
     detach_ClientFromOrganization,
     get_Users,
     get_User,
