@@ -95,6 +95,26 @@ async function get_OrganizationsByClient( clientId )
     return jSonArr;
 }
 
+async function get_OrganizationsNotBelongingToClient( clientId )
+{
+    const jSonArr = [];
+    const result = await pool.query({
+        rowMode: 'array',
+        text: 'select ROW_TO_JSON(o) from clients_organizations co, organizations o where co.org_id = o.org_id and co.client_id <> ' + clientId,
+    });
+    for ( let i = 0; i < result.rows.length; i++ )
+    {
+        const r = result.rows[i][0];
+        const jSon = {
+            org_id:         r.org_id,
+            org_name:       r.org_name,
+            org_add_date:   r.org_add_date
+        };
+        jSonArr.push( jSon );
+    } // end for i
+    return jSonArr;
+}
+
 async function get_Users()
 {
     const jSonArr = [];
@@ -229,6 +249,7 @@ module.exports = {
     get_Organizations,
     get_Organization,
     get_OrganizationsByClient,
+    get_OrganizationsNotBelongingToClient,
     get_Users,
     get_User,
     get_UsersByOrganization,
