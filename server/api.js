@@ -42,6 +42,14 @@ app.get('/api/organizations/client', async (req, res) =>
     res.json( jSonOrganization );
 });
 
+app.get('/api/organizations/client/not', async (req, res) =>
+{
+    const clientId = req.query.clientId;
+    const jSonOrganization = await model.get_OrganizationsNotBelongingToClient( clientId );
+    console.log( jSonOrganization );
+    res.json( jSonOrganization );
+});
+
 app.get('/api/users', async (req, res) =>
 {
     const jSonUsers = await model.get_Users();
