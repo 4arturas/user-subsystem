@@ -35,5 +35,3 @@ package-lock.json
 node_modules
 build
 dist
-
-.env
