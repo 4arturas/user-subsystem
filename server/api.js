@@ -71,7 +71,7 @@ app.post('/api/users/add', async (req, res) =>
     const user = await model.get_UserByUserName( jSon.userName );
     if ( user !== null )
     {
-        return res.json( { warn: 'User exists by given name' } );
+        return res.json( { warning: 'User exists by given name' } );
     }
     const jSonAddResult = await model.add_NewUser( jSon.organizationId, jSon.userName, jSon.userPassword, jSon.firstName, jSon.lastName );
     res.json( jSonAddResult );
