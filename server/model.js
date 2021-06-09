@@ -98,14 +98,18 @@ async function get_OrganizationsByClient( clientId )
 async function get_OrganizationsNotBelongingToClient( clientId )
 {
     const sql = `select ROW_TO_JSON(v) from (
-                                                select o.*, null as client_id, null as end_date
+                                                select o.*
                                                 from organizations o
                                                 where o.org_id not in (select org_id from clients_organizations)
-                                                union
-                                                select o.*, co.client_id, co.end_date
-                                                from clients_organizations co, organizations o
-                                                where co.org_id = o.org_id 
-                                                and co.client_id = ${clientId}
+                                                    union
+                                                select o.* from organizations o where o.org_id in (
+                                                    select co.org_id
+                                                    from clients_organizations co
+                                                    where co.client_id = 2
+                                                      and co.org_id not in (
+                                                        select org_id from clients_organizations where client_id = 2 and end_date is null
+                                                    )
+                                                )
                                             ) v`;
     const jSonArr = [];
     const result = await pool.query({
