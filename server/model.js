@@ -45,6 +45,14 @@ async function get_Client( id )
         return {};
     return res.rows[0].row_to_json;
 }
+async function get_ClientByName( clientName )
+{
+    const res = await pool.query(`SELECT ROW_TO_JSON(c) FROM clients as c where c.client_name='${clientName}'`);
+    console.log( res.rows );
+    if ( res.rows.length === 0 )
+        return null;
+    return res.rows[0].row_to_json;
+}
 
 async function get_Organizations()
 {
@@ -310,6 +318,7 @@ module.exports = {
     hello_World,
     get_Clients,
     get_Client,
+    get_ClientByName,
     get_Organizations,
     get_Organization,
     get_OrganizationsByClient,
