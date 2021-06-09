@@ -29,7 +29,7 @@ const theme = createMuiTheme({
         secondary: purple
     },
     typography: {
-        fontFamily: 'Quicksand',
+        fontFamily: 'Arial',
         fontWeightLight: 400,
         fontWeightRegular: 500,
         fontWeightMedium: 600,
