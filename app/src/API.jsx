@@ -42,6 +42,12 @@ class API
     {
         return get_Data( 'clients/client?id='+id );
     }
+    add_Client( clientName )
+    {
+        const jSon = { clientName: clientName };
+        const jSonResponse = add_Data( 'clients/add', jSon );
+        return jSonResponse;
+    }
     get_Organizations()
     {
         return get_Data( 'organizations' );
