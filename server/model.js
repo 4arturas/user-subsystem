@@ -105,9 +105,9 @@ async function get_OrganizationsNotBelongingToClient( clientId )
                                                 select o.* from organizations o where o.org_id in (
                                                     select co.org_id
                                                     from clients_organizations co
-                                                    where co.client_id = 2
+                                                    where co.client_id = ${clientId}
                                                       and co.org_id not in (
-                                                        select org_id from clients_organizations where client_id = 2 and end_date is null
+                                                        select org_id from clients_organizations where client_id = ${clientId} and end_date is null
                                                     )
                                                 )
                                             ) v`;
@@ -123,6 +123,44 @@ async function get_OrganizationsNotBelongingToClient( clientId )
             org_id:         r.org_id,
             org_name:       r.org_name,
             org_add_date:   r.org_add_date
+        };
+        jSonArr.push( jSon );
+    } // end for i
+    return jSonArr;
+}
+
+async function get_OrganizationsWithBelongInfo( clientId )
+{
+    const sql = `select ROW_TO_JSON(v) from (
+                                                select o.*, 0 as belongs
+                                                from organizations o
+                                                where o.org_id not in (select org_id from clients_organizations)
+                                                union
+                                                select o.*, 0 as belongs from organizations o where o.org_id in (
+                                                    select co.org_id
+                                                    from clients_organizations co
+                                                    where co.client_id = ${clientId}
+                                                      and co.org_id not in (
+                                                        select org_id from clients_organizations where client_id = ${clientId} and end_date is null
+                                                    )
+                                                )
+                                                union
+                                                select o.*, 1 as belongs from organizations o where o.org_id in ( select org_id from clients_organizations where client_id = ${clientId} and end_date is null )
+                                            ) v`;
+    const jSonArr = [];
+    const result = await pool.query({
+        rowMode: 'array',
+        text: sql,
+    });
+    console.log( result );
+    for ( let i = 0; i < result.rows.length; i++ )
+    {
+        const r = result.rows[i][0];
+        const jSon = {
+            org_id:         r.org_id,
+            org_name:       r.org_name,
+            org_add_date:   r.org_add_date,
+            belongs:        r.belongs
         };
         jSonArr.push( jSon );
     } // end for i
@@ -276,6 +314,7 @@ module.exports = {
     get_Organization,
     get_OrganizationsByClient,
     get_OrganizationsNotBelongingToClient,
+    get_OrganizationsWithBelongInfo,
     attach_ClientToOrganization,
     detach_ClientFromOrganization,
     get_Users,
