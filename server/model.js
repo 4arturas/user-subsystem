@@ -145,21 +145,16 @@ async function get_OrganizationsNotBelongingToClient( clientId )
 async function get_OrganizationsWithBelongInfo( clientId )
 {
     const sql = `select ROW_TO_JSON(v) from (
-                                                select o.*, 0 as belongs
-                                                from organizations o
-                                                where o.org_id not in (select org_id from clients_organizations)
-                                                union
-                                                select o.*, 0 as belongs from organizations o where o.org_id in (
-                                                    select co.org_id
-                                                    from clients_organizations co
-                                                    where co.client_id = ${clientId}
-                                                      and co.org_id not in (
-                                                        select org_id from clients_organizations where client_id = ${clientId} and end_date is null
-                                                    )
-                                                )
-                                                union
-                                                select o.*, 1 as belongs from organizations o where o.org_id in ( select org_id from clients_organizations where client_id = ${clientId} and end_date is null )
-                                            ) v`;
+                                     select o.*, 0 as belongs
+                                     from organizations o
+                                     where o.org_id not in
+                                           (select org_id from clients_organizations co where co.client_id = ${clientId} and co.end_date is null)
+                                     union
+                                     select o.*, 1 as belongs
+                                     from organizations o
+                                     where o.org_id in
+                                           (select org_id from clients_organizations co where co.client_id = ${clientId} and co.end_date is null)
+                                 ) v order by v.org_id`;
     const jSonArr = [];
     const result = await pool.query({
         rowMode: 'array',
