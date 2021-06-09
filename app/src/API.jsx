@@ -58,6 +58,10 @@ class API
     {
         return get_Data( 'organizations/client/not?clientId='+clientId );
     }
+    get_OrganizationsWithBelongInfo( clientId )
+    {
+        return get_Data( 'organizations/client/belong/info?clientId='+clientId );
+    }
     attach_ClientToOrganization( clientId, organizationId  )
     {
         const jSon = { clientId: clientId, organizationId: organizationId };
