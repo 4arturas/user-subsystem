@@ -19,6 +19,20 @@ app.get('/api/clients/client', async (req, res) =>
     res.json( jSonClient );
 });
 
+app.post('/api/clients/add', async (req, res) =>
+{
+    const jSon = req.body;
+    const clientName = jSon.clientName;
+    const client = await model.get_ClientByName( clientName );
+    if ( client !== null )
+    {
+        return res.json( { warning: 'Client exists by given name' } );
+    }
+    const jSonAddResult = await model.add_Client( clientName );
+    res.json( jSonAddResult );
+});
+
+
 app.get('/api/organizations', async (req, res) =>
 {
     const jSonOrganizations = await model.get_Organizations();
