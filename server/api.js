@@ -50,6 +50,15 @@ app.get('/api/organizations/client/not', async (req, res) =>
     res.json( jSonOrganization );
 });
 
+app.get('/api/organizations/client/belong/info', async (req, res) =>
+{
+    const clientId = req.query.clientId;
+    console.log( clientId );
+    const jSonOrganization = await model.get_OrganizationsWithBelongInfo( clientId );
+    console.log( jSonOrganization );
+    res.json( jSonOrganization );
+});
+
 app.post('/api/organizations/client/attach', async (req, res) =>
 {
     const jSon = req.body;
