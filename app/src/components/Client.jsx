@@ -10,7 +10,6 @@ import TableCell from "@material-ui/core/TableCell";
 import SearchReplace from "./SearchReplace";
 
 const headCells = [
-    { id: 'org_id', numeric: false, disablePadding: false, label: 'org_id' },
     { id: 'org_name', numeric: false, disablePadding: false, label: 'Organization Name' },
     { id: 'org_add_date', numeric: false, disablePadding: false, label: 'Action' }
 ];
@@ -48,7 +47,6 @@ function OrganizationsRow( { row, searchValue, rowComponentExt1 } )
             hover
             tabIndex={-1}
             key={row.org_id}>
-            <TableCell align="left">{row.org_id}</TableCell>
             <TableCell align="left" style={{whiteSpace:'nowrap'}}><SearchReplace value={row.org_name} markValue={searchValue}/></TableCell>
             <TableCell align="center">
                 { operation ? <CircularProgress size={30}/> :
