@@ -53,6 +53,11 @@ async function get_ClientByName( clientName )
         return null;
     return res.rows[0].row_to_json;
 }
+async function add_Client( clientName )
+{
+    const res = await pool.query( `INSERT INTO clients(client_name, client_add_date) VALUES('${clientName}', now())` );
+    return { ok: 1 };
+}
 
 async function get_Organizations()
 {
@@ -319,6 +324,7 @@ module.exports = {
     get_Clients,
     get_Client,
     get_ClientByName,
+    add_Client,
     get_Organizations,
     get_Organization,
     get_OrganizationsByClient,
