@@ -6,6 +6,7 @@ import {NavLink} from "react-router-dom";
 import SearchReplace from "./SearchReplace";
 import CommonTable from "./CommonTable";
 import * as GB from "../global";
+import ClientAddEdit from "./ClientAddEdit";
 
 function ClientRow( {row, searchValue} )
 {
