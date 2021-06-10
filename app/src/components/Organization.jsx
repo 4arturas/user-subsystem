@@ -4,6 +4,7 @@ import API from "../API";
 import './entity.css'
 import Users from "./Users";
 import * as GB from "../global";
+import OrganizationAddEdit from "./OrganizationAddEdit";
 
 function Organization()
 {
@@ -23,7 +24,7 @@ function Organization()
             <div>
             <Paper>
                 <div className="entity">
-                <h1>Organization</h1>
+                <h1>Organization&nbsp;<OrganizationAddEdit id={organization.org_id} name={organization.org_name}/></h1>
                 <table>
                     <tbody>
                         <tr>
