@@ -49,7 +49,7 @@ function OrganizationsRow( { row, searchValue, rowComponentExt1 } )
             tabIndex={-1}
             key={row.org_id}>
             <TableCell align="left" style={{whiteSpace:'nowrap'}}>
-                <NavLink to="/organizations/organization?id=${row.org_id}">
+                <NavLink to={`/organizations/organization?id=${row.org_id}`}>
                     <SearchReplace value={row.org_name} markValue={searchValue}/>
                 </NavLink>
             </TableCell>
