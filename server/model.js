@@ -205,6 +205,11 @@ async function add_Organization( organizationName )
     const res = await pool.query( `INSERT INTO organizations(org_name, org_add_date) VALUES('${organizationName}', now())` );
     return { ok: 1 };
 }
+async function update_Organization( organizationId, organizationName )
+{
+    const res = await pool.query( `UPDATE organizations set org_name='${organizationName}' WHERE org_id=${organizationId}` );
+    return { ok: 1 };
+}
 
 async function get_Users()
 {
@@ -349,6 +354,7 @@ module.exports = {
     detach_ClientFromOrganization,
     get_OrganizationByName,
     add_Organization,
+    update_Organization,
     get_Users,
     get_User,
     get_UsersByOrganization,
