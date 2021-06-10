@@ -6,12 +6,12 @@ import {Edit} from "@material-ui/icons";
 
 export default function ClientAddEdit( { id, name } )
 {
-    const refButton = React.useRef();
-    const refCancel = React.useRef();
-    const refClose = React.useRef();
-    const refInfo = React.useRef();
-    const refSuccess = React.useRef();
-    const [open, setOpen]   = React.useState(false);
+    const refButton                                 = React.useRef();
+    const refCancel                                 = React.useRef();
+    const refClose                                  = React.useRef();
+    const refInfo                                   = React.useRef();
+    const refSuccess                                = React.useRef();
+    const [open, setOpen]                           = React.useState(false);
     const [ clientName, setClientName ]             = React.useState('');
     const [errorClientName, setErrorClientName]     = React.useState('');
     const validateClientName = ( value ) =>
