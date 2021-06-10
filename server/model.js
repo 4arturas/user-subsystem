@@ -58,7 +58,7 @@ async function add_Client( clientName )
     const res = await pool.query( `INSERT INTO clients(client_name, client_add_date) VALUES('${clientName}', now())` );
     return { ok: 1 };
 }
-async function edit_Client( clientId, clientName )
+async function update_Client( clientId, clientName )
 {
     const res = await pool.query( `UPDATE clients set client_name='${clientName}' WHERE client_id=${clientId}` );
     return { ok: 1 };

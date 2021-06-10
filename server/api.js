@@ -42,7 +42,7 @@ app.post('/api/clients/edit', async (req, res) =>
         return res.json( { warning: 'Client exists by given name' } );
     }
     const clientId = jSon.clientId;
-    const jSonAddResult = await model.edit_Client( clientId, clientName );
+    const jSonAddResult = await model.update_Client( clientId, clientName );
     res.json( jSonAddResult );
 });
 

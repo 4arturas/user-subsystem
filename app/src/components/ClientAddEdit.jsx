@@ -78,7 +78,7 @@ export default function ClientAddEdit( { id, name } )
 
                                     let jSonResponse;
                                     if ( id )
-                                        jSonResponse = await API.edit_Client( id, clientName );
+                                        jSonResponse = await API.update_Client( id, clientName );
                                     else
                                         jSonResponse = await API.add_Client( clientName );
 

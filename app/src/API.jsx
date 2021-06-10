@@ -48,7 +48,7 @@ class API
         const jSonResponse = add_Data( 'clients/add', jSon );
         return jSonResponse;
     }
-    edit_Client( clientId, clientName )
+    update_Client( clientId, clientName )
     {
         const jSon = { clientId: clientId, clientName: clientName };
         const jSonResponse = add_Data( 'clients/edit', jSon );
