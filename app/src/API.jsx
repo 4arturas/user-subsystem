@@ -92,6 +92,12 @@ class API
         const jSonResponse = add_Data( 'organizations/add', jSon );
         return jSonResponse;
     }
+    update_Organization( organizationId, organizationName )
+    {
+        const jSon = { organizationId: organizationId, organizationName: organizationName };
+        const jSonResponse = add_Data( 'organizations/update', jSon );
+        return jSonResponse;
+    }
     get_Users()
     {
         return get_Data( 'users' );
