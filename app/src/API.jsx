@@ -51,7 +51,7 @@ class API
     update_Client( clientId, clientName )
     {
         const jSon = { clientId: clientId, clientName: clientName };
-        const jSonResponse = add_Data( 'clients/edit', jSon );
+        const jSonResponse = add_Data( 'clients/update', jSon );
         return jSonResponse;
     }
     get_Organizations()

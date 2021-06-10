@@ -32,7 +32,7 @@ app.post('/api/clients/add', async (req, res) =>
     res.json( jSonAddResult );
 });
 
-app.post('/api/clients/edit', async (req, res) =>
+app.post('/api/clients/update', async (req, res) =>
 {
     const jSon = req.body;
     const clientName = jSon.clientName;
