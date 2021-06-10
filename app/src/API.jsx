@@ -48,6 +48,12 @@ class API
         const jSonResponse = add_Data( 'clients/add', jSon );
         return jSonResponse;
     }
+    edit_Client( clientId, clientName )
+    {
+        const jSon = { clientId: clientId, clientName: clientName };
+        const jSonResponse = add_Data( 'clients/edit', jSon );
+        return jSonResponse;
+    }
     get_Organizations()
     {
         return get_Data( 'organizations' );
