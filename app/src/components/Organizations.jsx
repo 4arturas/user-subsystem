@@ -7,6 +7,8 @@ import {NavLink} from "react-router-dom";
 import SearchReplace from "./SearchReplace";
 import CommonTable from "./CommonTable";
 import * as GB from "../global";
+import ClientAddEdit from "./ClientAddEdit";
+import OrganizationAddEdit from "./OrganizationAddEdit";
 
 function OrganizationsRow( {row, searchValue} )
 {
@@ -45,7 +47,10 @@ function Organizations( {clientId} )
     }, [] );
 
     return (
-        <div>{ !data ? <></> : <CommonTable headCells={headCells} data={ data } RowComponent={ OrganizationsRow } />}</div>
+        <div>
+            <div style={{marginBottom:'5px'}}><OrganizationAddEdit/></div>
+            { !data ? <></> : <CommonTable headCells={headCells} data={ data } RowComponent={ OrganizationsRow } />}
+        </div>
     );
 }
 
