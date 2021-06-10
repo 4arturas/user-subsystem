@@ -8,6 +8,7 @@ import CommonTable from "./CommonTable";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import SearchReplace from "./SearchReplace";
+import {NavLink} from "react-router-dom";
 
 const headCells = [
     { id: 'org_name', numeric: false, disablePadding: false, label: 'Organization Name' },
@@ -47,7 +48,11 @@ function OrganizationsRow( { row, searchValue, rowComponentExt1 } )
             hover
             tabIndex={-1}
             key={row.org_id}>
-            <TableCell align="left" style={{whiteSpace:'nowrap'}}><SearchReplace value={row.org_name} markValue={searchValue}/></TableCell>
+            <TableCell align="left" style={{whiteSpace:'nowrap'}}>
+                <NavLink to="/organizations/organization?id=${row.org_id}">
+                    <SearchReplace value={row.org_name} markValue={searchValue}/>
+                </NavLink>
+            </TableCell>
             <TableCell align="center">
                 { operation ? <CircularProgress size={30}/> :
                     organizationBelongsToClient ?
