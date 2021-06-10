@@ -279,7 +279,7 @@ export default function Users( { organizationId}  )
             <></> :
             <div>
                 <div style={{paddingBottom:'5px', textAlign:"center"}}>
-                    <AddUser/>
+                    {/*<AddUser/>*/}
                 </div>
                 <CommonTable headCells={headCells} data={ data } RowComponent={ UserRow } />
             </div>
