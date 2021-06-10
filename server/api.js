@@ -101,6 +101,19 @@ app.post('/api/organizations/client/detach', async (req, res) =>
     res.json( jSonAddResult );
 });
 
+app.post('/api/organizations/add', async (req, res) =>
+{
+    const jSon = req.body;
+    const organizationName = jSon.organizationName;
+    const organization = await model.get_OrganizationByName( organizationName );
+    if ( organization !== null )
+    {
+        return res.json( { error: 'Organization exists by given name' } );
+    }
+    const jSonAddResult = await model.add_Organization( organizationName );
+    res.json( jSonAddResult );
+});
+
 app.get('/api/users', async (req, res) =>
 {
     const jSonUsers = await model.get_Users();
