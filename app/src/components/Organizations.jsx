@@ -1,5 +1,4 @@
 import React from 'react'
-import {Button, Dialog, Input} from "@material-ui/core";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import API from "../API";
@@ -7,7 +6,6 @@ import {NavLink} from "react-router-dom";
 import SearchReplace from "./SearchReplace";
 import CommonTable from "./CommonTable";
 import * as GB from "../global";
-import ClientAddEdit from "./ClientAddEdit";
 import OrganizationAddEdit from "./OrganizationAddEdit";
 
 function OrganizationsRow( {row, searchValue} )
