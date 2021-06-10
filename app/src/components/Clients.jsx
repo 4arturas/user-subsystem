@@ -6,8 +6,6 @@ import {NavLink} from "react-router-dom";
 import SearchReplace from "./SearchReplace";
 import CommonTable from "./CommonTable";
 import * as GB from "../global";
-import {Button, CircularProgress, Dialog, TextField} from "@material-ui/core";
-import {Alert} from "@material-ui/lab";
 
 function ClientRow( {row, searchValue} )
 {
