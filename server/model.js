@@ -344,7 +344,7 @@ module.exports = {
     get_Client,
     get_ClientByName,
     add_Client,
-    edit_Client,
+    update_Client,
     get_Organizations,
     get_Organization,
     get_OrganizationsByClient,
