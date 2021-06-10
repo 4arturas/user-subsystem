@@ -47,7 +47,7 @@ function Organization()
                         <td style={{width:'50%'}}></td>
                     </tr>
                 </table>
-                Following users are assigned to this organization:
+
                 <table>
                     <tr>
                         <td style={{width:'50%'}}></td>
