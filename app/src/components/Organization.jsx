@@ -48,9 +48,15 @@ function Organization()
                     </tr>
                 </table>
                 Following users are assigned to this organization:
-                <div>
-                    <Users organizationId={id}/>
-                </div>
+                <table>
+                    <tr>
+                        <td style={{width:'50%'}}></td>
+                        <td>
+                            <Users organizationId={id}/>
+                        </td>
+                        <td style={{width:'50%'}}></td>
+                    </tr>
+                </table>
             </div>
             }
         </div>
