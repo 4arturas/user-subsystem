@@ -86,6 +86,12 @@ class API
         const jSonResponse = add_Data( 'organizations/client/detach', jSon );
         return jSonResponse;
     }
+    add_Organization( organizationName )
+    {
+        const jSon = { organizationName: organizationName };
+        const jSonResponse = add_Data( 'organizations/add', jSon );
+        return jSonResponse;
+    }
     get_Users()
     {
         return get_Data( 'users' );
