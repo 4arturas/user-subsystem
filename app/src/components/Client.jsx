@@ -64,7 +64,7 @@ function OrganizationsRow( { row, searchValue, rowComponentExt1 } )
                         setOrganizationBelongsToClient( 0 );
                         setOperation( false );
                     } }>
-                        Detach
+                        <SearchReplace value="DETACH" markValue={searchValue}/>
                     </Button>
                    :
                     <Button variant="contained" color="secondary" onClick={ async () => {
@@ -75,7 +75,7 @@ function OrganizationsRow( { row, searchValue, rowComponentExt1 } )
                         setOrganizationBelongsToClient( 1 );
                         setOperation( false );
                     }} >
-                        Attach
+                        <SearchReplace value="ATTACH" markValue={searchValue}/>
                     </Button>
                 }
             </TableCell>
