@@ -192,6 +192,15 @@ async function detach_ClientFromOrganization( clientId, organizationId )
     return { ok: 1 };
 }
 
+async function get_OrganizationByName( organizationName )
+{
+    const res = await pool.query(`SELECT ROW_TO_JSON(o) FROM organizations as o where o.org_name='${organizationName}'`);
+    console.log( res.rows );
+    if ( res.rows.length === 0 )
+        return null;
+    return res.rows[0].row_to_json;
+}
+
 async function get_Users()
 {
     const jSonArr = [];
@@ -333,6 +342,7 @@ module.exports = {
     get_OrganizationsWithBelongInfo,
     attach_ClientToOrganization,
     detach_ClientFromOrganization,
+    get_OrganizationByName,
     get_Users,
     get_User,
     get_UsersByOrganization,
