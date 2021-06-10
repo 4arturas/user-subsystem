@@ -200,6 +200,11 @@ async function get_OrganizationByName( organizationName )
         return null;
     return res.rows[0].row_to_json;
 }
+async function add_Organization( organizationName )
+{
+    const res = await pool.query( `INSERT INTO organizations(org_name, org_add_date) VALUES('${organizationName}', now())` );
+    return { ok: 1 };
+}
 
 async function get_Users()
 {
@@ -343,6 +348,7 @@ module.exports = {
     attach_ClientToOrganization,
     detach_ClientFromOrganization,
     get_OrganizationByName,
+    add_Organization,
     get_Users,
     get_User,
     get_UsersByOrganization,
