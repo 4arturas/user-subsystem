@@ -1,9 +1,8 @@
 import React from "react";
-import {Button, CircularProgress, Dialog} from "@material-ui/core";
+import {Button, CircularProgress, Dialog, Paper} from "@material-ui/core";
 import API from "../API";
 import './entity.css'
 import * as GB from "../global";
-import EntityBlock from "./EntityBlock";
 import CommonTable from "./CommonTable";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
@@ -14,25 +13,6 @@ const headCells = [
     { id: 'org_name', numeric: false, disablePadding: false, label: 'Organization Name' },
     { id: 'org_add_date', numeric: false, disablePadding: false, label: 'Action' }
 ];
-
-function ClientChild( {client} )
-{
-    return (
-        <table>
-            <tbody>
-            <tr>
-                <td>Client Name</td>
-                <td>{client.client_name}</td>
-            </tr>
-            <tr>
-                <td>Client add date</td>
-                <td>{GB.format_Date1(client.client_add_date)}</td>
-            </tr>
-            </tbody>
-        </table>
-    );
-}
-
 
 function OrganizationsRow( { row, searchValue, rowComponentExt1 } )
 {
@@ -103,7 +83,31 @@ function Client()
         <div>
             {client===null ? <div>Loading...</div> :
             <div>
-                <EntityBlock title='Client' child={ <ClientChild client={client}/> }/>
+                <table>
+                    <tr>
+                        <td style={{width:'50%'}}></td>
+                        <td>
+                            <Paper>
+                                <div className="entity">
+                                    <h1>Client</h1>
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <td>Client Name</td>
+                                            <td>{client.client_name}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Client add date</td>
+                                            <td>{GB.format_Date1(client.client_add_date)}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </Paper>
+                        </td>
+                        <td style={{width:'50%'}}></td>
+                    </tr>
+                </table>
                 <br/>
                 <table>
                     <tbody>
