@@ -8,6 +8,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import SearchReplace from "./SearchReplace";
 import {NavLink} from "react-router-dom";
+import ClientAddEdit from "./ClientAddEdit";
 
 const headCells = [
     { id: 'org_name', numeric: false, disablePadding: false, label: 'Organization Name' },
@@ -89,7 +90,9 @@ function Client()
                         <td>
                             <Paper>
                                 <div className="entity">
-                                    <h1>Client</h1>
+                                    <h1>
+                                        Client&nbsp;<ClientAddEdit id={client.client_id} name={client.client_name}/>
+                                    </h1>
                                     <table>
                                         <tbody>
                                         <tr>
@@ -128,6 +131,6 @@ function Client()
             }
         </div>
     );
-};
+}
 
 export default Client
