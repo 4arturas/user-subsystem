@@ -114,6 +114,20 @@ app.post('/api/organizations/add', async (req, res) =>
     res.json( jSonAddResult );
 });
 
+app.post('/api/organizations/update', async (req, res) =>
+{
+    const jSon = req.body;
+    const organizationName = jSon.organizationName;
+    const organization = await model.get_OrganizationByName( organizationName );
+    if ( organization !== null )
+    {
+        return res.json( { error: 'Organization exists by given name' } );
+    }
+    const organizationId = jSon.organizationId;
+    const jSonAddResult = await model.update_Organization( organizationId, organizationName );
+    res.json( jSonAddResult );
+});
+
 app.get('/api/users', async (req, res) =>
 {
     const jSonUsers = await model.get_Users();
