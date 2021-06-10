@@ -5,7 +5,7 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import React from "react";
 
 function EnhancedTableHead(props) {
-    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells } = props;
+    const { classes, order, orderBy, numSelected, rowCount, onRequestSort, headCells } = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
