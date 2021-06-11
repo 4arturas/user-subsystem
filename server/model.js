@@ -188,7 +188,7 @@ async function attach_ClientToOrganization( clientId, organizationId )
 
 async function detach_ClientFromOrganization( clientId, organizationId )
 {
-    const res = await pool.query( `update clients_organizations set end_date = now() where org_id = ${organizationId} and client_id = ${clientId}` );
+    const res = await pool.query( `update clients_organizations set end_date = now() where org_id = ${organizationId} and client_id = ${clientId} and end_date is null` );
     return { ok: 1 };
 }
 
