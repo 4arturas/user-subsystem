@@ -272,6 +272,44 @@ async function get_UsersByOrganization( organizationId )
     return jSonArr;
 }
 
+async function get_UsersByOrganizationWithBelongInfo( organizationId )
+{
+    const sql = `select ROW_TO_JSON(v) from (
+                  select u.*, 1 as belongs
+                  from users u
+                  where u.user_id in (
+                      select distinct on (user_id) user_id from organizations_users ou where ou.org_id = ${organizationId}
+                  )
+                  union
+                  select u.*, 0 as belongs
+                  from users u
+                  where u.user_id not in (
+                      select distinct on (user_id) user_id from organizations_users ou where ou.org_id = ${organizationId}
+                  )
+              ) v order by v.user_id`;
+    const jSonArr = [];
+    const result = await pool.query({
+        rowMode: 'array',
+        text: sql
+    });
+    for ( let i = 0; i < result.rows.length; i++ )
+    {
+        const r = result.rows[i][0];
+        const jSon = {
+            user_id:         r.user_id,
+            user_name:       r.user_name,
+            first_name:      r.first_name,
+            last_name:       r.last_name,
+            user_add_date:   r.user_add_date,
+            start_date:      r.start_date,
+            end_date:        r.end_date,
+            belongs:         r.belongs
+        };
+        jSonArr.push( jSon );
+    } // end for i
+    return jSonArr;
+}
+
 async function get_UserByUserName( userName )
 {
     const res = await pool.query(`SELECT ROW_TO_JSON(u) FROM users as u where u.user_name='${userName}'`);
@@ -358,6 +396,7 @@ module.exports = {
     get_Users,
     get_User,
     get_UsersByOrganization,
+    get_UsersByOrganizationWithBelongInfo,
     get_UserByUserName,
     add_NewUser,
     get_Roles,
