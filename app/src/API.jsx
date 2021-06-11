@@ -111,6 +111,10 @@ class API
     {
         return get_Data( 'users/organization?organizationId='+organizationId );
     }
+    get_UsersByOrganizationWithBelongInfo( organizationId )
+    {
+        return get_Data( 'users/organization/belongs?organizationId='+organizationId );
+    }
     add_NewUser( organizationId, userName, userPassword, firstName, lastName )
     {
         const jSon = { organizationId: organizationId, userName: userName, userPassword: userPassword, firstName: firstName, lastName: lastName };
