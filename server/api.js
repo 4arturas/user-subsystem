@@ -180,6 +180,15 @@ app.post('/api/users/organization/detach', async (req, res) =>
     res.json( jSonAddResult );
 });
 
+app.post('/api/users/organization/attach', async (req, res) =>
+{
+    const jSon = req.body;
+    const userId = jSon.userId;
+    const organizationId = jSon.organizationId;
+    const jSonAddResult = await model.attach_UserToOrganization( userId, organizationId );
+    res.json( jSonAddResult );
+});
+
 app.get('/api/roles', async (req, res) =>
 {
     const jSonRoles = await model.get_Roles();
