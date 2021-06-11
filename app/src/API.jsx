@@ -127,6 +127,12 @@ class API
         const jSonResponse = add_Data( 'users/organization/detach', jSon );
         return jSonResponse;
     }
+    attach_UserToOrganization( userId, organizationId )
+    {
+        const jSon = { userId: userId, organizationId: organizationId };
+        const jSonResponse = add_Data( 'users/organization/attach', jSon );
+        return jSonResponse;
+    }
     get_Roles()
     {
         return get_Data( 'roles' );
