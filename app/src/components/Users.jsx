@@ -232,9 +232,16 @@ function AddUser()
     );
 }
 
-function UserRow( {row, searchValue} )
+function UserRow( { row, searchValue, rowComponentExt1 } )
 {
-    const user_add_date = GB.format_Date1(row.user_add_date);
+    const [userBelongsToOrganization, setUserBelongsToOrganization]     = React.useState(0  );
+    const [operation, setOperation]                                     = React.useState( false );
+    const user_add_date                                                 = GB.format_Date1(row.user_add_date);
+
+    React.useEffect( ()=> {
+        setUserBelongsToOrganization( row.belongs );
+    }, [] );
+
     return (
 
         <TableRow hidden={true}
@@ -250,9 +257,36 @@ function UserRow( {row, searchValue} )
             <TableCell align="left" style={{whiteSpace:'nowrap'}}><SearchReplace value={row.first_name} markValue={searchValue}/></TableCell>
             <TableCell align="left" style={{whiteSpace:'nowrap'}}><SearchReplace value={row.last_name} markValue={searchValue}/></TableCell>
             <TableCell align="left" style={{whiteSpace:'nowrap'}}><SearchReplace value={user_add_date} markValue={searchValue}/></TableCell>
+            <TableCell align="left" style={{whiteSpace:'nowrap'}}>
+                {
+                    operation ? <CircularProgress size={30}/> :
+                    userBelongsToOrganization ?
+                        <Button variant="contained" color="primary" onClick={ async () => {
+                            setOperation( true );
+                            const organizationId = rowComponentExt1;
+                            const jSonResult = await API.detach_UserFromOrganization( row.user_id, organizationId );
+                            console.log( jSonResult );
+                            setUserBelongsToOrganization( 0 );
+                            setOperation( false );
+                        } }>
+                            <SearchReplace value="DETACH" markValue={searchValue}/>
+                        </Button>
+                        :
+                        <Button variant="contained" color="secondary" onClick={ async () => {
+                            setOperation( true );
+                            const organizationId = rowComponentExt1;
+                            const jSonResult = await API.attach_UserToOrganization( row.user_id, organizationId );
+                            console.log( jSonResult );
+                            setUserBelongsToOrganization( 1 );
+                            setOperation( false );
+                        }} >
+                            <SearchReplace value="ATTACH" markValue={searchValue}/>
+                        </Button>
+                }
+            </TableCell>
         </TableRow>
     );
-}
+};
 
 export default function Users( { organizationId}  )
 {
@@ -260,7 +294,8 @@ export default function Users( { organizationId}  )
         { id: 'user_name', numeric: false, disablePadding: false, label: 'User Name' },
         { id: 'first_name', numeric: false, disablePadding: false, label: 'First Name' },
         { id: 'last_name', numeric: false, disablePadding: false, label: 'Last Name' },
-        { id: 'user_add_date', numeric: false, disablePadding: false, label: 'User Add Date' }
+        { id: 'user_add_date', numeric: false, disablePadding: false, label: 'User Add Date' },
+        { id: 'belongs', numeric: false, disablePadding: false, label: 'Attach from / Detach to Organization' }
     ];
 
     const [data, setData] = React.useState( null );
@@ -268,7 +303,7 @@ export default function Users( { organizationId}  )
     {
         let users;
         if ( organizationId !== null )
-            users = await API.get_UsersByOrganization( organizationId );
+            users = await API.get_UsersByOrganizationWithBelongInfo( organizationId );
         else
             users = await API.get_Users();
         setData( users );
@@ -281,7 +316,7 @@ export default function Users( { organizationId}  )
                 <div style={{paddingBottom:'5px', textAlign:"center"}}>
                     {/*<AddUser/>*/}
                 </div>
-                <CommonTable headCells={headCells} data={ data } RowComponent={ UserRow } />
+                <CommonTable headCells={headCells} data={ data } RowComponent={ UserRow } rowComponentExt1={ organizationId } />
             </div>
         }
         </div>
