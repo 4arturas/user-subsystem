@@ -121,6 +121,12 @@ class API
         const jSonResponse = add_Data( 'users/add', jSon );
         return jSonResponse;
     }
+    detach_UserFromOrganization( userId, organizationId )
+    {
+        const jSon = { userId: userId, organizationId: organizationId };
+        const jSonResponse = add_Data( 'users/organization/detach', jSon );
+        return jSonResponse;
+    }
     get_Roles()
     {
         return get_Data( 'roles' );
