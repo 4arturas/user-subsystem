@@ -278,13 +278,13 @@ async function get_UsersByOrganizationWithBelongInfo( organizationId )
                   select u.*, 1 as belongs
                   from users u
                   where u.user_id in (
-                      select distinct on (user_id) user_id from organizations_users ou where ou.org_id = ${organizationId}
+                      select distinct on (user_id) user_id from organizations_users ou where ou.org_id = ${organizationId} and ou.end_date is null
                   )
                   union
                   select u.*, 0 as belongs
                   from users u
                   where u.user_id not in (
-                      select distinct on (user_id) user_id from organizations_users ou where ou.org_id = ${organizationId}
+                      select distinct on (user_id) user_id from organizations_users ou where ou.org_id = ${organizationId} and ou.end_date is null
                   )
               ) v order by v.user_id`;
     const jSonArr = [];
