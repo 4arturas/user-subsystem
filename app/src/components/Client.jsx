@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, CircularProgress, Dialog, Paper} from "@material-ui/core";
+import {Button, CircularProgress, Paper} from "@material-ui/core";
 import API from "../API";
 import './entity.css'
 import * as GB from "../global";
@@ -9,7 +9,6 @@ import TableCell from "@material-ui/core/TableCell";
 import SearchReplace from "./SearchReplace";
 import {NavLink} from "react-router-dom";
 import ClientAddEdit from "./ClientAddEdit";
-import {format_Date1} from "../global";
 
 const headCells = [
     { id: 'org_name', numeric: false, disablePadding: false, label: 'Organization Name' },
