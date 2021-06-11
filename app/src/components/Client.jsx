@@ -46,7 +46,6 @@ function OrganizationsRow( { row, searchValue, rowComponentExt1 } )
                         setOperation( true );
                         const clientId = rowComponentExt1;
                         const jSonResult = await API.detach_ClientFromOrganization( clientId, row.org_id );
-                        console.log( jSonResult );
                         setOrganizationBelongsToClient( 0 );
                         setOperation( false );
                     } }>
@@ -57,7 +56,6 @@ function OrganizationsRow( { row, searchValue, rowComponentExt1 } )
                         setOperation( true );
                         const clientId = rowComponentExt1;
                         const jSonResult = await API.attach_ClientToOrganization( clientId, row.org_id );
-                        console.log( jSonResult );
                         setOrganizationBelongsToClient( 1 );
                         setOperation( false );
                     }} >
