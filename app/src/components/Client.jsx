@@ -14,7 +14,7 @@ import {format_Date1} from "../global";
 const headCells = [
     { id: 'org_name', numeric: false, disablePadding: false, label: 'Organization Name' },
     { id: 'org_add_date', numeric: false, disablePadding: false, label: 'Org. Add Date' },
-    { id: 'belongs', numeric: false, disablePadding: false, label: 'Action' }
+    { id: 'belongs', numeric: false, disablePadding: false, label: 'Attach to / Detach from Client' }
 ];
 
 function OrganizationsRow( { row, searchValue, rowComponentExt1 } )
