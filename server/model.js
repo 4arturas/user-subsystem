@@ -325,6 +325,12 @@ async function add_NewUser( organizationId, userName, userPassword, firstName, l
     return { ok: 1 };
 }
 
+async function detach_UserFromOrganization( userId, organizationId )
+{
+    const res = await pool.query( `update organizations_users set end_date = now() where user_id = ${userId} and org_id = ${organizationId} and end_date is null` );
+    return { ok: 1 };
+}
+
 async function get_Roles()
 {
     const jSonArr = [];
@@ -399,6 +405,7 @@ module.exports = {
     get_UsersByOrganizationWithBelongInfo,
     get_UserByUserName,
     add_NewUser,
+    detach_UserFromOrganization,
     get_Roles,
     get_Role,
     get_RolesByUserId
