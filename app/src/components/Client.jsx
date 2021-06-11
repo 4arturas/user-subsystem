@@ -9,10 +9,12 @@ import TableCell from "@material-ui/core/TableCell";
 import SearchReplace from "./SearchReplace";
 import {NavLink} from "react-router-dom";
 import ClientAddEdit from "./ClientAddEdit";
+import {format_Date1} from "../global";
 
 const headCells = [
     { id: 'org_name', numeric: false, disablePadding: false, label: 'Organization Name' },
-    { id: 'org_add_date', numeric: false, disablePadding: false, label: 'Action' }
+    { id: 'org_add_date', numeric: false, disablePadding: false, label: 'Org. Add Date' },
+    { id: 'belongs', numeric: false, disablePadding: false, label: 'Action' }
 ];
 
 function OrganizationsRow( { row, searchValue, rowComponentExt1 } )
@@ -33,6 +35,9 @@ function OrganizationsRow( { row, searchValue, rowComponentExt1 } )
                 <NavLink to={`/organizations/organization?id=${row.org_id}`}>
                     <SearchReplace value={row.org_name} markValue={searchValue}/>
                 </NavLink>
+            </TableCell>
+            <TableCell align="left" style={{whiteSpace:'nowrap'}}>
+                <SearchReplace value={GB.format_Date1(row.org_add_date)} markValue={searchValue}/>
             </TableCell>
             <TableCell align="center">
                 { operation ? <CircularProgress size={30}/> :
