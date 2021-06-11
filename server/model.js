@@ -60,7 +60,7 @@ async function add_Client( clientName )
 }
 async function update_Client( clientId, clientName )
 {
-    const res = await pool.query( `UPDATE clients set client_name='${clientName}' WHERE client_id=${clientId}` );
+    const res = await pool.query( `update clients set client_name='${clientName}' where client_id=${clientId}` );
     return { ok: 1 };
 }
 
