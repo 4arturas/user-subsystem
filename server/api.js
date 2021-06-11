@@ -151,6 +151,14 @@ app.get('/api/users/organization', async (req, res) =>
     res.json( jSonUsers );
 });
 
+app.get('/api/users/organization/belongs', async (req, res) =>
+{
+    const organizationId = req.query.organizationId;
+    const jSonUsers = await model.get_UsersByOrganizationWithBelongInfo( organizationId );
+    console.log( jSonUsers );
+    res.json( jSonUsers );
+});
+
 app.post('/api/users/add', async (req, res) =>
 {
     const jSon = req.body;
