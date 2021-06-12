@@ -415,6 +415,12 @@ select r.*, 0 as belongs from roles r where r.role_id not in ( select role_id fr
     return jSonArr;
 }
 
+async function detach_RoleFromUser( roleId, userId )
+{
+    const res = await pool.query( `update users_roles set end_date = now() where user_id = ${userId} and role_id = ${roleId} and end_date is null` );
+    return { ok: 1 };
+}
+
 module.exports = {
     hello_World,
     get_Clients,
@@ -443,5 +449,6 @@ module.exports = {
     get_Roles,
     get_Role,
     get_RolesByUserId,
-    get_RolesWithBelongInfo
+    get_RolesWithBelongInfo,
+    detach_RoleFromUser
 };
