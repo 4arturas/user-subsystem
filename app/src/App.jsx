@@ -77,7 +77,7 @@ function App()
                         <Organizations clientId={null}/>
                     </Route>
                     <Route exact path="/users">
-                        <Users organizationId={null}/>
+                        <Users/>
                     </Route>
                     <Route exact path="/roles">
                         <Roles userId={null}/>
