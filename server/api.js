@@ -220,4 +220,13 @@ app.get('/api/roles/user/belong/info', async (req, res) =>
     res.json( jSonRoles );
 });
 
+app.post('/api/roles/user/detach', async (req, res) =>
+{
+    const jSon = req.body;
+    const roleId = jSon.roleId;
+    const userId = jSon.userId;
+    const jSonAddResult = await model.detach_RoleFromUser( roleId, userId );
+    res.json( jSonAddResult );
+});
+
 module.exports = app;
