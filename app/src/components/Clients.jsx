@@ -6,6 +6,7 @@ import {NavLink} from "react-router-dom";
 import SearchReplace from "./SearchReplace";
 import CommonTable from "./CommonTable";
 import * as GB from "../global";
+import ClientAddEdit from "./ClientAddEdit";
 
 function ClientRow( {row, searchValue} )
 {
@@ -41,6 +42,9 @@ export default function Clients()
 
 
     return (
-        <div>{ !data ? <></> : <CommonTable headCells={headCells} data={ data } RowComponent={ ClientRow } />}</div>
+        <div>
+            <div style={{marginBottom:'5px'}}><ClientAddEdit/></div>
+            { !data ? <></> : <CommonTable headCells={headCells} data={ data } RowComponent={ ClientRow } />}
+        </div>
     );
 }

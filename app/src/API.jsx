@@ -42,6 +42,18 @@ class API
     {
         return get_Data( 'clients/client?id='+id );
     }
+    add_Client( clientName )
+    {
+        const jSon = { clientName: clientName };
+        const jSonResponse = add_Data( 'clients/add', jSon );
+        return jSonResponse;
+    }
+    update_Client( clientId, clientName )
+    {
+        const jSon = { clientId: clientId, clientName: clientName };
+        const jSonResponse = add_Data( 'clients/update', jSon );
+        return jSonResponse;
+    }
     get_Organizations()
     {
         return get_Data( 'organizations' );
@@ -58,6 +70,10 @@ class API
     {
         return get_Data( 'organizations/client/not?clientId='+clientId );
     }
+    get_OrganizationsWithBelongInfo( clientId )
+    {
+        return get_Data( 'organizations/client/belong/info?clientId='+clientId );
+    }
     attach_ClientToOrganization( clientId, organizationId  )
     {
         const jSon = { clientId: clientId, organizationId: organizationId };
@@ -68,6 +84,18 @@ class API
     {
         const jSon = { clientId: clientId, organizationId: organizationId };
         const jSonResponse = add_Data( 'organizations/client/detach', jSon );
+        return jSonResponse;
+    }
+    add_Organization( organizationName )
+    {
+        const jSon = { organizationName: organizationName };
+        const jSonResponse = add_Data( 'organizations/add', jSon );
+        return jSonResponse;
+    }
+    update_Organization( organizationId, organizationName )
+    {
+        const jSon = { organizationId: organizationId, organizationName: organizationName };
+        const jSonResponse = add_Data( 'organizations/update', jSon );
         return jSonResponse;
     }
     get_Users()
@@ -83,10 +111,26 @@ class API
     {
         return get_Data( 'users/organization?organizationId='+organizationId );
     }
+    get_UsersByOrganizationWithBelongInfo( organizationId )
+    {
+        return get_Data( 'users/organization/belongs?organizationId='+organizationId );
+    }
     add_NewUser( organizationId, userName, userPassword, firstName, lastName )
     {
         const jSon = { organizationId: organizationId, userName: userName, userPassword: userPassword, firstName: firstName, lastName: lastName };
         const jSonResponse = add_Data( 'users/add', jSon );
+        return jSonResponse;
+    }
+    detach_UserFromOrganization( userId, organizationId )
+    {
+        const jSon = { userId: userId, organizationId: organizationId };
+        const jSonResponse = add_Data( 'users/organization/detach', jSon );
+        return jSonResponse;
+    }
+    attach_UserToOrganization( userId, organizationId )
+    {
+        const jSon = { userId: userId, organizationId: organizationId };
+        const jSonResponse = add_Data( 'users/organization/attach', jSon );
         return jSonResponse;
     }
     get_Roles()

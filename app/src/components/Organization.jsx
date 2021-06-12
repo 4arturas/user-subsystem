@@ -4,6 +4,7 @@ import API from "../API";
 import './entity.css'
 import Users from "./Users";
 import * as GB from "../global";
+import OrganizationAddEdit from "./OrganizationAddEdit";
 
 function Organization()
 {
@@ -21,31 +22,45 @@ function Organization()
         <div>
             {organization===null ? <div>Loading...</div> :
             <div>
-            <Paper>
-                <div className="entity">
-                <h1>Organization</h1>
                 <table>
-                    <tbody>
-                        <tr>
-                            <td>Organization Name</td>
-                            <td>{organization.org_name}</td>
-                        </tr>
-                        <tr>
-                            <td>Organization Add Date</td>
-                            <td>{GB.format_Date1(organization.org_add_date)}</td>
-                        </tr>
-                    </tbody>
+                    <tr>
+                        <td style={{width:'50%'}}></td>
+                        <td>
+                            <Paper>
+                                <div className="entity">
+                                <h1>Organization&nbsp;<OrganizationAddEdit id={organization.org_id} name={organization.org_name}/></h1>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>Organization Name</td>
+                                            <td>{organization.org_name}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Organization Add Date</td>
+                                            <td>{GB.format_Date1(organization.org_add_date)}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                            </Paper>
+                        </td>
+                        <td style={{width:'50%'}}></td>
+                    </tr>
                 </table>
-                </div>
-            </Paper>
-                Following users are assigned to this organization:
-                <div>
-                    <Users organizationId={id}/>
-                </div>
+
+                <table>
+                    <tr>
+                        <td style={{width:'50%'}}></td>
+                        <td>
+                            <Users organizationId={id}/>
+                        </td>
+                        <td style={{width:'50%'}}></td>
+                    </tr>
+                </table>
             </div>
             }
         </div>
     );
-}
+};
 
 export default Organization

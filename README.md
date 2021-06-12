@@ -32,6 +32,8 @@ navigate to [http://localhost:4004](http://localhost:4004)
 
 ## Minikube
 ```sh
+minikube config set memory 16384
+minikube config set cpus 8
 minikube config set driver docker
 minikube start
 ````

@@ -45,6 +45,24 @@ async function get_Client( id )
         return {};
     return res.rows[0].row_to_json;
 }
+async function get_ClientByName( clientName )
+{
+    const res = await pool.query(`SELECT ROW_TO_JSON(c) FROM clients as c where c.client_name='${clientName}'`);
+    console.log( res.rows );
+    if ( res.rows.length === 0 )
+        return null;
+    return res.rows[0].row_to_json;
+}
+async function add_Client( clientName )
+{
+    const res = await pool.query( `INSERT INTO clients(client_name, client_add_date) VALUES('${clientName}', now())` );
+    return { ok: 1 };
+}
+async function update_Client( clientId, clientName )
+{
+    const res = await pool.query( `update clients set client_name='${clientName}' where client_id=${clientId}` );
+    return { ok: 1 };
+}
 
 async function get_Organizations()
 {
@@ -98,14 +116,18 @@ async function get_OrganizationsByClient( clientId )
 async function get_OrganizationsNotBelongingToClient( clientId )
 {
     const sql = `select ROW_TO_JSON(v) from (
-                                                select o.*, null as client_id, null as end_date
+                                                select o.*
                                                 from organizations o
                                                 where o.org_id not in (select org_id from clients_organizations)
-                                                union
-                                                select o.*, co.client_id, co.end_date
-                                                from clients_organizations co, organizations o
-                                                where co.org_id = o.org_id 
-                                                and co.client_id = ${clientId}
+                                                    union
+                                                select o.* from organizations o where o.org_id in (
+                                                    select co.org_id
+                                                    from clients_organizations co
+                                                    where co.client_id = ${clientId}
+                                                      and co.org_id not in (
+                                                        select org_id from clients_organizations where client_id = ${clientId} and end_date is null
+                                                    )
+                                                )
                                             ) v`;
     const jSonArr = [];
     const result = await pool.query({
@@ -125,6 +147,39 @@ async function get_OrganizationsNotBelongingToClient( clientId )
     return jSonArr;
 }
 
+async function get_OrganizationsWithBelongInfo( clientId )
+{
+    const sql = `select ROW_TO_JSON(v) from (
+                                     select o.*, 0 as belongs
+                                     from organizations o
+                                     where o.org_id not in
+                                           (select org_id from clients_organizations co where co.client_id = ${clientId} and co.end_date is null)
+                                     union
+                                     select o.*, 1 as belongs
+                                     from organizations o
+                                     where o.org_id in
+                                           (select org_id from clients_organizations co where co.client_id = ${clientId} and co.end_date is null)
+                                 ) v order by v.org_id`;
+    const jSonArr = [];
+    const result = await pool.query({
+        rowMode: 'array',
+        text: sql,
+    });
+    console.log( result );
+    for ( let i = 0; i < result.rows.length; i++ )
+    {
+        const r = result.rows[i][0];
+        const jSon = {
+            org_id:         r.org_id,
+            org_name:       r.org_name,
+            org_add_date:   r.org_add_date,
+            belongs:        r.belongs
+        };
+        jSonArr.push( jSon );
+    } // end for i
+    return jSonArr;
+}
+
 async function attach_ClientToOrganization( clientId, organizationId )
 {
     const res = await pool.query( `insert into clients_organizations(client_id, org_id, start_date) values (${clientId}, ${organizationId}, now())` );
@@ -133,7 +188,26 @@ async function attach_ClientToOrganization( clientId, organizationId )
 
 async function detach_ClientFromOrganization( clientId, organizationId )
 {
-    const res = await pool.query( `update clients_organizations set end_date = now() where org_id = ${organizationId} and client_id = ${clientId}` );
+    const res = await pool.query( `update clients_organizations set end_date = now() where org_id = ${organizationId} and client_id = ${clientId} and end_date is null` );
+    return { ok: 1 };
+}
+
+async function get_OrganizationByName( organizationName )
+{
+    const res = await pool.query(`SELECT ROW_TO_JSON(o) FROM organizations as o where o.org_name='${organizationName}'`);
+    console.log( res.rows );
+    if ( res.rows.length === 0 )
+        return null;
+    return res.rows[0].row_to_json;
+}
+async function add_Organization( organizationName )
+{
+    const res = await pool.query( `INSERT INTO organizations(org_name, org_add_date) VALUES('${organizationName}', now())` );
+    return { ok: 1 };
+}
+async function update_Organization( organizationId, organizationName )
+{
+    const res = await pool.query( `UPDATE organizations set org_name='${organizationName}' WHERE org_id=${organizationId}` );
     return { ok: 1 };
 }
 
@@ -198,6 +272,44 @@ async function get_UsersByOrganization( organizationId )
     return jSonArr;
 }
 
+async function get_UsersByOrganizationWithBelongInfo( organizationId )
+{
+    const sql = `select ROW_TO_JSON(v) from (
+                  select u.*, 1 as belongs
+                  from users u
+                  where u.user_id in (
+                      select distinct on (user_id) user_id from organizations_users ou where ou.org_id = ${organizationId} and ou.end_date is null
+                  )
+                  union
+                  select u.*, 0 as belongs
+                  from users u
+                  where u.user_id not in (
+                      select distinct on (user_id) user_id from organizations_users ou where ou.org_id = ${organizationId} and ou.end_date is null
+                  )
+              ) v order by v.user_id`;
+    const jSonArr = [];
+    const result = await pool.query({
+        rowMode: 'array',
+        text: sql
+    });
+    for ( let i = 0; i < result.rows.length; i++ )
+    {
+        const r = result.rows[i][0];
+        const jSon = {
+            user_id:         r.user_id,
+            user_name:       r.user_name,
+            first_name:      r.first_name,
+            last_name:       r.last_name,
+            user_add_date:   r.user_add_date,
+            start_date:      r.start_date,
+            end_date:        r.end_date,
+            belongs:         r.belongs
+        };
+        jSonArr.push( jSon );
+    } // end for i
+    return jSonArr;
+}
+
 async function get_UserByUserName( userName )
 {
     const res = await pool.query(`SELECT ROW_TO_JSON(u) FROM users as u where u.user_name='${userName}'`);
@@ -210,6 +322,18 @@ async function get_UserByUserName( userName )
 async function add_NewUser( organizationId, userName, userPassword, firstName, lastName )
 {
     const res = await pool.query( `INSERT INTO users(user_name, first_name, last_name, user_add_date) VALUES('${userName}', '${firstName}', '${lastName}', now())` );
+    return { ok: 1 };
+}
+
+async function detach_UserFromOrganization( userId, organizationId )
+{
+    const res = await pool.query( `update organizations_users set end_date = now() where user_id = ${userId} and org_id = ${organizationId} and end_date is null` );
+    return { ok: 1 };
+}
+
+async function attach_UserToOrganization( userId, organizationId )
+{
+    const res = await pool.query( `insert into organizations_users(org_id, user_id, start_date) values (${organizationId}, ${userId}, now())` );
     return { ok: 1 };
 }
 
@@ -268,17 +392,27 @@ module.exports = {
     hello_World,
     get_Clients,
     get_Client,
+    get_ClientByName,
+    add_Client,
+    update_Client,
     get_Organizations,
     get_Organization,
     get_OrganizationsByClient,
     get_OrganizationsNotBelongingToClient,
+    get_OrganizationsWithBelongInfo,
     attach_ClientToOrganization,
     detach_ClientFromOrganization,
+    get_OrganizationByName,
+    add_Organization,
+    update_Organization,
     get_Users,
     get_User,
     get_UsersByOrganization,
+    get_UsersByOrganizationWithBelongInfo,
     get_UserByUserName,
     add_NewUser,
+    detach_UserFromOrganization,
+    attach_UserToOrganization,
     get_Roles,
     get_Role,
     get_RolesByUserId
