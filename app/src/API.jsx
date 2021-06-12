@@ -152,5 +152,12 @@ class API
     {
         return get_Data( 'roles/user/belong/info?userId='+userId );
     }
+
+    detach_RoleFromUser( roleId, userId )
+    {
+        const jSon = { roleId: roleId, userId: userId };
+        const jSonResponse = add_Data( 'roles/user/detach', jSon );
+        return jSonResponse;
+    }
 }
 export default new API();
