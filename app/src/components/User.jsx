@@ -68,7 +68,7 @@ function RoleRow( { row, searchValue, rowComponentExt1 } )
                         <Button variant="contained" color="primary" onClick={ async () => {
                             setOperation( true );
                             const userId = rowComponentExt1;
-                            const jSonResult = await API.detach_RoleFromUser( userId, row.role_id );
+                            const jSonResult = await API.detach_RoleFromUser( row.role_id, userId);
                             setRoleBelongsToClient( 0 );
                             setOperation( false );
                         } }>
@@ -78,7 +78,7 @@ function RoleRow( { row, searchValue, rowComponentExt1 } )
                         <Button variant="contained" color="secondary" onClick={ async () => {
                             setOperation( true );
                             const userId = rowComponentExt1;
-                            const jSonResult = await API.attach_ClientToOrganization( userId, row.role_id );
+                            const jSonResult = await API.attach_RoleToUser( row.role_id, userId );
                             setRoleBelongsToClient( 1 );
                             setOperation( false );
                         }} >
