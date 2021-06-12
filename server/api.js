@@ -229,4 +229,13 @@ app.post('/api/roles/user/detach', async (req, res) =>
     res.json( jSonAddResult );
 });
 
+app.post('/api/roles/user/attach', async (req, res) =>
+{
+    const jSon = req.body;
+    const roleId = jSon.roleId;
+    const userId = jSon.userId;
+    const jSonAddResult = await model.attach_RoleToUser( roleId, userId );
+    res.json( jSonAddResult );
+});
+
 module.exports = app;
