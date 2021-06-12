@@ -212,4 +212,12 @@ app.get('/api/roles/user', async (req, res) =>
     res.json( jSonRoles );
 });
 
+app.get('/api/roles/user/belong/info', async (req, res) =>
+{
+    const userId = req.query.userId;
+    const jSonRoles = await model.get_RolesWithBelongInfo( userId );
+    console.log( jSonRoles );
+    res.json( jSonRoles );
+});
+
 module.exports = app;
