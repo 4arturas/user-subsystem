@@ -159,5 +159,12 @@ class API
         const jSonResponse = add_Data( 'roles/user/detach', jSon );
         return jSonResponse;
     }
+
+    attach_RoleToUser( roleId, userId )
+    {
+        const jSon = { roleId: roleId, userId: userId };
+        const jSonResponse = add_Data( 'roles/user/attach', jSon );
+        return jSonResponse;
+    }
 }
 export default new API();
