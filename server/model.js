@@ -421,6 +421,12 @@ async function detach_RoleFromUser( roleId, userId )
     return { ok: 1 };
 }
 
+async function attach_RoleToUser( roleId, userId )
+{
+    const res = await pool.query( `insert into users_roles(user_id, role_id, start_date) values (${userId}, ${roleId}, now())` );
+    return { ok: 1 };
+}
+
 module.exports = {
     hello_World,
     get_Clients,
@@ -450,5 +456,6 @@ module.exports = {
     get_Role,
     get_RolesByUserId,
     get_RolesWithBelongInfo,
-    detach_RoleFromUser
+    detach_RoleFromUser,
+    attach_RoleToUser
 };
