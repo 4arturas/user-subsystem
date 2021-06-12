@@ -388,6 +388,33 @@ async function get_RolesByUserId( userId )
     return jSonArr;
 }
 
+async function get_RolesWithBelongInfo( userId )
+{
+    const sql = `select ROW_TO_JSON(v) from (
+select r.*, 1 as belongs from roles r where r.role_id in ( select role_id from users_roles where user_id = ${userId} and end_date is null )
+union
+select r.*, 0 as belongs from roles r where r.role_id not in ( select role_id from users_roles where user_id = ${userId} and end_date is null )
+              ) v order by v.role_id`;
+    const jSonArr = [];
+    const result = await pool.query({
+        rowMode: 'array',
+        text: sql
+    });
+    for ( let i = 0; i < result.rows.length; i++ )
+    {
+        const r = result.rows[i][0];
+        const jSon = {
+            role_id:         r.role_id,
+            role_name:       r.role_name,
+            role_add_date:   r.role_add_date,
+            belongs:         r.belongs
+        };
+        jSonArr.push( jSon );
+    } // end for i
+    console.log( jSonArr );
+    return jSonArr;
+}
+
 module.exports = {
     hello_World,
     get_Clients,
@@ -415,5 +442,6 @@ module.exports = {
     attach_UserToOrganization,
     get_Roles,
     get_Role,
-    get_RolesByUserId
+    get_RolesByUserId,
+    get_RolesWithBelongInfo
 };
