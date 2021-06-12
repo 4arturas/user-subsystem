@@ -147,5 +147,10 @@ class API
     {
         return get_Data( 'roles/user?userId='+userId );
     }
+
+    get_RolesWithBelongInfo( userId )
+    {
+        return get_Data( 'roles/user/belong/info?userId='+userId );
+    }
 }
 export default new API();
