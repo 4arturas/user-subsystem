@@ -118,7 +118,7 @@ function User()
                                 <Paper>
                                     <div className="entity">
                                         <h1>
-                                            User&nbsp;<UserAddEdit id={user.user_id} name={user.user_name}/>
+                                            User&nbsp;<UserAddEdit id={user.user_id} name={user.user_name} first={user.first_name} last={user.last_name}/>
                                         </h1>
                                         <table>
                                             <tbody>
