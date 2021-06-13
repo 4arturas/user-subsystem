@@ -6,6 +6,7 @@ import {NavLink} from "react-router-dom";
 import CommonTable from "./CommonTable";
 import SearchReplace from "./SearchReplace";
 import * as GB from "../global";
+import UserAddEdit from "./UserAddEdit";
 
 function UserRow( { row, searchValue } )
 {
@@ -47,15 +48,9 @@ export default function Users()
     }, [] );
 
     return (
-        <div>{ !data ?
-            <></> :
-            <div>
-                <div style={{paddingBottom:'5px', textAlign:"center"}}>
-                    {/*<AddUser/>*/}
-                </div>
-                <CommonTable headCells={headCells} data={ data } RowComponent={ UserRow }/>
-            </div>
-        }
+        <div>
+            <div style={{marginBottom:'5px'}}><UserAddEdit/></div>
+            { !data ? <></> : <CommonTable headCells={headCells} data={ data } RowComponent={ UserRow } /> }
         </div>
     );
 }
