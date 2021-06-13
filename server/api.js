@@ -204,6 +204,21 @@ app.post('/api/users/update', async (req, res) =>
     const jSonAddResult = await model.update_User( userId, userName, firstName, lastName );
     res.json( jSonAddResult );
 });
+app.post('/api/users/add', async (req, res) =>
+{
+    const jSon = req.body;
+    const userName = jSon.userName;
+    const user = await model.get_UserByUserName( userName );
+    if ( user !== null )
+    {
+        return res.json( { error: 'User exists by given name' } );
+    }
+    const firstName     = jSon.firstName;
+    const lastName      = jSon.lastName;
+    const jSonAddResult = await model.add_User( userName, firstName, lastName );
+    res.json( jSonAddResult );
+});
+
 
 app.get('/api/roles', async (req, res) =>
 {
