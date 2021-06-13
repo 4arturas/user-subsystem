@@ -442,6 +442,12 @@ async function update_Role( roleId, roleName )
     return { ok: 1 };
 }
 
+async function add_Role( roleName )
+{
+    const res = await pool.query( `INSERT INTO roles(role_name, role_add_date) VALUES('${roleName}', now())` );
+    return { ok: 1 };
+}
+
 module.exports = {
     hello_World,
     get_Clients,
@@ -474,5 +480,6 @@ module.exports = {
     detach_RoleFromUser,
     attach_RoleToUser,
     get_RoleByName,
-    update_Role
+    update_Role,
+    add_Role
 };
