@@ -252,4 +252,17 @@ app.post('/api/roles/update', async (req, res) =>
     res.json( jSonAddResult );
 });
 
+app.post('/api/roles/add', async (req, res) =>
+{
+    const jSon = req.body;
+    const roleName = jSon.roleName;
+    const role = await model.get_RoleByName( roleName );
+    if ( role !== null )
+    {
+        return res.json( { warning: 'Role exists by given name' } );
+    }
+    const jSonAddResult = await model.add_Role( roleName );
+    res.json( jSonAddResult );
+});
+
 module.exports = app;
