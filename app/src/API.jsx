@@ -139,6 +139,12 @@ class API
         const jSonResponse = add_Data( 'users/update', jSon );
         return jSonResponse;
     }
+    add_User( userName, firstName, lastName )
+    {
+        const jSon = { userName: userName, firstName: firstName, lastName: lastName };
+        const jSonResponse = add_Data( 'users/add', jSon );
+        return jSonResponse;
+    }
 
     get_Roles()
     {
