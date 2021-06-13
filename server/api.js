@@ -189,6 +189,22 @@ app.post('/api/users/organization/attach', async (req, res) =>
     res.json( jSonAddResult );
 });
 
+app.post('/api/users/update', async (req, res) =>
+{
+    const jSon = req.body;
+    const userName = jSon.userName;
+    const role = await model.get_UserByUserName( userName );
+    if ( role !== null )
+    {
+        return res.json( { error: 'User exists by given name' } );
+    }
+    const userId        = jSon.userId;
+    const firstName     = jSon.firstName;
+    const lastName      = jSon.lastName;
+    const jSonAddResult = await model.update_User( userId, userName, firstName, lastName );
+    res.json( jSonAddResult );
+});
+
 app.get('/api/roles', async (req, res) =>
 {
     const jSonRoles = await model.get_Roles();
