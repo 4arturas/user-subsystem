@@ -166,5 +166,13 @@ class API
         const jSonResponse = add_Data( 'roles/user/attach', jSon );
         return jSonResponse;
     }
+
+    update_Role( roleId, roleName )
+    {
+        const jSon = { roleId: roleId, roleName: roleName };
+        const jSonResponse = add_Data( 'roles/update', jSon );
+        return jSonResponse;
+    }
+
 }
 export default new API();
