@@ -174,5 +174,12 @@ class API
         return jSonResponse;
     }
 
+    add_Role( roleName )
+    {
+        const jSon = { roleName: roleName };
+        const jSonResponse = add_Data( 'roles/add', jSon );
+        return jSonResponse;
+    }
+
 }
 export default new API();
