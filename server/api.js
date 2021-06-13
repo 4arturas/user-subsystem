@@ -193,8 +193,8 @@ app.post('/api/users/update', async (req, res) =>
 {
     const jSon = req.body;
     const userName = jSon.userName;
-    const role = await model.get_UserByUserName( userName );
-    if ( role !== null )
+    const user = await model.get_UserByUserName( userName );
+    if ( user !== null )
     {
         return res.json( { error: 'User exists by given name' } );
     }
