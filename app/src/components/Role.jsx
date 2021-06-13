@@ -36,7 +36,7 @@ function Role()
                                             <tbody>
                                             <tr>
                                                 <td>Role Name</td>
-                                                <td>{role.client_name}</td>
+                                                <td>{role.role_name}</td>
                                             </tr>
                                             <tr>
                                                 <td>Role add date</td>
