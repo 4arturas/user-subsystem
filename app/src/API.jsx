@@ -133,6 +133,13 @@ class API
         const jSonResponse = add_Data( 'users/organization/attach', jSon );
         return jSonResponse;
     }
+    update_User( userId, userName, firstName, lastName )
+    {
+        const jSon = { userId: userId, userName: userName, firstName: firstName, lastName: lastName };
+        const jSonResponse = add_Data( 'users/update', jSon );
+        return jSonResponse;
+    }
+
     get_Roles()
     {
         return get_Data( 'roles' );
