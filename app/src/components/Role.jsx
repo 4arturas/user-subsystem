@@ -20,23 +20,35 @@ function Role()
     return (
         <div>
             {role===null ? <div>Loading...</div> :
-            <Paper>
-                <div className="entity">
-                <h1>Role</h1>
-                <table>
-                    <tbody>
+                <div>
+                    <table>
                         <tr>
-                            <td>Role Name</td>
-                            <td>{role.role_name}</td>
+                            <td style={{width:'50%'}}></td>
+                            <td>
+                                <Paper>
+                                    <div className="entity">
+                                        <h1>
+                                            Role
+                                        </h1>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td>Role Name</td>
+                                                <td>{role.client_name}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Role add date</td>
+                                                <td>{GB.format_Date1(role.role_add_date)}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </Paper>
+                            </td>
+                            <td style={{width:'50%'}}></td>
                         </tr>
-                        <tr>
-                            <td>Role Add Date</td>
-                            <td>{GB.format_Date1(role.role_add_date)}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                    </table>
                 </div>
-            </Paper>
             }
         </div>
     );
