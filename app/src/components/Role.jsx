@@ -3,6 +3,8 @@ import {Paper} from "@material-ui/core";
 import API from "../API";
 import './entity.css'
 import * as GB from "../global";
+import ClientAddEdit from "./ClientAddEdit";
+import RoleAddEdit from "./RoleAddEdit";
 
 function Role()
 {
@@ -28,7 +30,7 @@ function Role()
                                 <Paper>
                                     <div className="entity">
                                         <h1>
-                                            Role
+                                            Role&nbsp;<RoleAddEdit id={role.role_id} name={role.role_name}/>
                                         </h1>
                                         <table>
                                             <tbody>
