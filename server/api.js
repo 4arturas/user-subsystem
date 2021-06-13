@@ -238,4 +238,18 @@ app.post('/api/roles/user/attach', async (req, res) =>
     res.json( jSonAddResult );
 });
 
+app.post('/api/roles/update', async (req, res) =>
+{
+    const jSon = req.body;
+    const roleName = jSon.roleName;
+    const role = await model.get_RoleByName( roleName );
+    if ( role !== null )
+    {
+        return res.json( { error: 'Role exists by given name' } );
+    }
+    const roleId = jSon.roleId;
+    const jSonAddResult = await model.update_Role( roleId, roleName );
+    res.json( jSonAddResult );
+});
+
 module.exports = app;
