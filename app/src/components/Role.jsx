@@ -10,9 +10,9 @@ function Role()
     const query = new URLSearchParams(window.location.search);
     React.useEffect(async ()=>
     {
-        const id = query.get('id');
+        const roleId = query.get('id');
 
-        const data = await API.get_Role( id );
+        const data = await API.get_Role( roleId );
         setRole( data );
         console.log( data );
     }, [] );
