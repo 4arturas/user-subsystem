@@ -342,6 +342,11 @@ async function update_User( userId, userName, firstName, lastName )
     const res = await pool.query( `update users set user_name='${userName}', first_name='${firstName}', last_name='${lastName}' where user_id=${userId}` );
     return { ok: 1 };
 }
+async function add_User( userName, firstName, lastName )
+{
+    const res = await pool.query( `INSERT INTO users(user_name, first_name, last_name, user_add_date) VALUES('${userName}', '${firstName}', '${lastName}' now())` );
+    return { ok: 1 };
+}
 
 async function get_Roles()
 {
@@ -480,6 +485,7 @@ module.exports = {
     detach_UserFromOrganization,
     attach_UserToOrganization,
     update_User,
+    add_User,
     get_Roles,
     get_Role,
     get_RolesByUserId,
