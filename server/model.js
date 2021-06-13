@@ -436,6 +436,12 @@ async function get_RoleByName( roleName )
     return res.rows[0].row_to_json;
 }
 
+async function update_Role( roleId, roleName )
+{
+    const res = await pool.query( `update roles set role_name='${roleName}' where role_id=${roleId}` );
+    return { ok: 1 };
+}
+
 module.exports = {
     hello_World,
     get_Clients,
@@ -467,5 +473,6 @@ module.exports = {
     get_RolesWithBelongInfo,
     detach_RoleFromUser,
     attach_RoleToUser,
-    get_RoleByName
+    get_RoleByName,
+    update_Role
 };
