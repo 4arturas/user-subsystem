@@ -9,32 +9,6 @@ import TableCell from "@material-ui/core/TableCell";
 import {NavLink} from "react-router-dom";
 import SearchReplace from "./SearchReplace";
 
-function UserChild( {user} )
-{
-    return (
-    <table>
-        <tbody>
-        <tr>
-            <td>User Name</td>
-            <td>{user.user_name}</td>
-        </tr>
-        <tr>
-            <td>First Name</td>
-            <td>{user.first_name}</td>
-        </tr>
-        <tr>
-            <td>Last Name</td>
-            <td>{user.last_name}</td>
-        </tr>
-        <tr>
-            <td>User Add Date</td>
-            <td>{GB.format_Date1(user.user_add_date)}</td>
-        </tr>
-        </tbody>
-    </table>
-    );
-}
-
 const rolesHeadCells = [
     { id: 'role_name', numeric: false, disablePadding: false, label: 'Role Name' },
     { id: 'role_add_date', numeric: false, disablePadding: false, label: 'Role Add Date' }
