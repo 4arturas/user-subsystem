@@ -427,6 +427,15 @@ async function attach_RoleToUser( roleId, userId )
     return { ok: 1 };
 }
 
+async function get_RoleByName( roleName )
+{
+    const res = await pool.query(`SELECT ROW_TO_JSON(r) FROM roles as r where r.role_name='${roleName}'`);
+    console.log( 'rows: ' + res.rows.length );
+    if ( res.rows.length === 0 )
+        return null;
+    return res.rows[0].row_to_json;
+}
+
 module.exports = {
     hello_World,
     get_Clients,
@@ -457,5 +466,6 @@ module.exports = {
     get_RolesByUserId,
     get_RolesWithBelongInfo,
     detach_RoleFromUser,
-    attach_RoleToUser
+    attach_RoleToUser,
+    get_RoleByName
 };
