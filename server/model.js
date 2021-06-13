@@ -337,6 +337,12 @@ async function attach_UserToOrganization( userId, organizationId )
     return { ok: 1 };
 }
 
+async function update_User( userId, userName, firstName, lastName )
+{
+    const res = await pool.query( `update users set user_name='${userName}', first_name='${firstName}', last_name='${lastName}' where user_id=${userId}` );
+    return { ok: 1 };
+}
+
 async function get_Roles()
 {
     const jSonArr = [];
@@ -473,6 +479,7 @@ module.exports = {
     add_NewUser,
     detach_UserFromOrganization,
     attach_UserToOrganization,
+    update_User,
     get_Roles,
     get_Role,
     get_RolesByUserId,
