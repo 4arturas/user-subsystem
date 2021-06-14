@@ -190,6 +190,11 @@ class API
         return get_Data( 'roles/user/belong/info?userId='+userId );
     }
 
+    get_RolesWithBelongToRolesGroupInfo( roleGroupId )
+    {
+        return get_Data( 'roles/rolegroups/belong/info?roleGroupId='+roleGroupId );
+    }
+
     detach_RoleFromUser( roleId, userId )
     {
         const jSon = { roleId: roleId, userId: userId };
