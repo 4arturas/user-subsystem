@@ -292,6 +292,14 @@ app.get('/api/roles/user/belong/info', async (req, res) =>
     res.json( jSonRoles );
 });
 
+app.get('/api/roles/rolegroups/belong/info', async (req, res) =>
+{
+    const roleGroupId = req.query.roleGroupId;
+    const jSonRoles = await model.get_RolesWithBelongToRolesGroupInfo( roleGroupId );
+    console.log( jSonRoles );
+    res.json( jSonRoles );
+});
+
 app.post('/api/roles/user/detach', async (req, res) =>
 {
     const jSon = req.body;
