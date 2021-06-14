@@ -514,6 +514,12 @@ async function detach_RoleFromUser( roleId, userId )
     return { ok: 1 };
 }
 
+async function detach_RoleFromRoleGroups( roleId, roleGroupId )
+{
+    const res = await pool.query( `update role_groups_roles set end_date = now() where role_group_id = ${roleGroupId} and role_id = ${roleId} and end_date is null` );
+    return { ok: 1 };
+}
+
 async function attach_RoleToUser( roleId, userId )
 {
     const res = await pool.query( `insert into users_roles(user_id, role_id, start_date) values (${userId}, ${roleId}, now())` );
@@ -585,6 +591,7 @@ module.exports = {
     get_RolesWithBelongInfo,
     get_RolesWithBelongToRolesGroupInfo,
     detach_RoleFromUser,
+    detach_RoleFromRoleGroups,
     attach_RoleToUser,
     attach_RoleToRoleGroups,
     get_RoleByName,
