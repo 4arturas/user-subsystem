@@ -348,6 +348,26 @@ async function add_User( userName, firstName, lastName )
     return { ok: 1 };
 }
 
+async function get_RoleGroups()
+{
+    const jSonArr = [];
+    const result = await pool.query({
+        rowMode: 'array',
+        text: 'SELECT ROW_TO_JSON(rg) FROM role_groups as rg;',
+    });
+    for ( let i = 0; i < result.rows.length; i++ )
+    {
+        const r = result.rows[i][0];
+        const jSon = {
+            role_group_id:         r.role_group_id,
+            role_group_name:       r.role_group_name,
+            role_group_add_date:   r.role_add_date
+        };
+        jSonArr.push( jSon );
+    } // end for i
+    return jSonArr;
+}
+
 async function get_Roles()
 {
     const jSonArr = [];
@@ -486,6 +506,7 @@ module.exports = {
     attach_UserToOrganization,
     update_User,
     add_User,
+    get_RoleGroups,
     get_Roles,
     get_Role,
     get_RolesByUserId,
