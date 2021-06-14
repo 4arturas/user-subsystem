@@ -101,6 +101,14 @@ function User()
                                                 <td>{user.user_name}</td>
                                             </tr>
                                             <tr>
+                                                <td>First Name</td>
+                                                <td>{user.first_name}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Last Name</td>
+                                                <td>{user.last_name}</td>
+                                            </tr>
+                                            <tr>
                                                 <td>User add date</td>
                                                 <td>{GB.format_Date1(user.user_add_date)}</td>
                                             </tr>
