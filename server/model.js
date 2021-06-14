@@ -476,6 +476,38 @@ select r.*, 0 as belongs from roles r where r.role_id not in ( select role_id fr
     return jSonArr;
 }
 
+async function get_RolesWithBelongToRolesGroupInfo( roleGroupId )
+{
+    const sql = `select row_to_json(v) from (
+                                                select r.*, 1 as belongs
+                                                from roles r
+                                                where r.role_id in
+                                                      (select role_id from role_groups_roles rgr where rgr.role_group_id = ${roleGroupId} and rgr.end_date is null)
+                                                union
+                                                select r.*, 0 as belongs
+                                                from roles r
+                                                where r.role_id not in
+                                                      (select role_id from role_groups_roles rgr where rgr.role_group_id = ${roleGroupId} and rgr.end_date is null)
+                                            ) v order by v.role_id`;
+    const jSonArr = [];
+    const result = await pool.query({
+        rowMode: 'array',
+        text: sql
+    });
+    for ( let i = 0; i < result.rows.length; i++ )
+    {
+        const r = result.rows[i][0];
+        const jSon = {
+            role_id:         r.role_id,
+            role_name:       r.role_name,
+            role_add_date:   r.role_add_date,
+            belongs:         r.belongs
+        };
+        jSonArr.push( jSon );
+    } // end for i
+    return jSonArr;
+}
+
 async function detach_RoleFromUser( roleId, userId )
 {
     const res = await pool.query( `update users_roles set end_date = now() where user_id = ${userId} and role_id = ${roleId} and end_date is null` );
@@ -545,6 +577,7 @@ module.exports = {
     get_Role,
     get_RolesByUserId,
     get_RolesWithBelongInfo,
+    get_RolesWithBelongToRolesGroupInfo,
     detach_RoleFromUser,
     attach_RoleToUser,
     get_RoleByName,
