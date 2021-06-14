@@ -361,7 +361,7 @@ async function get_RoleGroups()
         const jSon = {
             role_group_id:         r.role_group_id,
             role_group_name:       r.role_group_name,
-            role_group_add_date:   r.role_add_date
+            role_group_add_date:   r.role_group_add_date
         };
         jSonArr.push( jSon );
     } // end for i
@@ -375,6 +375,12 @@ async function get_RoleGroupByName( roleGroupName )
     if ( res.rows.length === 0 )
         return null;
     return res.rows[0].row_to_json;
+}
+
+async function add_RoleGroup( roleGroupName )
+{
+    const res = await pool.query( `INSERT INTO role_groups(role_group_name, role_group_add_date) VALUES('${roleGroupName}', now())` );
+    return { ok: 1 };
 }
 
 async function get_Roles()
@@ -517,6 +523,7 @@ module.exports = {
     add_User,
     get_RoleGroups,
     get_RoleGroupByName,
+    add_RoleGroup,
     get_Roles,
     get_Role,
     get_RolesByUserId,
