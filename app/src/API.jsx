@@ -151,6 +151,13 @@ class API
         return get_Data( 'users/rolegroups/belong/info?userId='+userId );
     }
 
+    attach_RoleGroupToUser( roleGroupId, userId )
+    {
+        const jSon = { roleGroupId: roleGroupId, userId: userId };
+        const jSonResponse = add_Data( 'users/rolegroups/attach', jSon );
+        return jSonResponse;
+    }
+
     get_RoleGroups()
     {
         return get_Data( 'rolegroups' );
