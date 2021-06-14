@@ -219,6 +219,14 @@ app.post('/api/users/add', async (req, res) =>
     res.json( jSonAddResult );
 });
 
+app.get('/api/users/rolegroups/belong/info', async (req, res) =>
+{
+    const userId = req.query.userId;
+    const jSonRoles = await model.get_RoleGroupsWithBelongToUserInfo( userId );
+    console.log( jSonRoles );
+    res.json( jSonRoles );
+});
+
 app.get('/api/rolegroups', async (req, res) =>
 {
     const jSonRoles = await model.get_RoleGroups();
