@@ -65,11 +65,11 @@ function App()
                     <NavLink to="/users" className="header__option" activeClassName="header__option--active">
                         Users
                     </NavLink>
-                    <NavLink to="/roles" className="header__option" activeClassName="header__option--active">
-                        Roles
-                    </NavLink>
                     <NavLink to="/rolegroups" className="header__option" activeClassName="header__option--active">
                         Role Groups
+                    </NavLink>
+                    <NavLink to="/roles" className="header__option" activeClassName="header__option--active">
+                        Roles
                     </NavLink>
                 </div>
             </div>
