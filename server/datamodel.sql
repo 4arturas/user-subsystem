@@ -147,6 +147,21 @@ create unique index role_groups_role_group_id_uindex
 create unique index role_groups_role_group_name_uindex
     on role_groups (role_group_name);
 -----------------------------------------------
+create table role_groups_roles
+(
+    role_group_id integer   not null
+        constraint role_groups_roles_role_groups_role_group_id_fk
+            references role_groups,
+    role_id       integer
+        constraint role_groups_roles_roles_role_id_fk
+            references roles,
+    start_date    timestamp not null,
+    end_date      timestamp
+);
+
+alter table role_groups_roles
+    owner to postgres;
+-----------------------------------------------
 
 commit;
 
