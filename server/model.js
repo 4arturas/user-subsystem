@@ -520,6 +520,12 @@ async function attach_RoleToUser( roleId, userId )
     return { ok: 1 };
 }
 
+async function attach_RoleToRoleGroups( roleId, roleGroupId )
+{
+    const res = await pool.query( `insert into role_groups_roles(role_group_id, role_id, start_date) values (${roleGroupId}, ${roleId}, now())` );
+    return { ok: 1 };
+}
+
 async function get_RoleByName( roleName )
 {
     const res = await pool.query(`SELECT ROW_TO_JSON(r) FROM roles as r where r.role_name='${roleName}'`);
@@ -580,6 +586,7 @@ module.exports = {
     get_RolesWithBelongToRolesGroupInfo,
     detach_RoleFromUser,
     attach_RoleToUser,
+    attach_RoleToRoleGroups,
     get_RoleByName,
     update_Role,
     add_Role
