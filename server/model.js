@@ -380,6 +380,12 @@ async function attach_RoleGroupToUser( roleGroupId, userId )
     return { ok: 1 };
 }
 
+async function detach_RoleGroupFromUser( roleGroupId, userId )
+{
+    const res = await pool.query( `update users_role_groups set end_date = now() where user_id = ${userId} and role_group_id = ${roleGroupId} and end_date is null` );
+    return { ok: 1 };
+}
+
 async function get_RoleGroups()
 {
     const jSonArr = [];
@@ -613,6 +619,7 @@ module.exports = {
     update_User,
     add_User,
     attach_RoleGroupToUser,
+    detach_RoleGroupFromUser,
     get_RoleGroupsWithBelongToUserInfo,
     get_RoleGroups,
     get_RoleGroupByName,
