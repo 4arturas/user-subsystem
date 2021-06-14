@@ -95,6 +95,24 @@ create table organizations_users
 alter table organizations_users
     owner to postgres;
 
+create table role_groups
+(
+    role_group_id       serial    not null
+        constraint role_groups_pk
+            primary key,
+    role_group_name     varchar   not null,
+    role_group_add_date timestamp not null
+);
+
+alter table role_groups
+    owner to postgres;
+
+create unique index role_groups_role_group_id_uindex
+    on role_groups (role_group_id);
+
+create unique index role_groups_role_group_name_uindex
+    on role_groups (role_group_name);
+
 create table users_roles
 (
     user_id    integer   not null
