@@ -348,6 +348,32 @@ async function add_User( userName, firstName, lastName )
     return { ok: 1 };
 }
 
+async function get_RoleGroupsWithBelongToUserInfo( userId )
+{
+    const sql = `select row_to_json(v) from (
+                                                select rg.*, 1 as belongs from role_groups rg where rg.role_group_id in ( select role_group_id from users_role_groups urg where urg.user_id = ${userId} and urg.end_date is null )
+                                                union
+                                                select rg.*, 0 as belongs from role_groups rg where rg.role_group_id not in ( select role_group_id from users_role_groups urg where urg.user_id = ${userId} and urg.end_date is null )
+                                            ) v order by v.role_group_id`;
+    const jSonArr = [];
+    const result = await pool.query({
+        rowMode: 'array',
+        text: sql
+    });
+    for ( let i = 0; i < result.rows.length; i++ )
+    {
+        const r = result.rows[i][0];
+        const jSon = {
+            role_group_id:         r.role_group_id,
+            role_group_name:       r.role_group_name,
+            role_group_add_date:   r.role_group_add_date,
+            belongs:               r.belongs
+        };
+        jSonArr.push( jSon );
+    } // end for i
+    return jSonArr;
+}
+
 async function get_RoleGroups()
 {
     const jSonArr = [];
@@ -580,6 +606,7 @@ module.exports = {
     attach_UserToOrganization,
     update_User,
     add_User,
+    get_RoleGroupsWithBelongToUserInfo,
     get_RoleGroups,
     get_RoleGroupByName,
     add_RoleGroup,
