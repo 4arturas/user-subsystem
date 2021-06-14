@@ -318,6 +318,15 @@ app.post('/api/roles/user/attach', async (req, res) =>
     res.json( jSonAddResult );
 });
 
+app.post('/api/roles/rolegroups/attach', async (req, res) =>
+{
+    const jSon = req.body;
+    const roleId = jSon.roleId;
+    const roleGroupId = jSon.roleGroupId;
+    const jSonAddResult = await model.attach_RoleToRoleGroups( roleId, roleGroupId );
+    res.json( jSonAddResult );
+});
+
 app.post('/api/roles/update', async (req, res) =>
 {
     const jSon = req.body;
