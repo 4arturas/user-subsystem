@@ -158,6 +158,11 @@ class API
         return jSonResponse;
     }
 
+    get_RoleGroup( roleGroupId )
+    {
+        return get_Data( 'rolegroups/rolegroup?id='+roleGroupId );
+    }
+
     get_Roles()
     {
         return get_Data( 'roles' );
