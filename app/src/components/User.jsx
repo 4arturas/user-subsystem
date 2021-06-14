@@ -9,6 +9,62 @@ import TableCell from "@material-ui/core/TableCell";
 import {NavLink} from "react-router-dom";
 import SearchReplace from "./SearchReplace";
 
+const roleGroupsHeadCells = [
+    { id: 'role_group_name', numeric: false, disablePadding: false, label: 'Role Group Name' },
+    { id: 'role_group_add_date', numeric: false, disablePadding: false, label: 'Role Group Add Date' }
+];
+
+function RoleGroupsRow( { row, searchValue, rowComponentExt1 } )
+{
+    const [roleGroupBelongsToClient, setRoleGroupBelongsToClient]   = React.useState( 0 );
+    const [operation, setOperation] = React.useState( false );
+
+    React.useEffect( () => {
+        setRoleGroupBelongsToClient( row.belongs );
+    }, [] );
+
+    return (
+        <TableRow
+            hover
+            tabIndex={-1}
+            key={row.role_id}>
+            <TableCell align="left" style={{whiteSpace:'nowrap'}}>
+                <NavLink to={`/rolegroups/rolegroup?id=${row.role_group_id}`}>
+                    <SearchReplace value={row.role_group_name} markValue={searchValue}/>
+                </NavLink>
+            </TableCell>
+            <TableCell align="left" style={{whiteSpace:'nowrap'}}>
+                <SearchReplace value={GB.format_Date1(row.role_group_add_date)} markValue={searchValue}/>
+            </TableCell>
+            <TableCell align="center">
+                { operation ? <CircularProgress size={30}/> :
+                    roleGroupBelongsToClient ?
+                        <Button variant="contained" color="primary" onClick={ async () => {
+                            setOperation( true );
+                            const userId = rowComponentExt1;
+                            const jSonResult = await API.detach_RoleGroupFromUser( row.role_group_id, userId);
+                            setRoleGroupBelongsToClient( 0 );
+                            setOperation( false );
+                        } }>
+                            <SearchReplace value="DETACH" markValue={searchValue}/>
+                        </Button>
+                        :
+                        <Button variant="contained" color="secondary" onClick={ async () => {
+                            setOperation( true );
+                            const userId = rowComponentExt1;
+                            const jSonResult = await API.attach_RoleGroupToUser( row.role_group_id, userId );
+                            setRoleGroupBelongsToClient( 1 );
+                            setOperation( false );
+                        }} >
+                            <SearchReplace value="ATTACH" markValue={searchValue}/>
+                        </Button>
+                }
+            </TableCell>
+        </TableRow>
+    );
+}
+
+
 const rolesHeadCells = [
     { id: 'role_name', numeric: false, disablePadding: false, label: 'Role Name' },
     { id: 'role_add_date', numeric: false, disablePadding: false, label: 'Role Add Date' }
@@ -29,7 +85,7 @@ function RoleRow( { row, searchValue, rowComponentExt1 } )
             tabIndex={-1}
             key={row.role_id}>
             <TableCell align="left" style={{whiteSpace:'nowrap'}}>
-                <NavLink to={`/organizations/organization?id=${row.role_id}`}>
+                <NavLink to={`/roles/role?id=${row.role_id}`}>
                     <SearchReplace value={row.role_name} markValue={searchValue}/>
                 </NavLink>
             </TableCell>
@@ -66,8 +122,9 @@ function RoleRow( { row, searchValue, rowComponentExt1 } )
 
 function User()
 {
-    const [user, setUser] = React.useState(null);
-    const [roles, setRoles] = React.useState(null);
+    const [user, setUser]               = React.useState(null);
+    const [roleGroups, setRoleGroups]   = React.useState(null);
+    const [roles, setRoles]             = React.useState(null);
     const query = new URLSearchParams(window.location.search);
     const userId = query.get('id');
     React.useEffect(async ()=>
@@ -75,9 +132,11 @@ function User()
         const data = await API.get_User( userId );
         setUser( data );
 
+        const roleGroupsData = await  API.get_RoleGroupsWithBelongToUserInfo( userId );
+        setRoleGroups( roleGroupsData );
+
         const rolesData = await API.get_RolesWithBelongToUserInfo( userId );
         setRoles( rolesData );
-        console.log( rolesData );
 
     }, [] );
 
@@ -119,6 +178,22 @@ function User()
                             </td>
                             <td style={{width:'50%'}}></td>
                         </tr>
+                    </table>
+                    <br/>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td style={{width:'50%'}}></td>
+                            <td>
+                                {
+                                    roles === null ?
+                                        <div>Loading...</div> :
+                                        <CommonTable headCells={roleGroupsHeadCells} data={ roleGroups } RowComponent={ RoleGroupsRow } rowComponentExt1={userId} />
+                                }
+                            </td>
+                            <td style={{width:'50%'}}></td>
+                        </tr>
+                        </tbody>
                     </table>
                     <br/>
                     <table>
