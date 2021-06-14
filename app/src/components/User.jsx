@@ -101,7 +101,7 @@ function User()
                                                 <td>{user.user_name}</td>
                                             </tr>
                                             <tr>
-                                                <td>Client add date</td>
+                                                <td>User add date</td>
                                                 <td>{GB.format_Date1(user.user_add_date)}</td>
                                             </tr>
                                             </tbody>
