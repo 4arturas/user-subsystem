@@ -209,6 +209,13 @@ class API
         return jSonResponse;
     }
 
+    attach_RoleToRoleGroups( roleId, roleGroupId )
+    {
+        const jSon = { roleId: roleId, roleGroupId: roleGroupId };
+        const jSonResponse = add_Data( 'roles/rolegroups/attach', jSon );
+        return jSonResponse;
+    }
+
     update_Role( roleId, roleName )
     {
         const jSon = { roleId: roleId, roleName: roleName };
