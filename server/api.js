@@ -309,6 +309,15 @@ app.post('/api/roles/user/detach', async (req, res) =>
     res.json( jSonAddResult );
 });
 
+app.post('/api/roles/rolegroups/detach', async (req, res) =>
+{
+    const jSon = req.body;
+    const roleId = jSon.roleId;
+    const roleGroupId = jSon.roleGroupId;
+    const jSonAddResult = await model.detach_RoleFromRoleGroups( roleId, roleGroupId );
+    res.json( jSonAddResult );
+});
+
 app.post('/api/roles/user/attach', async (req, res) =>
 {
     const jSon = req.body;
