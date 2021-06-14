@@ -374,6 +374,12 @@ async function get_RoleGroupsWithBelongToUserInfo( userId )
     return jSonArr;
 }
 
+async function attach_RoleGroupToUser( roleGroupId, userId )
+{
+    const res = await pool.query( `insert into users_role_groups(user_id, role_group_id, start_date) values (${userId}, ${roleGroupId}, now())` );
+    return { ok: 1 };
+}
+
 async function get_RoleGroups()
 {
     const jSonArr = [];
@@ -606,6 +612,7 @@ module.exports = {
     attach_UserToOrganization,
     update_User,
     add_User,
+    attach_RoleGroupToUser,
     get_RoleGroupsWithBelongToUserInfo,
     get_RoleGroups,
     get_RoleGroupByName,
