@@ -162,6 +162,21 @@ create table role_groups_roles
 alter table role_groups_roles
     owner to postgres;
 -----------------------------------------------
+create table users_role_groups
+(
+    user_id       integer   not null
+        constraint users_role_groups_users_user_id_fk
+            references users,
+    role_group_id integer   not null
+        constraint users_role_groups_role_groups_role_group_id_fk
+            references role_groups,
+    start_date    timestamp not null,
+    end_date      integer
+);
+
+alter table users_role_groups
+    owner to postgres;
+-----------------------------------------------
 
 commit;
 
