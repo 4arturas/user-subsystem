@@ -151,6 +151,13 @@ class API
         return get_Data( 'rolegroups' );
     }
 
+    add_RoleGroup( roleGroupName )
+    {
+        const jSon = { roleGroupName: roleGroupName };
+        const jSonResponse = add_Data( 'rolegroups/add', jSon );
+        return jSonResponse;
+    }
+
     get_Roles()
     {
         return get_Data( 'roles' );
