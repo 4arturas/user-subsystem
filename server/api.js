@@ -247,6 +247,20 @@ app.get('/api/rolegroups/rolegroup', async (req, res) =>
     res.json( jSonUser );
 });
 
+app.post('/api/rolegroups/update', async (req, res) =>
+{
+    const jSon = req.body;
+    const roleGroupName = jSon.roleGroupName;
+    const roleGroup = await model.get_RoleGroupByName( roleGroupName );
+    if ( roleGroup !== null )
+    {
+        return res.json( { error: 'Role Group exists by given name' } );
+    }
+    const roleGroupId= jSon.roleGroupId;
+    const jSonAddResult = await model.update_RoleGroup( roleGroupId, roleGroupName );
+    res.json( jSonAddResult );
+});
+
 app.get('/api/roles', async (req, res) =>
 {
     const jSonRoles = await model.get_Roles();
