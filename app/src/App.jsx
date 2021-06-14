@@ -20,6 +20,8 @@ import User from "./components/User";
 import Role from "./components/Role";
 import {purple} from "@material-ui/core/colors";
 import {ThemeProvider, createMuiTheme} from "@material-ui/core";
+import RoleGroups from "./components/RoleGroups";
+import RoleGroup from "./components/RoleGroup";
 
 const theme = createMuiTheme({
     palette: {
@@ -66,6 +68,9 @@ function App()
                     <NavLink to="/roles" className="header__option" activeClassName="header__option--active">
                         Roles
                     </NavLink>
+                    <NavLink to="/rolegroups" className="header__option" activeClassName="header__option--active">
+                        Role Groups
+                    </NavLink>
                 </div>
             </div>
             <div style={{padding:'30px 20px'}}>
@@ -78,6 +83,9 @@ function App()
                     </Route>
                     <Route exact path="/users">
                         <Users/>
+                    </Route>
+                    <Route exact path="/rolegroups">
+                        <RoleGroups userId={null}/>
                     </Route>
                     <Route exact path="/roles">
                         <Roles userId={null}/>
@@ -94,6 +102,9 @@ function App()
                     </Route>
                     <Route exact path="/users/user">
                         <User/>
+                    </Route>
+                    <Route exact path="/rolegroups/rolegroup">
+                        <RoleGroup/>
                     </Route>
                     <Route exact path="/roles/role">
                         <Role/>
