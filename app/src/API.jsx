@@ -158,6 +158,13 @@ class API
         return jSonResponse;
     }
 
+    detach_RoleGroupFromUser( roleGroupId, userId )
+    {
+        const jSon = { roleGroupId: roleGroupId, userId: userId };
+        const jSonResponse = add_Data( 'users/rolegroups/detach', jSon );
+        return jSonResponse;
+    }
+
     get_RoleGroups()
     {
         return get_Data( 'rolegroups' );
