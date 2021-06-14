@@ -368,6 +368,15 @@ async function get_RoleGroups()
     return jSonArr;
 }
 
+async function get_RoleGroupByName( roleGroupName )
+{
+    const res = await pool.query(`SELECT ROW_TO_JSON(rg) FROM role_groups as rg where rg.role_group_name='${roleGroupName}'`);
+    console.log( 'rows: ' + res.rows.length );
+    if ( res.rows.length === 0 )
+        return null;
+    return res.rows[0].row_to_json;
+}
+
 async function get_Roles()
 {
     const jSonArr = [];
@@ -507,6 +516,7 @@ module.exports = {
     update_User,
     add_User,
     get_RoleGroups,
+    get_RoleGroupByName,
     get_Roles,
     get_Role,
     get_RolesByUserId,
