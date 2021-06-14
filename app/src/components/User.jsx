@@ -75,7 +75,7 @@ function User()
         const data = await API.get_User( userId );
         setUser( data );
 
-        const rolesData = await API.get_RolesWithBelongInfo( userId );
+        const rolesData = await API.get_RolesWithBelongToUserInfo( userId );
         setRoles( rolesData );
         console.log( rolesData );
 

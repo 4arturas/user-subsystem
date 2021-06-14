@@ -449,7 +449,7 @@ async function get_RolesByUserId( userId )
     return jSonArr;
 }
 
-async function get_RolesWithBelongInfo( userId )
+async function get_RolesWithBelongToUserInfo( userId )
 {
     const sql = `select ROW_TO_JSON(v) from (
 select r.*, 1 as belongs from roles r where r.role_id in ( select role_id from users_roles where user_id = ${userId} and end_date is null )
@@ -588,7 +588,7 @@ module.exports = {
     get_Roles,
     get_Role,
     get_RolesByUserId,
-    get_RolesWithBelongInfo,
+    get_RolesWithBelongToUserInfo,
     get_RolesWithBelongToRolesGroupInfo,
     detach_RoleFromUser,
     detach_RoleFromRoleGroups,

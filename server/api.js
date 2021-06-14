@@ -287,7 +287,7 @@ app.get('/api/roles/user', async (req, res) =>
 app.get('/api/roles/user/belong/info', async (req, res) =>
 {
     const userId = req.query.userId;
-    const jSonRoles = await model.get_RolesWithBelongInfo( userId );
+    const jSonRoles = await model.get_RolesWithBelongToUserInfo( userId );
     console.log( jSonRoles );
     res.json( jSonRoles );
 });
