@@ -163,6 +163,13 @@ class API
         return get_Data( 'rolegroups/rolegroup?id='+roleGroupId );
     }
 
+    update_RoleGroup( roleGroupId, roleGroupName )
+    {
+        const jSon = { roleGroupId: roleGroupId, roleGroupName: roleGroupName };
+        const jSonResponse = add_Data( 'rolegroups/update', jSon );
+        return jSonResponse;
+    }
+
     get_Roles()
     {
         return get_Data( 'roles' );
