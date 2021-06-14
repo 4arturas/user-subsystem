@@ -336,6 +336,8 @@ insert into users_roles (user_id, role_id, start_date) values (103,3,now());
 insert into users_roles (user_id, role_id, start_date) values (104,3,now());
 insert into users_roles (user_id, role_id, start_date) values (105,3,now());
 insert into users_roles (user_id, role_id, start_date) values (106,3,now());
+-----------------------------------------------
+insert into role_groups(role_group_id, role_group_name, role_group_add_date) values (1,'group_id',now());
 
 -- select * from organizations;
 
