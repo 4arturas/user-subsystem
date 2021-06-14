@@ -146,6 +146,11 @@ class API
         return jSonResponse;
     }
 
+    get_RoleGroupsWithBelongToUserInfo( userId )
+    {
+        return get_Data( 'users/rolegroups/belong/info?userId='+userId );
+    }
+
     get_RoleGroups()
     {
         return get_Data( 'rolegroups' );
